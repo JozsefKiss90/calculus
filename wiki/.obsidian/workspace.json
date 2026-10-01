@@ -11,10 +11,14 @@
             "id": "c3443cff9db862b6",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
-              "icon": "lucide-file",
-              "title": "New tab"
+              "type": "markdown",
+              "state": {
+                "file": "Module 1 Anchor Graph.md",
+                "mode": "preview",
+                "source": false
+              },
+              "icon": "lucide-file-text",
+              "title": "Module 1 Anchor Graph"
             }
           }
         ]
@@ -184,24 +188,6 @@
   },
   "active": "c3443cff9db862b6",
   "lastOpenFiles": [
-    "docs/adr/0006-latex-is-restricted-to-the-katex-subset.md",
-    "docs/adr/0005-authors-read-a-context-pack-not-the-wiki.md",
-    "docs/adr/0004-interactives-are-archetype-instances.md",
-    "docs/adr/0003-frontmatter-stores-only-what-the-graph-cannot-derive.md",
-    "GLOSSARY.md.tmp.411348.b95322be0b5b",
-    "GLOSSARY.md.tmp.411348.b6c1706ca50f",
-    "docs/adr/0002-script-authoritative-graph-health.md",
-    "docs/adr/0002-script-authoritative-graph-health.md.tmp.411348.76646cd7c289",
-    "docs/adr/0001-target-anchored-prerequisite-closure.md",
-    "docs/adr",
-    "GLOSSARY.md",
-    "prompt.md",
-    "CLAUDE.md",
-    "docs/agents/domain.md",
-    "docs/agents/triage-labels.md",
-    "docs/agents/issue-tracker.md",
-    "docs/agents",
-    "docs",
-    "skills-lock.json"
+    "Module 1 Anchor Graph.md"
   ]
 }
