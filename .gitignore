@@ -1,0 +1,4 @@
+# Symlinked mirror of .agents/skills/ — commit the source, not the mirror.
+# core.symlinks=false on Windows means git walks these as real files,
+# which would duplicate every skill in the repo.
+.claude/skills/
