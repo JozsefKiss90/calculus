@@ -187,7 +187,13 @@ Any failure is red and fails the build:
 9. Every `interactive` block names a known Archetype and validates against its parameter schema.
 10. Every Note at `status: drafted` or above has non-empty `## In one sentence`.
 
-All of 1–5 hold on the Anchor Graph as it stands, verified: 61 Nodes, 97 Edges, acyclic, single root at *Derivative*, 61 of 61 reachable, 9 Floor Nodes. They are a regression gate from the first commit.
+11. The graph built from the Notes' `requires` is identical to the Anchor Graph.
+
+These run at two different times, and conflating them was an error in an earlier draft of this spec. Invariants 1–4 are computed from the Anchor Graph file and are a regression gate **from the first commit**, before any Note exists. Invariants 5–10 are computed from the Notes and can only run once `scaffold` has created them. Invariant 11 joins the two and is what makes "agents never change the structure" enforceable rather than conventional; its failure message must name both directions of the mismatch, since adding a Node legitimately produces a one-sided mismatch until both sides are updated.
+
+Invariants 1–4 hold on the Anchor Graph as it stands, verified: 61 Nodes, 97 Edges, acyclic, single root at *Derivative*, 61 of 61 reachable, 9 Floor Nodes.
+
+One graph loader serves both sources. The Mermaid file and the Notes' frontmatter are two front-ends producing one in-memory representation, shared by `generate` and `check` — two independent graph builders would reintroduce exactly the dashboard-versus-gate divergence ADR-0002 exists to prevent.
 
 ### Graded metrics — green / yellow / red
 
