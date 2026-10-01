@@ -4,7 +4,7 @@
 
 **Blocked by:** None (can start immediately)
 
-**Status:** resolved
+**Status:** ready-for-human
 
 - [x] Obsidian opens with `wiki/` as the vault root, and `.obsidian/` is no longer at the repo root
 - [x] The five domain directories — algebra, functions, limits, trigonometry, calculus — exist and survive a clone (git does not track empty directories, so each needs a `.gitkeep` until 04 populates it)
@@ -43,13 +43,24 @@ the graph as human-verified and frozen, so the honest values are `reviewed` and
 `## In one sentence` section is present, so the Note satisfies invariant 10 at
 `drafted` either way.
 
-**`.smart-env/` moved with the vault.** Not named in the ticket, but it is the
-smart-connections plugin's embedding cache and the plugin anchors it to the vault
-root, so leaving it behind would have orphaned it. It is still tracked, and it churns
-on every Obsidian session; untracking it and adding it to `.gitignore` is worth
-considering separately.
+**`.smart-env/` is untracked, not moved.** It is the smart-connections embedding
+cache, which the plugin anchors to the vault root, so the move would have carried it
+into `wiki/`. Review caught that its contents index `docs/adr` (101 references),
+`GLOSSARY.md` (82) and `CLAUDE.md` — repo specs, which inside the vault breaks the
+last acceptance criterion. Every entry also named a file that the move had just put
+outside the vault, so the cache was stale as well as misplaced. It is deleted and
+`.gitignore`d; the plugin rebuilds it on first open and the rebuild is not tracked.
 
 Verified by parsing the committed mermaid block rather than by reading it: 61 Nodes,
 97 Edges, no duplicate Edges, acyclic, a single in-degree-zero root at *Derivative*,
 61 of 61 reachable from it, 9 Floor Nodes. The block is byte-identical to
 `example_nodes.mmd` apart from LF normalisation and a terminating newline.
+
+Review also caught derivable counts written into the Note's `## In one sentence`.
+They are gone: declaring 61 Nodes inside the vault, where 11's dashboard will compute
+the same number, is the exact drift ADR-0003 exists to prevent. The counts stay here,
+in a dated record, rather than in live content.
+
+**Left for a human**, which is why this is `ready-for-human` rather than finished:
+open Obsidian on `wiki/` and confirm the Anchor Graph renders as a diagram, then set
+`status: reviewed` and `reviewed_by: human` on the Note. Both are human-only by spec.

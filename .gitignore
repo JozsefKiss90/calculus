@@ -2,3 +2,9 @@
 # core.symlinks=false on Windows means git walks these as real files,
 # which would duplicate every skill in the repo.
 .claude/skills/
+
+# smart-connections' embedding cache. Per-machine, regenerable, and it indexes
+# whatever the vault contains — which is why it must not be tracked: a cache of
+# the repo's specs and skills inside wiki/ breaks "the vault holds learning
+# content only".
+.smart-env/

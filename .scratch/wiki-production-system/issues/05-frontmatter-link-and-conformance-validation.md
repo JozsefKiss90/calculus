@@ -15,3 +15,25 @@ And invariant 11, which joins the two graph sources: the graph built from the No
 - [ ] A Node added to the Anchor Graph but not yet scaffolded reads as a one-sided mismatch naming the missing Note, not as an unexplained failure
 - [ ] Structural files are excluded from every graph computation by their absence of frontmatter, not by a hardcoded name list
 - [ ] `check` on the freshly scaffolded vault exits 0
+
+## Comments
+
+From 01, which wrote the first frontmatter block in the vault. Two of this ticket's
+criteria need adjusting before they can be implemented as written.
+
+**"Excluded by their absence of frontmatter, not by a hardcoded name list" is no
+longer sufficient.** It holds for `CLAUDE.md`, `index.md` and `log.md`, which carry no
+frontmatter. It does not hold for `wiki/Module 1 Anchor Graph.md` or for source Notes
+under `wiki/sources/`: both carry frontmatter and neither is a Node. The replacement is
+still not a name list — select Nodes on `kind: concept`. The Anchor Graph Note is
+`kind: reference` with `requires: []`, so without that filter it reads as an extra
+Floor Node and invariant 4 fails on a clean vault.
+
+**Invariant 6 is basename-of-parent, not a five-value enum.** The Anchor Graph Note
+sits at the vault root and carries `domain: wiki`, which is not one of the five domains
+the spec names. `domain` equals the basename of the file's containing directory, with
+no special case: `wiki` at the root, `observability` for the dashboard, `sources` for a
+source Note, and the five domain names for Nodes. Validating against the five-name list
+instead would fail the vault's own Anchor Graph. The spec's "Repository and vault
+topology" section names the five domains and does not spell this out; 01's Comments
+carry the reasoning.
