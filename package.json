@@ -1,0 +1,14 @@
+{
+  "name": "calculus-wiki-tools",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Tooling that produces and validates the Calculus Wiki. Not the App.",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "check": "node scripts/wiki.js check wiki",
+    "test": "node --test \"tests/**/*.test.js\""
+  }
+}

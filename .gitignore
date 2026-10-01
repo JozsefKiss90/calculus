@@ -8,3 +8,7 @@
 # the repo's specs and skills inside wiki/ breaks "the vault holds learning
 # content only".
 .smart-env/
+
+# The machine-readable health report `check` writes beside the vault. Regenerated on
+# every run, so tracking it would dirty the tree on each check.
+.wiki-health/
