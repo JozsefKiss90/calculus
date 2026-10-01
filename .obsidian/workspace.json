@@ -178,11 +178,23 @@
       "daily-notes:Open today's daily note": false,
       "templates:Insert template": false,
       "command-palette:Open command palette": false,
-      "bases:Create new base": false
+      "bases:Create new base": false,
+      "copilot:Open Copilot Agent Chat": false
     }
   },
   "active": "c3443cff9db862b6",
   "lastOpenFiles": [
+    "docs/adr/0006-latex-is-restricted-to-the-katex-subset.md",
+    "docs/adr/0005-authors-read-a-context-pack-not-the-wiki.md",
+    "docs/adr/0004-interactives-are-archetype-instances.md",
+    "docs/adr/0003-frontmatter-stores-only-what-the-graph-cannot-derive.md",
+    "GLOSSARY.md.tmp.411348.b95322be0b5b",
+    "GLOSSARY.md.tmp.411348.b6c1706ca50f",
+    "docs/adr/0002-script-authoritative-graph-health.md",
+    "docs/adr/0002-script-authoritative-graph-health.md.tmp.411348.76646cd7c289",
+    "docs/adr/0001-target-anchored-prerequisite-closure.md",
+    "docs/adr",
+    "GLOSSARY.md",
     "prompt.md",
     "CLAUDE.md",
     "docs/agents/domain.md",
