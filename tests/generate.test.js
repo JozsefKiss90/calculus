@@ -6,7 +6,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFile, readdir, writeFile } from "node:fs/promises";
 import { join, relative } from "node:path";
-import { anchorNoteContents, makeFixtureVault, readReport, runWiki } from "./helpers/vault.js";
+import { anchorNoteContents, makeScaffoldedVault, readReport, runWiki } from "./helpers/vault.js";
 
 /** Shaped like the real Module: domains as subgraphs, and one Node whose name needs spelling out. */
 const GRAPH = `flowchart TD
@@ -30,12 +30,7 @@ const ARITHMETIC = "algebra/Signed arithmetic and order of operations.md";
 const LIMITS = "limits/Limits.md";
 const SINL = "limits/Limit of sin h over h as h approaches zero.md";
 
-async function scaffoldedVault(graph = GRAPH) {
-  const fixture = await makeFixtureVault(graph);
-  const { exitCode, stderr } = await runWiki(["scaffold", fixture.vault]);
-  assert.equal(exitCode, 0, stderr);
-  return fixture;
-}
+const scaffoldedVault = (graph = GRAPH) => makeScaffoldedVault(graph);
 
 const generate = (vault) => runWiki(["generate", vault]);
 

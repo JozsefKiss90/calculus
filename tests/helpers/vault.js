@@ -66,6 +66,25 @@ export async function makeFixtureVault(mermaidBody) {
   return makeFixtureVaultFromNote(anchorNoteContents(mermaidBody));
 }
 
+/**
+ * A fixture repository that `scaffold` has just filled from the given graph: every Note
+ * present and every invariant holding, for a test to break one thing by hand.
+ *
+ * @returns {Promise<{root: string, vault: string, anchorNote: string}>}
+ */
+export async function makeScaffoldedVault(mermaidBody) {
+  const fixture = await makeFixtureVault(mermaidBody);
+  const { exitCode, stderr } = await runWiki(["scaffold", fixture.vault]);
+  if (exitCode !== 0) throw new Error(`the fixture would not scaffold:\n${stderr}`);
+  return fixture;
+}
+
+/** Run `check` on a fixture and read the report it wrote. */
+export async function checkVault({ root, vault }) {
+  const { exitCode, stdout, stderr } = await runWiki(["check", vault]);
+  return { exitCode, stdout, stderr, report: await readReport(root) };
+}
+
 /** A fixture repository whose Anchor Graph Note has exactly the given contents. */
 export async function makeFixtureVaultFromNote(contents) {
   const { root, vault } = await makeFixtureRoot();

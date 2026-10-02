@@ -7,7 +7,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { mkdir, readFile, rename, rm, writeFile } from "node:fs/promises";
 import { join } from "node:path";
-import { anchorNoteContents, invariant, makeFixtureVault, readReport, runWiki } from "./helpers/vault.js";
+import { anchorNoteContents, checkVault as check, invariant, makeScaffoldedVault } from "./helpers/vault.js";
 
 /** Shaped like the real Module: domains as subgraphs, and one Node whose name needs spelling out. */
 const GRAPH = `flowchart TD
@@ -29,17 +29,7 @@ const FRACTIONS = "algebra/Equivalent fractions and cancellation.md";
 const ARITHMETIC = "algebra/Signed arithmetic and order of operations.md";
 const LIMITS = "limits/Limits.md";
 
-async function scaffoldedVault(graph = GRAPH) {
-  const fixture = await makeFixtureVault(graph);
-  const { exitCode, stderr } = await runWiki(["scaffold", fixture.vault]);
-  assert.equal(exitCode, 0, stderr);
-  return fixture;
-}
-
-async function check({ root, vault }) {
-  const { exitCode, stdout, stderr } = await runWiki(["check", vault]);
-  return { exitCode, stdout, stderr, report: await readReport(root) };
-}
+const scaffoldedVault = (graph = GRAPH) => makeScaffoldedVault(graph);
 
 async function editNote(vault, path, change) {
   const file = join(vault, path);
@@ -55,7 +45,7 @@ test("check on a freshly scaffolded vault exits 0, every invariant checked and h
   assert.equal(exitCode, 0, stdout);
   assert.deepEqual(
     report.invariants.map((entry) => [entry.id, entry.status]),
-    [1, 2, 3, 4, 5, 6, 7, 10, 11].map((id) => [id, "pass"]),
+    [1, 2, 3, 4, 5, 6, 7, 8, 10, 11].map((id) => [id, "pass"]),
   );
   assert.deepEqual(report.notes, { notes: 7, conceptNotes: 6 });
 });

@@ -1,5 +1,6 @@
-// Invariants 5, 6, 7 and 10, computed from the Notes, and invariant 11, which joins the
-// Notes to the Anchor Graph.
+// Invariants 5, 6, 7, 8 and 10, computed from the Notes, and invariant 11, which joins the
+// Notes to the Anchor Graph. Invariant 8 holds every Note's mathematics, not only a concept
+// Note's, because any Note can reach a Page.
 //
 // Every failure names the Note it is about in `note` and says what went wrong in
 // `problem`, a stable slug, so an agent can act on a report without parsing prose and two
@@ -11,6 +12,7 @@
 // that only ever showed one direction would read as a bug in the check.
 
 import { GraphError } from "./graph.js";
+import { findMaths, katexRejection } from "./maths.js";
 import { noteNameFor } from "./note-names.js";
 import { CONCEPT, SUMMARY_HEADING, buildNotesGraph, indexByName, isConcept, resolveLink, summaryOf, valueOf } from "./notes.js";
 
@@ -29,6 +31,11 @@ const INVARIANT = {
     id: 7,
     name: "frontmatter-conforms",
     title: "No frontmatter key outside the schema; no enum value outside its closed set",
+  },
+  mathsParsesUnderKatex: {
+    id: 8,
+    name: "maths-parses-under-katex",
+    title: "Every $…$ and $$…$$ block parses under KaTeX",
   },
   summaryBeforeDrafted: {
     id: 10,
@@ -73,6 +80,7 @@ export function checkNoteInvariants(notes, anchor) {
     requiresResolve(notes),
     domainMatchesDirectory(notes),
     frontmatterConforms(notes),
+    mathsParsesUnderKatex(notes),
     summaryBeforeDrafted(notes),
     notesMatchAnchorGraph(notes, anchor.graph),
   ];
@@ -84,7 +92,13 @@ const verdict = (invariant, failures) => ({
   failures,
 });
 
-const failure = (note, problem, message) => ({ problem, note: note.path, message: `${note.path}: ${message}` });
+/** `details` carries what one kind of failure adds; a `line` among them joins the Note's path. */
+const failure = (note, problem, message, details = {}) => ({
+  problem,
+  note: note.path,
+  ...details,
+  message: `${note.path}${details.line === undefined ? "" : `:${details.line}`}: ${message}`,
+});
 
 function requiresResolve(notes) {
   const byName = indexByName(notes);
@@ -190,6 +204,31 @@ function repeatedPrerequisites(note) {
   }
   return [...repeated].map((target) => failure(note, "duplicate-prerequisite", `requires lists [[${target}]] more than once`));
 }
+
+function mathsParsesUnderKatex(notes) {
+  const failures = [];
+  for (const note of notes) {
+    const { expressions, unclosed } = findMaths(note.frontmatter.body, note.frontmatter.bodyLine);
+    const found = [];
+    for (const { line } of unclosed) {
+      found.push(failure(note, "unclosed-display-maths", "a display block opened with $$ is never closed", { line }));
+    }
+    for (const { expression, display, line } of expressions) {
+      const rejection = katexRejection({ expression, display });
+      if (rejection === undefined) continue;
+      // The report keeps the expression exactly; the message puts it on one line.
+      const shown = display ? `$$${oneLine(expression)}$$` : `$${expression}$`;
+      const kind = display ? "display" : "inline";
+      found.push(
+        failure(note, "katex-rejects", `KaTeX rejects the ${kind} expression ${shown}: ${rejection}`, { line, display, expression }),
+      );
+    }
+    failures.push(...found.sort((a, b) => a.line - b.line));
+  }
+  return verdict(INVARIANT.mathsParsesUnderKatex, failures);
+}
+
+const oneLine = (text) => text.replace(/\s*\n\s*/g, " ");
 
 function summaryBeforeDrafted(notes) {
   const failures = [];

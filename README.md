@@ -21,6 +21,16 @@ not run at all. The report is a file you can read from a terminal without openin
 cat .wiki-health/report.json
 ```
 
+Mathematics is checked too: every `$…$` and `$$…$$` in every Note must parse under KaTeX,
+because Obsidian renders with MathJax and the App with KaTeX, and only what both accept is
+safe ([ADR-0006](docs/adr/0006-latex-is-restricted-to-the-katex-subset.md)). A macro that
+renders fine in Obsidian can still fail here — that is the check doing its job. Code blocks,
+code spans and `\$` are not mathematics. KaTeX itself is vendored, pinned, in
+[`scripts/vendor/katex/`](scripts/vendor/katex/README.md).
+
+Which symbol and which word to write is decided in [`wiki/Conventions.md`](wiki/Conventions.md),
+the notation authority every Note follows.
+
 ## Scaffold the Notes
 
 ```sh
@@ -77,9 +87,9 @@ whether or not the committer ever ran the setup step above.
 npm test
 ```
 
-No dependencies and no install step, here or in CI. Tests drive the CLI from outside against
-fixture vaults in temporary directories; nothing is mocked. See
-[the testing decisions](.scratch/wiki-production-system/spec.md#testing-decisions).
+No install step, here or in CI: the one third-party library, KaTeX, is vendored. Tests
+drive the CLI from outside against fixture vaults in temporary directories; nothing is
+mocked. See [the testing decisions](.scratch/wiki-production-system/spec.md#testing-decisions).
 
 ## Where things are
 

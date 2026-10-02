@@ -18,6 +18,7 @@
  *   entries: Map<string, Entry>,
  *   problems: {line?: number, message: string}[],
  *   body: string,
+ *   bodyLine: number,
  * }} Frontmatter
  */
 
@@ -35,11 +36,13 @@ export function readFrontmatter(source) {
       entries: new Map(),
       problems: [{ line: 1, message: "the frontmatter opened on line 1 is never closed" }],
       body: "",
+      bodyLine: lines.length + 1,
     };
   }
 
   const { entries, problems } = parseBlock(lines.slice(1, close));
-  return { entries, problems, body: lines.slice(close + 1).join("\n") };
+  // bodyLine is the body's first line in the file, so a problem found in it can name a line.
+  return { entries, problems, body: lines.slice(close + 1).join("\n"), bodyLine: close + 2 };
 }
 
 const KEY_LINE = /^([A-Za-z_][\w-]*)\s*:(?:\s+(.*?))?\s*$/;

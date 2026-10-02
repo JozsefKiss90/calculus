@@ -1,0 +1,85 @@
+---
+kind: reference
+domain: wiki
+requires: []
+status: drafted
+reviewed_by: none
+created: 2026-10-02
+updated: 2026-10-02
+aliases:
+  - Notation
+tags:
+  - conventions
+---
+
+## In one sentence
+
+Which symbol and which word this Wiki uses for each idea, and how other sources write it
+when they disagree.
+
+## How to use this
+
+Look up the symbol or term you are about to write. **This Wiki** is what you write. Each
+**Elsewhere** line is a convention a learner will meet in another source, then who uses it.
+Where it would trip a learner up, say so once, in the Note that introduces the idea. Never
+resolve a disagreement silently by writing the other form. Spelling is British English
+throughout: *factorise*, *centre*, *recognise*.
+
+Every entry has the same shape: the symbol or term as its heading, one **This Wiki** line,
+and an **Elsewhere** line for each conflicting convention, attributed after a dash — or a
+single "**Elsewhere:** none known".
+Mathematics is KaTeX: `check` rejects anything else.
+
+## Entries
+
+### Order of operations
+
+- **This Wiki:** brackets, then indices, then multiplication and division, then addition and subtraction — called **BIDMAS**, as UK schools teach it. Multiplication and division share one rank and are worked left to right; so are addition and subtraction: $8 - 3 + 2 = 7$, not $3$.
+- **Elsewhere:** BODMAS (*Orders* or *Of* for indices) — UK and Commonwealth schools, older texts.
+- **Elsewhere:** PEMDAS (*Parentheses, Exponents*) — US schools. BEDMAS — Canadian schools. Same rule. Every mnemonic's letter order wrongly suggests a ranking within each pair: division before multiplication in BIDMAS, BODMAS and BEDMAS, the reverse in PEMDAS, and addition before subtraction in all four.
+
+### Implied multiplication after division
+
+- **This Wiki:** never write $\div$ or $/$ before a product written without a sign. Write $\frac{1}{2a}$ or $\frac{1}{2}a$, whichever is meant.
+- **Elsewhere:** $1/2a$ read as $\frac{1}{2a}$, binding $2a$ first — many physics and engineering texts, and some calculators. A strict left-to-right reading of BIDMAS gives $\frac{1}{2}a$, so $6 \div 2(1 + 2)$ has no agreed value.
+
+### Brackets
+
+- **This Wiki:** *brackets* are $( \, )$, *square brackets* $[ \, ]$, *braces* $\{ \, \}$.
+- **Elsewhere:** *parentheses* for $( \, )$ and *brackets* for $[ \, ]$ — US texts.
+
+### Index and power
+
+- **This Wiki:** in $2^3$ the $3$ is the *index* (plural *indices*), and $2^3$ is a *power* of $2$: "two to the power three". The laws are the *index laws*.
+- **Elsewhere:** *exponent* for the index — US texts, and most university texts everywhere.
+
+### Multiplication sign
+
+- **This Wiki:** $\times$ between numbers, $3 \times 4$; no sign between letters or a number and a letter, $3ab$. Never $*$, and never $\cdot$ between numbers.
+- **Elsewhere:** a centred dot between numbers, $3 \cdot 4$ — US texts and much of continental Europe. Older British printing raises the decimal point to the centre, $2{\cdot}5$, so there the centred dot is not multiplication.
+
+### Decimal point and digit groups
+
+- **This Wiki:** a decimal point, $2.5$. Digits of a long number are grouped in threes with a thin space, $12\,345.678$.
+- **Elsewhere:** a decimal comma, $2{,}5$ — much of continental Europe and South America.
+- **Elsewhere:** a comma between groups, $12{,}345$ — UK and US everyday print. It reads as a decimal comma to a European reader, which is why this Wiki uses a space (the SI recommendation).
+
+### Slope
+
+- **This Wiki:** *slope*, as the Node is named in the Anchor Graph: [[Slope of a straight line]]. Introduce *gradient* once, there, as the same thing.
+- **Elsewhere:** *gradient* — UK schools and examinations. University texts reserve *gradient* for a vector, $\nabla f$, which is another reason to keep it out of this Module.
+
+### Intervals
+
+- **This Wiki:** $(a, b)$ excludes both ends, $[a, b]$ includes both, $[a, b)$ includes only $a$.
+- **Elsewhere:** reversed square brackets for an excluded end, $]a, b[$ and $[a, b[$ — France and parts of continental Europe. The same $(a, b)$ also names the point with coordinates $a$ and $b$; say which.
+
+### Inverse trigonometric functions
+
+- **This Wiki:** $\arcsin x$, $\arccos x$, $\arctan x$. A power of a trigonometric function is $\sin^2 x$, meaning $(\sin x)^2$.
+- **Elsewhere:** $\sin^{-1} x$ for $\arcsin x$ — UK and US school texts and calculator keys. It is not $(\sin x)^{-1}$, though $\sin^2 x$ is $(\sin x)^2$: the reason this Wiki avoids it.
+
+### Tangent
+
+- **This Wiki:** $\tan x$, and $\cot x$ for its reciprocal.
+- **Elsewhere:** $\operatorname{tg} x$ and $\operatorname{ctg} x$ — Russian and much of Central and Eastern European school mathematics.

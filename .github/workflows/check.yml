@@ -15,8 +15,8 @@ jobs:
         with:
           node-version: 22
 
-      # The same two commands the hook and a human run. No install step: the tooling has no
-      # dependencies, which is what keeps CI and a terminal the same thing. The gate runs
-      # first, so a failing test never hides a structural violation.
+      # The same two commands the hook and a human run. No install step: the tooling's one
+      # dependency, KaTeX, is vendored, which is what keeps CI and a terminal the same
+      # thing. The gate runs first, so a failing test never hides a structural violation.
       - run: npm run check
       - run: npm test

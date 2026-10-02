@@ -2,3 +2,7 @@
 # this repo, and a CRLF shell script fails at its shebang with `bad interpreter: /bin/sh^M`
 # — a gate that silently stops gating, which is the one failure mode a gate must not have.
 .githooks/** text eol=lf
+
+# Third-party code, kept byte-for-byte as released: no line-ending conversion, so the
+# checksum in its README holds in every clone, and no diffs of 600 KB of someone else's code.
+scripts/vendor/katex/katex.mjs -text -diff linguist-vendored
