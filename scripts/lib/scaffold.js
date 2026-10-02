@@ -11,6 +11,7 @@
 
 import { mkdir, readdir, writeFile } from "node:fs/promises";
 import { join } from "node:path";
+import { noteNameFor } from "./note-names.js";
 
 export class ScaffoldError extends Error {}
 
@@ -28,28 +29,6 @@ const SECTIONS = [
   { heading: "Required by", generated: "required-by" },
   { heading: "References" },
 ];
-
-/**
- * Characters a filename or a wikilink cannot hold, and how a name spells each out. Only `/`
- * has a spelling, because only `/` has one that reads as the mathematics did; anything else
- * is refused rather than given a spelling nobody chose.
- */
-const SPELLED_OUT = { "/": "over" };
-const ILLEGAL_IN_FILENAME = /[\\/:*?"<>|#^[\]]/g;
-
-/**
- * The name of the Note that carries a Node: its name, with every character a filename
- * cannot hold spelled out. `requires` links to this, so it is also how a Note is linked.
- *
- * @returns {string | {unspellable: string[]}}
- */
-function noteNameFor(nodeName) {
-  const unspellable = [...new Set(nodeName.match(ILLEGAL_IN_FILENAME) ?? [])].filter(
-    (character) => !(character in SPELLED_OUT),
-  );
-  if (unspellable.length > 0) return { unspellable };
-  return nodeName.replace(ILLEGAL_IN_FILENAME, (character) => SPELLED_OUT[character]);
-}
 
 /**
  * @param {string} vaultDir

@@ -26,17 +26,19 @@ export async function writeReport(vaultDir, report) {
   return path;
 }
 
-export function buildReport({ vaultDir, graph, invariants }) {
+export function buildReport({ vaultDir, graph, notes, invariants }) {
   const failed = invariants.filter((entry) => entry.status === "fail");
+  const checked = invariants.filter((entry) => entry.status !== "skipped");
 
   return {
     generatedAt: new Date().toISOString(),
     vault: resolve(vaultDir),
     status: failed.length === 0 ? "pass" : "fail",
     graph,
+    notes,
     invariants,
     summary: {
-      invariantsChecked: invariants.length,
+      invariantsChecked: checked.length,
       invariantsFailed: failed.length,
     },
   };
@@ -50,6 +52,7 @@ export function buildErrorReport({ vaultDir, message }) {
     status: "error",
     error: message,
     graph: null,
+    notes: null,
     invariants: [],
     summary: { invariantsChecked: 0, invariantsFailed: 0 },
   };

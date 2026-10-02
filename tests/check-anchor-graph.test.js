@@ -41,6 +41,11 @@ test("the report is readable from a terminal and names every invariant it checke
       [2, "pass"],
       [3, "pass"],
       [4, "pass"],
+      [5, "pass"],
+      [6, "pass"],
+      [7, "pass"],
+      [10, "pass"],
+      [11, "skipped"],
     ],
   );
   for (const entry of report.invariants) {
@@ -58,5 +63,5 @@ test("the human summary prints the graph's shape and the invariant results", asy
   assert.match(stdout, /Declared Terminal Node: Derivative/);
   assert.match(stdout, /Nodes nothing requires: Derivative/);
   assert.match(stdout, /3 of 3 Nodes reachable/);
-  assert.match(stdout, /4 of 4 invariants hold/);
+  assert.match(stdout, /8 of 8 invariants hold, 1 not checked/);
 });

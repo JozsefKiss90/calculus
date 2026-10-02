@@ -11,4 +11,4 @@
 
 # The machine-readable health report `check` writes beside the vault. Regenerated on
 # every run, so tracking it would dirty the tree on each check.
-#.wiki-health/
+.wiki-health/

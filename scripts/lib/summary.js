@@ -17,22 +17,25 @@ export function renderSummary(report, reportPath) {
     `  Declared Terminal Node: ${graph.declaredTerminalNode}`,
     `  Nodes nothing requires: ${graph.nodesWithNoDependents.join(", ")}`,
     `  ${graph.reachableNodes} of ${graph.nodes} Nodes reachable from the Terminal Node`,
+    `Notes: ${counted(report.notes.notes, "Note")} with frontmatter, ${report.notes.conceptNotes} of them concept Notes`,
     "",
     "Invariants",
   ];
 
   for (const invariant of report.invariants) {
-    lines.push(`  ${invariant.status.toUpperCase().padEnd(7)}${invariant.id}  ${invariant.title}`);
-    if (invariant.reason) lines.push(`           not checked: ${invariant.reason}`);
-    for (const failure of invariant.failures) lines.push(`           ${failure.message}`);
+    lines.push(`  ${invariant.status.toUpperCase().padEnd(8)}${String(invariant.id).padStart(2)}  ${invariant.title}`);
+    if (invariant.reason) lines.push(`              not checked: ${invariant.reason}`);
+    for (const failure of invariant.failures) lines.push(`              ${failure.message}`);
   }
 
   const { invariantsChecked, invariantsFailed } = report.summary;
+  const skipped = report.invariants.length - invariantsChecked;
+  const notChecked = skipped === 0 ? "" : `, ${skipped} not checked`;
   lines.push(
     "",
     report.status === "pass"
-      ? `check passed: ${invariantsChecked} of ${invariantsChecked} invariants hold`
-      : `check failed: ${counted(invariantsFailed, "invariant")} of ${invariantsChecked} broken`,
+      ? `check passed: ${invariantsChecked} of ${invariantsChecked} invariants hold${notChecked}`
+      : `check failed: ${counted(invariantsFailed, "invariant")} of ${invariantsChecked} broken${notChecked}`,
     `report: ${reportPath}`,
   );
 

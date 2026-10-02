@@ -13,6 +13,8 @@
 import { AnchorGraphError, loadAnchorGraph } from "./lib/anchor-graph.js";
 import { GraphError, graphShape } from "./lib/graph.js";
 import { checkStructuralInvariants } from "./lib/structural-invariants.js";
+import { checkNoteInvariants } from "./lib/note-invariants.js";
+import { isConcept, loadNotes } from "./lib/notes.js";
 import { buildErrorReport, buildReport, writeReport } from "./lib/report.js";
 import { renderSummary } from "./lib/summary.js";
 import { ScaffoldError, scaffold } from "./lib/scaffold.js";
@@ -85,10 +87,15 @@ async function check(vaultDir) {
   }
 
   const { note, graph } = loaded;
+  const notes = await loadNotes(vaultDir);
   const report = buildReport({
     vaultDir,
     graph: { source: "anchor", note, ...graphShape(graph, TERMINAL_NODE) },
-    invariants: checkStructuralInvariants(graph, { terminalNode: TERMINAL_NODE }),
+    notes: { notes: notes.length, conceptNotes: notes.filter(isConcept).length },
+    invariants: [
+      ...checkStructuralInvariants(graph, { terminalNode: TERMINAL_NODE }),
+      ...checkNoteInvariants(notes, loaded),
+    ],
   });
 
   const reportPath = await writeReport(vaultDir, report);

@@ -44,6 +44,10 @@ export async function makeFixtureRoot() {
 export function anchorNoteContents(mermaidBody) {
   const fence = "```";
   return `${ANCHOR_NOTE_FRONTMATTER}
+## In one sentence
+
+The fixture Module's frozen inventory of Nodes.
+
 ## The graph
 
 ${fence}mermaid
