@@ -7,6 +7,12 @@
 const counted = (count, singular, pluralForm = `${singular}s`) =>
   `${count} ${count === 1 ? singular : pluralForm}`;
 
+const measureOf = (metric) => {
+  if (metric.level === "skipped") return "not measured";
+  if (metric.unit !== "percent") return String(metric.count);
+  return `${metric.count} of ${counted(metric.of, "written Note")} (${metric.percent}%)`;
+};
+
 export function renderSummary(report, reportPath) {
   if (report.status === "error") return `check could not run: ${report.error}\n`;
 
@@ -28,16 +34,28 @@ export function renderSummary(report, reportPath) {
     for (const failure of invariant.failures) lines.push(`              ${failure.message}`);
   }
 
-  const { invariantsChecked, invariantsFailed } = report.summary;
+  lines.push("", "Metrics");
+  for (const metric of report.metrics) {
+    const bands = Object.entries(metric.bands).map(([level, band]) => `${level} ${band}`).join(" · ");
+    lines.push(`  ${metric.level.toUpperCase().padEnd(8)}${metric.title}: ${measureOf(metric)}  (${bands})`);
+    if (metric.reason) lines.push(`              not measured: ${metric.reason}`);
+    // Green needs nothing done, so only a yellow or red metric spells out its action and Notes.
+    if (metric.level !== "yellow" && metric.level !== "red") continue;
+    lines.push(`              action: ${metric.action}`);
+    for (const offender of metric.notes) lines.push(`              ${offender.message}`);
+  }
+
+  const { invariantsChecked, invariantsFailed, metrics } = report.summary;
   const skipped = report.invariants.length - invariantsChecked;
   const notChecked = skipped === 0 ? "" : `, ${skipped} not checked`;
-  lines.push(
-    "",
-    report.status === "pass"
-      ? `check passed: ${invariantsChecked} of ${invariantsChecked} invariants hold${notChecked}`
-      : `check failed: ${counted(invariantsFailed, "invariant")} of ${invariantsChecked} broken${notChecked}`,
-    `report: ${reportPath}`,
-  );
+  const invariants =
+    invariantsFailed === 0
+      ? `${invariantsChecked} of ${invariantsChecked} invariants hold${notChecked}`
+      : `${counted(invariantsFailed, "invariant")} of ${invariantsChecked} broken${notChecked}`;
+  const notMeasured = metrics.skipped === 0 ? "" : `, ${metrics.skipped} not measured`;
+  const red = report.metrics.filter((metric) => metric.level === "red").map((metric) => metric.title);
+  const graded = `metrics ${metrics.green} green, ${metrics.yellow} yellow, ${metrics.red} red${notMeasured}${red.length === 0 ? "" : `: ${red.join(", ")}`}`;
+  lines.push("", `check ${report.status === "pass" ? "passed" : "failed"}: ${invariants}; ${graded}`, `report: ${reportPath}`);
 
   return `${lines.join("\n")}\n`;
 }

@@ -7,9 +7,9 @@
 //   node scripts/wiki.js scaffold <vault directory> [<Node name>...]
 //   node scripts/wiki.js generate <vault directory>
 //
-// Exit codes: 0 every invariant holds, every Note asked for exists, or every generated
-// block is written; 1 the check ran and something failed, or some Notes' blocks could not
-// be written; 2 nothing could run at all — bad usage, no Anchor Graph, a graph that cannot
+// Exit codes: 0 every invariant holds and no metric is red, every Note asked for exists, or
+// every generated block is written; 1 the check ran and something failed or graded red, or
+// some Notes' blocks could not be written; 2 nothing could run at all — bad usage, no Anchor Graph, a graph that cannot
 // be read, an Archetype catalogue that cannot be read, or a scaffold that was refused.
 
 import { AnchorGraphError, loadAnchorGraph } from "./lib/anchor-graph.js";
@@ -17,7 +17,8 @@ import { CatalogueError, loadCatalogue } from "./lib/archetype-catalogue.js";
 import { GraphError, graphShape } from "./lib/graph.js";
 import { checkStructuralInvariants } from "./lib/structural-invariants.js";
 import { checkNoteInvariants } from "./lib/note-invariants.js";
-import { isConcept, loadNotes } from "./lib/notes.js";
+import { computeMetrics } from "./lib/metrics.js";
+import { isConcept, loadNotes, vaultFiles } from "./lib/notes.js";
 import { buildErrorReport, buildReport, writeReport } from "./lib/report.js";
 import { renderSummary } from "./lib/summary.js";
 import { ScaffoldError, scaffold } from "./lib/scaffold.js";
@@ -43,9 +44,9 @@ const USAGE = `usage: node scripts/wiki.js <subcommand>
 
 subcommands:
   check <vault directory>   check the Wiki's invariants against the declared Terminal
-                            Node "${TERMINAL_NODE}", write the report to
-                            .wiki-health/report.json beside the vault, print a summary,
-                            and exit non-zero on any failure
+                            Node "${TERMINAL_NODE}" and grade its metrics, write the
+                            report to .wiki-health/report.json beside the vault, print a
+                            summary, and exit non-zero on any failure or red metric
   scaffold <vault directory> [<Node name>...]
                             create the stub Note for every Node in the Anchor Graph, or
                             only the Nodes named; a Note that already exists is never
@@ -107,6 +108,7 @@ async function check(vaultDir) {
       ...checkStructuralInvariants(graph, { terminalNode: TERMINAL_NODE }),
       ...checkNoteInvariants(notes, loaded, catalogue),
     ],
+    metrics: computeMetrics(notes, { files: await vaultFiles(vaultDir), today: localDate() }),
   });
 
   const reportPath = await writeReport(vaultDir, report);

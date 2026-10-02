@@ -6,7 +6,7 @@
 //   Coordinates, tables, and plotting.md           the same Note after the agent's run
 //
 // The output is held to what its contract (.claude/agents/interactive-author.md) promises:
-// it passes `check` with invariant 9 holding, and it differs from its input only by
+// it holds every invariant `check` computes, invariant 9 included, and it differs from its input only by
 // `interactive` blocks and its `updated` date, so the agent touched no prose, no generated
 // block, and neither `status` nor `reviewed_by`. Re-run the agent and replace the output when
 // the catalogue changes under it.
@@ -60,23 +60,30 @@ async function vaultHolding(text) {
   return { ...fixture, path };
 }
 
-test("the hand-drafted input is a drafted Note that passes check with no Interactive", async () => {
+// A lone written Note is the whole of the written population, so the percentage metrics read
+// 0% or 100% of one Note; the fixture Note has no Cross-reference, so that metric is red
+// either side of the run. What the run is for is the Archetype coverage metric.
+const uncovered = (report) => report.metrics.find((metric) => metric.id === "archetype-coverage").notes.map(({ note }) => note);
+
+test("the hand-drafted input is a drafted Note that holds every invariant and has no Interactive", async () => {
   const text = await drafted();
   assert.match(text, /^status: drafted$/m);
   assert.match(text, /^reviewed_by: none$/m);
   assert.doesNotMatch(text, /```interactive/);
 
-  const { exitCode, stdout } = await checkVault(await vaultHolding(text));
-  assert.equal(exitCode, 0, stdout);
+  const { stdout, report } = await checkVault(await vaultHolding(text));
+  assert.equal(report.summary.invariantsFailed, 0, stdout);
+  assert.deepEqual(uncovered(report), [`functions/${NOTE}.md`]);
 });
 
-test("the Interactive Author's output passes check, with invariant 9 holding over its blocks", async () => {
+test("the Interactive Author's output holds every invariant, with invariant 9 over its blocks, and covers the Note", async () => {
   const text = await authored();
   assert.ok(text.match(BLOCK)?.length >= 1, "the output holds no interactive block");
 
-  const { exitCode, stdout, report } = await checkVault(await vaultHolding(text));
-  assert.equal(exitCode, 0, stdout);
+  const { stdout, report } = await checkVault(await vaultHolding(text));
+  assert.equal(report.summary.invariantsFailed, 0, stdout);
   assert.equal(invariant(report, 9).status, "pass");
+  assert.deepEqual(uncovered(report), []);
 });
 
 test("the output differs from the drafted Note only by its interactive blocks and its updated date", async () => {

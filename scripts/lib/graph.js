@@ -167,3 +167,28 @@ export function nodesReachingFloor(graph) {
   }
   return reaching;
 }
+
+/**
+ * Each Node's Layer, by id: the length of its longest path to the Floor, so 0 for a Floor
+ * Node and otherwise one more than its highest prerequisite. Computed, never declared
+ * (ADR-0003). A Node on or above a cycle has no Layer; invariant 1 names the cycle.
+ */
+export function layersOf(graph) {
+  const layers = new Map();
+  const visiting = new Set();
+  const layerOf = (id) => {
+    if (layers.has(id)) return layers.get(id);
+    if (visiting.has(id)) return undefined;
+    visiting.add(id);
+    let layer = 0;
+    for (const prerequisite of graph.prerequisitesOf(id)) {
+      const below = layerOf(prerequisite);
+      layer = below === undefined || layer === undefined ? undefined : Math.max(layer, below + 1);
+    }
+    visiting.delete(id);
+    layers.set(id, layer);
+    return layer;
+  };
+  for (const node of graph.nodes) layerOf(node.id);
+  return layers;
+}

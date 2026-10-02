@@ -36,7 +36,7 @@ export const CONCEPT = "concept";
 export async function loadNotes(vaultDir) {
   const vaultName = basename(resolve(vaultDir));
   const notes = [];
-  for (const path of await markdownFiles(vaultDir, "")) {
+  for (const path of (await vaultFiles(vaultDir)).filter((file) => file.endsWith(".md"))) {
     const frontmatter = readFrontmatter(await readFile(join(vaultDir, path), "utf8"));
     if (frontmatter === null) continue;
     const directory = posix.dirname(path);
@@ -51,14 +51,22 @@ export async function loadNotes(vaultDir) {
   return notes;
 }
 
-async function markdownFiles(vaultDir, relativeDir) {
+/**
+ * Every file in the vault as a vault-relative path, in path order: what a wikilink can
+ * resolve to, Markdown or attachment. Dot-directories are not content.
+ */
+export async function vaultFiles(vaultDir) {
+  return filesUnder(vaultDir, "");
+}
+
+async function filesUnder(vaultDir, relativeDir) {
   const found = [];
   const entries = await readdir(join(vaultDir, relativeDir), { withFileTypes: true });
   for (const entry of entries.sort((a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0))) {
     if (entry.name.startsWith(".")) continue;
     const path = relativeDir === "" ? entry.name : `${relativeDir}/${entry.name}`;
-    if (entry.isDirectory()) found.push(...(await markdownFiles(vaultDir, path)));
-    else if (entry.isFile() && entry.name.endsWith(".md")) found.push(path);
+    if (entry.isDirectory()) found.push(...(await filesUnder(vaultDir, path)));
+    else if (entry.isFile()) found.push(path);
   }
   return found;
 }
@@ -98,10 +106,18 @@ export function summaryOf(note) {
  * @returns {{target: string} & ({notes: object[]} | {notWikilink: true})}
  */
 export function resolveLink(entry, notesByName) {
-  const link = /^\[\[([^\]|#]*)(?:#[^\]|]*)?(?:\|[^\]]*)?\]\]$/.exec(entry.trim());
+  const link = /^\[\[([^\]]*)\]\]$/.exec(entry.trim());
   if (!link) return { target: entry, notWikilink: true };
-  const target = link[1].trim().split("/").at(-1).replace(/\.md$/i, "");
+  const target = linkTarget(link[1]);
   return { target, notes: notesByName.get(target.toLowerCase()) ?? [] };
+}
+
+/**
+ * The name a wikilink's inside points at: without `|display text`, `#heading`, folder path
+ * or `.md`. Empty for `[[#heading]]`, which points into the Note it is written in.
+ */
+export function linkTarget(inside) {
+  return inside.split("|")[0].split("#")[0].trim().split("/").at(-1).replace(/\.md$/i, "");
 }
 
 /** Every Note by case-folded name; more than one under a name is an ambiguous link target. */

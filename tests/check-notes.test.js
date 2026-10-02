@@ -178,9 +178,10 @@ test("invariant 10: a drafted Note with its one-sentence summary written passes,
       .replace("## In one sentence\n", "## In one sentence\n\nA limit is the value a function approaches.\n"),
   );
 
-  const { exitCode, report } = await check(fixture);
+  const { report } = await check(fixture);
 
-  assert.equal(exitCode, 0);
+  // A lone written Note grades the metrics red (11's), so the invariants are asserted directly.
+  assert.equal(report.summary.invariantsFailed, 0);
   assert.equal(invariant(report, 10).status, "pass");
 });
 

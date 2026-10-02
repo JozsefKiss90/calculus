@@ -26,20 +26,28 @@ export async function writeReport(vaultDir, report) {
   return path;
 }
 
-export function buildReport({ vaultDir, graph, notes, invariants }) {
+/**
+ * The build fails on a broken invariant or a red metric, and on nothing else: a yellow
+ * metric is reported and passes.
+ */
+export function buildReport({ vaultDir, graph, notes, invariants, metrics }) {
   const failed = invariants.filter((entry) => entry.status === "fail");
   const checked = invariants.filter((entry) => entry.status !== "skipped");
+  const levels = { green: 0, yellow: 0, red: 0, skipped: 0 };
+  for (const metric of metrics) levels[metric.level] += 1;
 
   return {
     generatedAt: new Date().toISOString(),
     vault: resolve(vaultDir),
-    status: failed.length === 0 ? "pass" : "fail",
+    status: failed.length === 0 && levels.red === 0 ? "pass" : "fail",
     graph,
     notes,
     invariants,
+    metrics,
     summary: {
       invariantsChecked: checked.length,
       invariantsFailed: failed.length,
+      metrics: levels,
     },
   };
 }
@@ -54,6 +62,7 @@ export function buildErrorReport({ vaultDir, message }) {
     graph: null,
     notes: null,
     invariants: [],
-    summary: { invariantsChecked: 0, invariantsFailed: 0 },
+    metrics: [],
+    summary: { invariantsChecked: 0, invariantsFailed: 0, metrics: { green: 0, yellow: 0, red: 0, skipped: 0 } },
   };
 }
