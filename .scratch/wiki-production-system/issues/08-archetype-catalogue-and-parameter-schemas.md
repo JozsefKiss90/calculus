@@ -6,14 +6,14 @@ This is a design deliverable, not an implementation. It ships ahead of 09 and 10
 
 **Blocked by:** 01
 
-**Status:** ready-for-human
+**Status:** done
 
 - [x] All thirteen Archetypes have a complete parameter schema; none is a placeholder
 - [x] Each schema is declarative and names no rendering library, framework or expression language
 - [x] Each Archetype carries a one-liner short enough to go into a Context Pack unmodified
 - [x] At least one worked example instance per Archetype, drawn from a Node in the Anchor Graph that actually needs it
 - [x] The catalogue records that it is a closed set, extended only through the Archetype Builder
-- [ ] The author has reviewed and reacted to the catalogue before 09 starts — **needs the author; 09 should not start until this is ticked**
+- [x] The author has reviewed and reacted to the catalogue before 09 starts
 
 ## Comments
 
@@ -81,3 +81,5 @@ It does not type-check example values. That is 09's validator, and 09's "a valid
 each of the thirteen Archetypes passes" can use these examples as its fixtures. A review
 checked every example value against its schema, and the arithmetic in every caption, by hand.
 The LaTeX in the examples was run through the vendored KaTeX, and all of it parses.
+
+**Closed 2026-10-02.** The author reviewed the catalogue and accepted it as written, so ticket 09 is unblocked.
