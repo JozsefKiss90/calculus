@@ -1,6 +1,6 @@
-// Invariants 5, 6, 7, 8 and 10, computed from the Notes, and invariant 11, which joins the
-// Notes to the Anchor Graph. Invariant 8 holds every Note's mathematics, not only a concept
-// Note's, because any Note can reach a Page.
+// Invariants 5 to 10, computed from the Notes, and invariant 11, which joins the Notes to the
+// Anchor Graph. Invariants 8 and 9 hold every Note's mathematics and Interactives, not only a
+// concept Note's, because any Note can reach a Page.
 //
 // Every failure names the Note it is about in `note` and says what went wrong in
 // `problem`, a stable slug, so an agent can act on a report without parsing prose and two
@@ -12,6 +12,8 @@
 // that only ever showed one direction would read as a bug in the check.
 
 import { GraphError } from "./graph.js";
+import { fencedBlocks, languageOf } from "./fences.js";
+import { validateInteractive } from "./interactives.js";
 import { findMaths, katexRejection } from "./maths.js";
 import { noteNameFor } from "./note-names.js";
 import { CONCEPT, SUMMARY_HEADING, buildNotesGraph, indexByName, isConcept, resolveLink, summaryOf, valueOf } from "./notes.js";
@@ -36,6 +38,11 @@ const INVARIANT = {
     id: 8,
     name: "maths-parses-under-katex",
     title: "Every $…$ and $$…$$ block parses under KaTeX",
+  },
+  interactivesMatchArchetypes: {
+    id: 9,
+    name: "interactives-match-archetypes",
+    title: "Every interactive block names a known Archetype and validates against its parameter schema",
   },
   summaryBeforeDrafted: {
     id: 10,
@@ -74,13 +81,15 @@ const SUMMARISED = new Set(["drafted", "reviewed"]);
 /**
  * @param {Awaited<ReturnType<typeof import("./notes.js").loadNotes>>} notes
  * @param {{graph: object}} anchor what `loadAnchorGraph` returned
+ * @param {import("./archetype-catalogue.js").Catalogue} catalogue what `loadCatalogue` returned
  */
-export function checkNoteInvariants(notes, anchor) {
+export function checkNoteInvariants(notes, anchor, catalogue) {
   return [
     requiresResolve(notes),
     domainMatchesDirectory(notes),
     frontmatterConforms(notes),
     mathsParsesUnderKatex(notes),
+    interactivesMatchArchetypes(notes, catalogue),
     summaryBeforeDrafted(notes),
     notesMatchAnchorGraph(notes, anchor.graph),
   ];
@@ -229,6 +238,35 @@ function mathsParsesUnderKatex(notes) {
 }
 
 const oneLine = (text) => text.replace(/\s*\n\s*/g, " ");
+
+const INTERACTIVE = "interactive";
+
+/**
+ * Each problem names the line it is on: the parameter's line where there is one, else the
+ * line the block opens on, which `block` always carries.
+ */
+function interactivesMatchArchetypes(notes, catalogue) {
+  const failures = [];
+  for (const note of notes) {
+    const lines = note.frontmatter.body.split(/\r?\n/);
+    for (const fenced of fencedBlocks(lines)) {
+      if (languageOf(fenced) !== INTERACTIVE) continue;
+      const block = note.frontmatter.bodyLine + fenced.open;
+      if (fenced.close === -1) {
+        failures.push(
+          failure(note, "unclosed-interactive-block", "the interactive block opened here is never closed, so it swallows the rest of the Note", { line: block, block }),
+        );
+        continue;
+      }
+      const yaml = lines.slice(fenced.open + 1, fenced.close).join("\n");
+      for (const { problem, line, message, ...details } of validateInteractive(yaml, catalogue)) {
+        // `line` counts within the YAML, which starts on the line after the opening fence.
+        failures.push(failure(note, problem,`interactive block: ${message}`, { ...details, line: line === undefined ? block : block + line, block }));
+      }
+    }
+  }
+  return verdict(INVARIANT.interactivesMatchArchetypes, failures);
+}
 
 function summaryBeforeDrafted(notes) {
   const failures = [];

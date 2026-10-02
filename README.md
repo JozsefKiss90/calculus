@@ -34,7 +34,13 @@ the notation authority every Note follows.
 Interactives are drawn from a closed set of Archetypes, each with a parameter schema, in
 [`docs/archetype-catalogue.md`](docs/archetype-catalogue.md). An Interactive names one
 Archetype and fills in its parameters. It never names a rendering library or contains code
-([ADR-0004](docs/adr/0004-interactives-are-archetype-instances.md)).
+([ADR-0004](docs/adr/0004-interactives-are-archetype-instances.md)). `check` validates every
+` ```interactive ` block against the catalogue itself, so a typo fails the build instead of
+reaching a learner as a blank box. The report names each mistake by kind: an unknown
+Archetype or parameter, a missing parameter, a wrong type, a value out of range, or YAML that
+cannot be read. Single-quote LaTeX in a block (`label: '\frac{1}{x}'`), because in double
+quotes `\f` is a form feed. Editing the catalogue changes what `check` accepts, and a
+catalogue that breaks its own rules stops `check` with exit code 2.
 
 ## Scaffold the Notes
 

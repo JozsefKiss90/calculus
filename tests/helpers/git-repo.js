@@ -17,11 +17,12 @@ import { anchorNoteContents, capture } from "./vault.js";
 const REPO_ROOT = fileURLToPath(new URL("../..", import.meta.url));
 
 /**
- * Copied into every fixture repo: what `npm run check` needs, the hook itself, and
+ * Copied into every fixture repo: what `npm run check` needs (the Archetype catalogue among
+ * it, since invariant 9 validates against it), the hook itself, and
  * `.gitattributes` — without which a fixture would not carry the line-ending pinning the
  * hook depends on, and `cloneWithCrlf` would be testing a different repo than this one.
  */
-const TOOLING = ["package.json", "scripts", ".githooks", ".gitignore", ".gitattributes"];
+const TOOLING = ["package.json", "scripts", "docs/archetype-catalogue.md", ".githooks", ".gitignore", ".gitattributes"];
 
 /**
  * A graph satisfying invariants 1 to 4 — one root, every path reaching the Floor, nothing

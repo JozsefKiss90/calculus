@@ -10,9 +10,10 @@
 // Exit codes: 0 every invariant holds, every Note asked for exists, or every generated
 // block is written; 1 the check ran and something failed, or some Notes' blocks could not
 // be written; 2 nothing could run at all — bad usage, no Anchor Graph, a graph that cannot
-// be read, or a scaffold that was refused.
+// be read, an Archetype catalogue that cannot be read, or a scaffold that was refused.
 
 import { AnchorGraphError, loadAnchorGraph } from "./lib/anchor-graph.js";
+import { CatalogueError, loadCatalogue } from "./lib/archetype-catalogue.js";
 import { GraphError, graphShape } from "./lib/graph.js";
 import { checkStructuralInvariants } from "./lib/structural-invariants.js";
 import { checkNoteInvariants } from "./lib/note-invariants.js";
@@ -85,12 +86,14 @@ async function main(argv) {
 
 async function check(vaultDir) {
   let loaded;
+  let catalogue;
   try {
     loaded = await loadAnchorGraph(vaultDir);
+    catalogue = await loadCatalogue();
   } catch (error) {
-    // Only a graph that cannot be read is a report; anything else is a bug in this tool
-    // and should surface as one rather than as a verdict about the Wiki.
-    if (!(error instanceof AnchorGraphError || error instanceof GraphError)) throw error;
+    // Only a graph or an Archetype catalogue that cannot be read is a report; anything else
+    // is a bug in this tool and should surface as one rather than as a verdict about the Wiki.
+    if (![AnchorGraphError, GraphError, CatalogueError].some((kind) => error instanceof kind)) throw error;
     return await reportUnrunnable(vaultDir, error);
   }
 
@@ -102,7 +105,7 @@ async function check(vaultDir) {
     notes: { notes: notes.length, conceptNotes: notes.filter(isConcept).length },
     invariants: [
       ...checkStructuralInvariants(graph, { terminalNode: TERMINAL_NODE }),
-      ...checkNoteInvariants(notes, loaded),
+      ...checkNoteInvariants(notes, loaded, catalogue),
     ],
   });
 

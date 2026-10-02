@@ -45,7 +45,7 @@ test("check on a freshly scaffolded vault exits 0, every invariant checked and h
   assert.equal(exitCode, 0, stdout);
   assert.deepEqual(
     report.invariants.map((entry) => [entry.id, entry.status]),
-    [1, 2, 3, 4, 5, 6, 7, 8, 10, 11].map((id) => [id, "pass"]),
+    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map((id) => [id, "pass"]),
   );
   assert.deepEqual(report.notes, { notes: 7, conceptNotes: 6 });
 });

@@ -51,7 +51,7 @@ test("the refusal shows the report's human summary, naming the broken invariant"
 
   assert.match(shown, /FAIL\s+1\s+The Edge graph is acyclic/);
   assert.match(shown, /prerequisite cycle: Limit requires Function requires Limit/);
-  assert.match(shown, /check failed: \d+ invariants? of 9 broken/);
+  assert.match(shown, /check failed: \d+ invariants? of 10 broken/);
   assert.match(shown, /report:/);
 });
 

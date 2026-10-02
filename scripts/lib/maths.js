@@ -23,6 +23,7 @@
 //     same paragraph does pair with it, and fails: write a price's dollar as `\$`.
 
 import katex from "../vendor/katex/katex.mjs";
+import { fencedBlocks } from "./fences.js";
 
 /**
  * Every expression in a Note's body, and every display block left open.
@@ -128,16 +129,9 @@ const blank = (text) => text.replace(/[^\n]/g, " ");
 
 function maskFences(body) {
   const lines = body.split("\n");
-  let fence = null;
-  for (let index = 0; index < lines.length; index += 1) {
-    const marker = /^ {0,3}(`{3,}|~{3,})/.exec(lines[index])?.[1];
-    if (fence === null) {
-      if (marker === undefined) continue;
-      fence = marker;
-    } else if (marker !== undefined && marker[0] === fence[0] && marker.length >= fence.length && lines[index].trim() === marker) {
-      fence = null;
-    }
-    lines[index] = blank(lines[index]);
+  for (const { open, close } of fencedBlocks(lines)) {
+    const last = close === -1 ? lines.length - 1 : close;
+    for (let index = open; index <= last; index += 1) lines[index] = blank(lines[index]);
   }
   return lines.join("\n");
 }
