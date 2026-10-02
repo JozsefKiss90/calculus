@@ -298,11 +298,14 @@ test("an interactive block that is never closed fails", async () => {
   assert.deepEqual(problems(report).map(([problem]) => problem), ["unclosed-interactive-block"]);
 });
 
-test("every worked example in the catalogue passes, which is a valid instance of each of the thirteen Archetypes", async () => {
+test("every worked example in the catalogue passes, which is a valid instance of each of its Archetypes", async () => {
   const catalogue = (await readFile(CATALOGUE, "utf8")).replace(/\r\n/g, "\n");
   const examples = [...catalogue.matchAll(/^```interactive\n([\s\S]*?)^```$/gm)].map((m) => m[1]);
   const archetypes = new Set(examples.map((yaml) => /^archetype: (\S+)$/m.exec(yaml)[1]));
-  assert.equal(archetypes.size, 13);
+  // The spec's thirteen, and any the Archetype Builder has added since.
+  const headings = new Set([...catalogue.matchAll(/^### `([a-z-]+)`$/gm)].map((m) => m[1]));
+  assert.ok(headings.size >= 13);
+  assert.deepEqual(archetypes, headings);
 
   const fixture = await scaffoldedVault();
   await writeIdea(fixture.vault, LIMITS, examples.map((yaml) => block(yaml)).join("\n\nAnd another.\n\n"));

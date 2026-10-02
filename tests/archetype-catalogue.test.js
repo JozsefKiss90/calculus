@@ -1,16 +1,18 @@
 // Ticket 08: docs/archetype-catalogue.md is the closed set of Archetypes every Interactive
 // instantiates (ADR-0004). This holds what the validator and both agent contracts rely on:
-// all thirteen Archetypes present with no placeholder, a one-liner short enough for a Context
-// Pack, no rendering library or expression language named anywhere, and a worked example from
-// a real Note for each.
+// the spec's thirteen Archetypes first and any the Archetype Builder adds after them, none a
+// placeholder, a one-liner short enough for a Context Pack, no rendering library or
+// expression language named anywhere, and a worked example from a real Note for each.
 //
 // Like conventions.test.js, it reads the real file, because the file is the thing under test.
 // Since ticket 09 it reads the schemas through the validator's own parser rather than a copy
 // of it, so what is tested here is exactly what `check` validates against; that parser refuses
 // a catalogue that breaks its own rules (a type not defined, a default outside its range, a
 // Range naming a parameter that is not there), so loading it at all is most of the test. That
-// import is the one place a test reaches into scripts/lib/. Every example is validated in full
-// by tests/check-interactives.test.js, through the CLI.
+// import is the one place a test reaches into scripts/lib/, and it is fed only the real file
+// or the real file with one change made: broken, or with an Archetype appended the way the
+// Archetype Builder appends one. Every example is validated in full by
+// tests/check-interactives.test.js, through the CLI.
 
 import { test } from "node:test";
 import assert from "node:assert/strict";
@@ -80,9 +82,31 @@ function archetypeSections(lines) {
   return found;
 }
 
-test("the catalogue holds exactly the thirteen Archetypes of the spec, in its order", async () => {
+test("the catalogue opens with the thirteen Archetypes of the spec, in its order", async () => {
   const { archetypes } = await parsed();
-  assert.deepEqual([...archetypes.keys()], ARCHETYPES);
+  // Any after them were added by the Archetype Builder and reviewed by the author.
+  assert.deepEqual([...archetypes.keys()].slice(0, ARCHETYPES.length), ARCHETYPES);
+});
+
+test("an Archetype appended in the catalogue's shape is read after every other", async () => {
+  const text = await catalogue();
+  const added = `
+### \`appended-sample\`
+
+**One-liner:** Feeds an input through one or two function machines in turn and shows the output of each.
+
+**Serves:** inputs and outputs, composition.
+
+| Parameter | Type | Required | Default | Range | Meaning |
+|---|---|---|---|---|---|
+| \`machines\` | \`list of function\` | yes | — | \`[1, 2] items\` | The machines, applied in this order. |
+| \`input\` | \`number\` | no | \`2\` | \`[-1000, 1000]\` | The number fed in first. |
+| \`caption\` | \`text\` | no | \`none\` | — | One line saying what to notice. |
+`;
+  const { archetypes } = parseCatalogue(`${text.trimEnd()}\n${added}`);
+  // The real catalogue may already hold Archetypes the Builder added, so only the end is fixed.
+  assert.equal([...archetypes.keys()].at(-1), "appended-sample");
+  assert.deepEqual([...archetypes.get("appended-sample").parameters.keys()], ["machines", "input", "caption"]);
 });
 
 test("the composite types are defined, and the function type fixes each family's coefficient count", async () => {

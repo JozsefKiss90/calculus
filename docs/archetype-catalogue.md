@@ -21,10 +21,13 @@ App's business, so the renderer can be chosen and replaced without touching a No
 
 This catalogue is a closed set. An Interactive can only be an instance of an Archetype listed
 here, and no agent invents a one-off visualisation. When the material needs something no
-Archetype covers, the Interactive Author reports the gap instead of forcing the nearest fit.
-The gap is then handed to the **Archetype Builder**, which writes one new Archetype in exactly
-the shape below. It joins the catalogue only after a human has reviewed it. That is the only
-way the set grows. A new composite type or function family is added the same way.
+Archetype covers, the Interactive Author reports the gap instead of forcing the nearest fit,
+as a ticket in `.scratch/archetype-gaps/issues/` for the author to triage. A gap the author
+accepts is handed to the **Archetype Builder**, which appends one new Archetype after the
+others in exactly the shape below. It joins the catalogue only when the author has reviewed
+it and committed it. That is the only way the set grows. A new composite type or function
+family is the author's decision, made the same way. Both agents' contracts are in
+`.claude/agents/`.
 
 ## Reading a schema
 
