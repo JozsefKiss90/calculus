@@ -22,11 +22,24 @@ updated: 2026-10-02
 ## Builds on
 
 <!-- generated:start builds-on -->
+- [[Factors and multiples]]
 <!-- generated:end builds-on -->
 
 ## Required by
 
 <!-- generated:start required-by -->
+- [[Factorisation]]
 <!-- generated:end required-by -->
+
+<!-- generated:start mini-map -->
+```mermaid
+flowchart TD
+    N["Common factors, quadratics, and difference of squares"]
+    N --> P1["Factors and multiples"]
+    D1["Factorisation"] --> N
+    class N,P1,D1 internal-link
+    style N stroke-width:3px
+```
+<!-- generated:end mini-map -->
 
 ## References

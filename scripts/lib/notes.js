@@ -71,6 +71,26 @@ export function valueOf(note, key) {
 
 export const isConcept = (note) => valueOf(note, "kind") === CONCEPT;
 
+export const SUMMARY_HEADING = "In one sentence";
+
+/**
+ * A Note's one-sentence summary: the text under `## In one sentence`, up to the next heading
+ * of level one or two, as one line. HTML comments are removed, because a comment is nothing
+ * a reader or a Context Pack can use. Undefined when the Note has no such heading.
+ */
+export function summaryOf(note) {
+  const lines = note.frontmatter.body.split(/\r?\n/);
+  const start = lines.findIndex((line) => /^##\s+(.*?)\s*#*\s*$/.exec(line)?.[1] === SUMMARY_HEADING);
+  if (start === -1) return undefined;
+  const rest = lines.slice(start + 1);
+  const end = rest.findIndex((line) => /^#{1,2}\s/.test(line));
+  return (end === -1 ? rest : rest.slice(0, end))
+    .join("\n")
+    .replace(/<!--[\s\S]*?-->/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
 /**
  * The Note a wikilink names. Resolved the way Obsidian resolves it: by Note name, ignoring
  * case, any folder path, `#heading` or `|display text`.

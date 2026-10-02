@@ -5,10 +5,12 @@
 //
 //   node scripts/wiki.js check <vault directory>
 //   node scripts/wiki.js scaffold <vault directory> [<Node name>...]
+//   node scripts/wiki.js generate <vault directory>
 //
-// Exit codes: 0 every invariant holds, or every Note asked for exists; 1 the check ran and
-// something failed; 2 nothing could run at all — bad usage, no Anchor Graph, a graph that
-// cannot be read, or a scaffold that was refused.
+// Exit codes: 0 every invariant holds, every Note asked for exists, or every generated
+// block is written; 1 the check ran and something failed, or some Notes' blocks could not
+// be written; 2 nothing could run at all — bad usage, no Anchor Graph, a graph that cannot
+// be read, or a scaffold that was refused.
 
 import { AnchorGraphError, loadAnchorGraph } from "./lib/anchor-graph.js";
 import { GraphError, graphShape } from "./lib/graph.js";
@@ -18,6 +20,7 @@ import { isConcept, loadNotes } from "./lib/notes.js";
 import { buildErrorReport, buildReport, writeReport } from "./lib/report.js";
 import { renderSummary } from "./lib/summary.js";
 import { ScaffoldError, scaffold } from "./lib/scaffold.js";
+import { generate } from "./lib/generate.js";
 
 // Module 1's Terminal Node: the declaration invariant 2 holds the graph against. A Module
 // has exactly one, and this is where this Module's is declared.
@@ -46,6 +49,11 @@ subcommands:
                             create the stub Note for every Node in the Anchor Graph, or
                             only the Nodes named; a Note that already exists is never
                             touched, and a Node the Anchor Graph lacks is refused
+  generate <vault directory>
+                            rewrite every concept Note's generated blocks (Builds on,
+                            Required by and the prerequisite mini-map) from the Notes'
+                            requires; nothing outside the markers is touched, and a hand
+                            edit inside them is overwritten
 `;
 
 const EXIT_OK = 0;
@@ -60,7 +68,7 @@ async function main(argv) {
     return EXIT_OK;
   }
   if (!subcommand) return usageError(USAGE);
-  if (subcommand !== "check" && subcommand !== "scaffold") {
+  if (!["check", "scaffold", "generate"].includes(subcommand)) {
     return usageError(`unknown subcommand "${subcommand}"\n\n${USAGE}`);
   }
 
@@ -70,9 +78,9 @@ async function main(argv) {
 
   if (subcommand === "scaffold") return scaffoldNotes(rest[0], rest.slice(1));
   if (rest.length > 1) {
-    return usageError(`check takes one vault directory, given ${rest.length}\n\n${USAGE}`);
+    return usageError(`${subcommand} takes one vault directory, given ${rest.length}\n\n${USAGE}`);
   }
-  return check(rest[0]);
+  return subcommand === "check" ? check(rest[0]) : generateBlocks(rest[0]);
 }
 
 async function check(vaultDir) {
@@ -135,6 +143,33 @@ async function scaffoldNotes(vaultDir, nodeNames) {
   );
   process.stdout.write(`${lines.join("\n")}\n`);
   return EXIT_OK;
+}
+
+async function generateBlocks(vaultDir) {
+  let result;
+  try {
+    result = await generate(vaultDir, await loadNotes(vaultDir));
+  } catch (error) {
+    // A graph the Notes cannot form, or a vault that is not there; anything else is a bug.
+    if (!(error instanceof GraphError || ["ENOENT", "ENOTDIR"].includes(error.code))) throw error;
+    process.stderr.write(`generate could not run, and wrote nothing:\n${error.message}\n`);
+    return EXIT_UNRUNNABLE;
+  }
+
+  const { updated, unchanged, refused } = result;
+  const notes = (count) => `${count} ${count === 1 ? "Note" : "Notes"}`;
+  const lines = updated.map((path) => `updated ${path}`);
+  for (const { path, problems } of refused) {
+    lines.push(`left alone ${path}:`, ...problems.map((problem) => `  ${problem}`));
+  }
+  const leftAlone = refused.length === 0 ? "" : `, ${refused.length} left alone`;
+  lines.push(
+    updated.length === 0 && refused.length === 0
+      ? `no change: all ${notes(unchanged.length)} already up to date`
+      : `updated ${notes(updated.length)}, ${unchanged.length} already up to date${leftAlone}`,
+  );
+  process.stdout.write(`${lines.join("\n")}\n`);
+  return refused.length === 0 ? EXIT_OK : EXIT_FAILED;
 }
 
 /**

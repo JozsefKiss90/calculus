@@ -23,11 +23,32 @@ updated: 2026-10-02
 ## Builds on
 
 <!-- generated:start builds-on -->
+- [[Equivalent fractions and cancellation]]
+- [[Division restrictions]]
 <!-- generated:end builds-on -->
 
 ## Required by
 
 <!-- generated:start required-by -->
+- [[Difference quotient]]
+- [[Linear, quadratic, polynomial, and rational functions]]
+- [[Simplification and equations]]
+- [[Simplifying before taking a limit]]
 <!-- generated:end required-by -->
+
+<!-- generated:start mini-map -->
+```mermaid
+flowchart TD
+    N["Algebraic fractions and rationalisation"]
+    N --> P1["Equivalent fractions and cancellation"]
+    N --> P2["Division restrictions"]
+    D1["Difference quotient"] --> N
+    D2["Linear, quadratic, polynomial, and rational functions"] --> N
+    D3["Simplification and equations"] --> N
+    D4["Simplifying before taking a limit"] --> N
+    class N,P1,P2,D1,D2,D3,D4 internal-link
+    style N stroke-width:3px
+```
+<!-- generated:end mini-map -->
 
 ## References

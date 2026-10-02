@@ -25,11 +25,26 @@ aliases:
 ## Builds on
 
 <!-- generated:start builds-on -->
+- [[Unit circle and radians]]
+- [[Approaching a value]]
 <!-- generated:end builds-on -->
 
 ## Required by
 
 <!-- generated:start required-by -->
+- [[Trigonometric limits]]
 <!-- generated:end required-by -->
+
+<!-- generated:start mini-map -->
+```mermaid
+flowchart TD
+    N["Limit of sin h over h as h approaches zero"]
+    N --> P1["Unit circle and radians"]
+    N --> P2["Approaching a value"]
+    D1["Trigonometric limits"] --> N
+    class N,P1,P2,D1 internal-link
+    style N stroke-width:3px
+```
+<!-- generated:end mini-map -->
 
 ## References

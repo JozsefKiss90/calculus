@@ -24,11 +24,28 @@ updated: 2026-10-02
 ## Builds on
 
 <!-- generated:start builds-on -->
+- [[Trigonometric graphs]]
+- [[Trigonometric identities]]
+- [[Trigonometric limits]]
 <!-- generated:end builds-on -->
 
 ## Required by
 
 <!-- generated:start required-by -->
+- [[Trigonometry]]
 <!-- generated:end required-by -->
+
+<!-- generated:start mini-map -->
+```mermaid
+flowchart TD
+    N["Trigonometric functions"]
+    N --> P1["Trigonometric graphs"]
+    N --> P2["Trigonometric identities"]
+    N --> P3["Trigonometric limits"]
+    D1["Trigonometry"] --> N
+    class N,P1,P2,P3,D1 internal-link
+    style N stroke-width:3px
+```
+<!-- generated:end mini-map -->
 
 ## References

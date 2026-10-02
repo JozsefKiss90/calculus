@@ -23,11 +23,26 @@ updated: 2026-10-02
 ## Builds on
 
 <!-- generated:start builds-on -->
+- [[Powers and radicals]]
+- [[Ratios, proportion, units, and average speed]]
 <!-- generated:end builds-on -->
 
 ## Required by
 
 <!-- generated:start required-by -->
+- [[Right-triangle trigonometry]]
 <!-- generated:end required-by -->
+
+<!-- generated:start mini-map -->
+```mermaid
+flowchart TD
+    N["Similar triangles and Pythagoras' theorem"]
+    N --> P1["Powers and radicals"]
+    N --> P2["Ratios, proportion, units, and average speed"]
+    D1["Right-triangle trigonometry"] --> N
+    class N,P1,P2,D1 internal-link
+    style N stroke-width:3px
+```
+<!-- generated:end mini-map -->
 
 ## References

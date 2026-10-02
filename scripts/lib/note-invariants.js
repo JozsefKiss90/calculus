@@ -12,7 +12,7 @@
 
 import { GraphError } from "./graph.js";
 import { noteNameFor } from "./note-names.js";
-import { CONCEPT, buildNotesGraph, indexByName, isConcept, resolveLink, valueOf } from "./notes.js";
+import { CONCEPT, SUMMARY_HEADING, buildNotesGraph, indexByName, isConcept, resolveLink, summaryOf, valueOf } from "./notes.js";
 
 const INVARIANT = {
   requiresResolve: {
@@ -63,7 +63,6 @@ const SCHEMA = {
 
 /** The statuses at which a Note's one-sentence summary has to exist. */
 const SUMMARISED = new Set(["drafted", "reviewed"]);
-const SUMMARY_HEADING = "In one sentence";
 
 /**
  * @param {Awaited<ReturnType<typeof import("./notes.js").loadNotes>>} notes
@@ -197,7 +196,7 @@ function summaryBeforeDrafted(notes) {
   for (const note of notes) {
     const status = valueOf(note, "status");
     if (!SUMMARISED.has(status)) continue;
-    const summary = sectionText(note.frontmatter.body, SUMMARY_HEADING);
+    const summary = summaryOf(note);
     if (summary === undefined) {
       failures.push(failure(note, "missing-summary", `is status: ${status} and has no ## ${SUMMARY_HEADING} section`));
     } else if (summary === "") {
@@ -205,23 +204,6 @@ function summaryBeforeDrafted(notes) {
     }
   }
   return verdict(INVARIANT.summaryBeforeDrafted, failures);
-}
-
-/**
- * The text under a `##` heading, up to the next heading of level one or two, with HTML
- * comments removed: the generated-section markers are comments, and a comment is nothing a
- * reader or a Context Pack can use. Undefined when the heading is absent.
- */
-function sectionText(body, heading) {
-  const lines = body.split(/\r?\n/);
-  const start = lines.findIndex((line) => /^##\s+(.*?)\s*#*\s*$/.exec(line)?.[1] === heading);
-  if (start === -1) return undefined;
-  const rest = lines.slice(start + 1);
-  const end = rest.findIndex((line) => /^#{1,2}\s/.test(line));
-  return (end === -1 ? rest : rest.slice(0, end))
-    .join("\n")
-    .replace(/<!--[\s\S]*?-->/g, "")
-    .trim();
 }
 
 function notesMatchAnchorGraph(notes, anchorGraph) {

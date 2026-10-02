@@ -23,11 +23,26 @@ updated: 2026-10-02
 ## Builds on
 
 <!-- generated:start builds-on -->
+- [[Variables, substitution, and brackets]]
+- [[Powers and radicals]]
 <!-- generated:end builds-on -->
 
 ## Required by
 
 <!-- generated:start required-by -->
+- [[Algebra]]
 <!-- generated:end required-by -->
+
+<!-- generated:start mini-map -->
+```mermaid
+flowchart TD
+    N["Expressions and operations"]
+    N --> P1["Variables, substitution, and brackets"]
+    N --> P2["Powers and radicals"]
+    D1["Algebra"] --> N
+    class N,P1,P2,D1 internal-link
+    style N stroke-width:3px
+```
+<!-- generated:end mini-map -->
 
 ## References

@@ -24,11 +24,28 @@ updated: 2026-10-02
 ## Builds on
 
 <!-- generated:start builds-on -->
+- [[Approaching a value]]
+- [[Calculating limits]]
+- [[Continuity]]
 <!-- generated:end builds-on -->
 
 ## Required by
 
 <!-- generated:start required-by -->
+- [[Derivative]]
 <!-- generated:end required-by -->
+
+<!-- generated:start mini-map -->
+```mermaid
+flowchart TD
+    N["Limits"]
+    N --> P1["Approaching a value"]
+    N --> P2["Calculating limits"]
+    N --> P3["Continuity"]
+    D1["Derivative"] --> N
+    class N,P1,P2,P3,D1 internal-link
+    style N stroke-width:3px
+```
+<!-- generated:end mini-map -->
 
 ## References

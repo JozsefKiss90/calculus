@@ -11,13 +11,15 @@
 
 import { mkdir, readdir, writeFile } from "node:fs/promises";
 import { join } from "node:path";
+import { emptyBlock } from "./generated-blocks.js";
 import { noteNameFor } from "./note-names.js";
 
 export class ScaffoldError extends Error {}
 
 /**
  * The eight sections, in order. Two are machine-owned: their markers are written now, empty,
- * and `generate` rewrites what lies between them on every run.
+ * and `generate` rewrites what lies between them on every run. The mini-map closes Required
+ * by, after both lists, because it pictures both directions at once.
  */
 const SECTIONS = [
   { heading: "In one sentence" },
@@ -25,8 +27,8 @@ const SECTIONS = [
   { heading: "The idea" },
   { heading: "Worked example" },
   { heading: "Common mistakes" },
-  { heading: "Builds on", generated: "builds-on" },
-  { heading: "Required by", generated: "required-by" },
+  { heading: "Builds on", generated: ["builds-on"] },
+  { heading: "Required by", generated: ["required-by", "mini-map"] },
   { heading: "References" },
 ];
 
@@ -175,9 +177,7 @@ function noteContents(note, today) {
   ];
 
   const sections = SECTIONS.map(({ heading, generated }) =>
-    generated
-      ? `## ${heading}\n\n<!-- generated:start ${generated} -->\n<!-- generated:end ${generated} -->\n`
-      : `## ${heading}\n`,
+    generated ? `## ${heading}\n\n${generated.map(emptyBlock).join("\n\n")}\n` : `## ${heading}\n`,
   );
 
   return `---\n${frontmatter.join("\n")}\n---\n\n${sections.join("\n")}`;

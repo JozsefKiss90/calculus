@@ -10,6 +10,7 @@
   "scripts": {
     "check": "node scripts/wiki.js check wiki",
     "scaffold": "node scripts/wiki.js scaffold wiki",
+    "generate": "node scripts/wiki.js generate wiki",
     "test": "node --test \"tests/**/*.test.js\""
   }
 }

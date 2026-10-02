@@ -21,11 +21,23 @@ updated: 2026-10-02
 ## Builds on
 
 <!-- generated:start builds-on -->
+*Nothing: this is a Floor Node, knowledge the Module assumes.*
 <!-- generated:end builds-on -->
 
 ## Required by
 
 <!-- generated:start required-by -->
+- [[Equations and rearranging formulas]]
 <!-- generated:end required-by -->
+
+<!-- generated:start mini-map -->
+```mermaid
+flowchart TD
+    N["Inverse operations"]
+    D1["Equations and rearranging formulas"] --> N
+    class N,D1 internal-link
+    style N stroke-width:3px
+```
+<!-- generated:end mini-map -->
 
 ## References

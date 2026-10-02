@@ -22,11 +22,24 @@ updated: 2026-10-02
 ## Builds on
 
 <!-- generated:start builds-on -->
+- [[Multiplication, division, squares, and roots]]
 <!-- generated:end builds-on -->
 
 ## Required by
 
 <!-- generated:start required-by -->
+- [[Powers and radicals]]
 <!-- generated:end required-by -->
+
+<!-- generated:start mini-map -->
+```mermaid
+flowchart TD
+    N["Index laws and fractional powers"]
+    N --> P1["Multiplication, division, squares, and roots"]
+    D1["Powers and radicals"] --> N
+    class N,P1,D1 internal-link
+    style N stroke-width:3px
+```
+<!-- generated:end mini-map -->
 
 ## References

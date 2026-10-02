@@ -133,12 +133,15 @@ updated: ${today}
 <!-- generated:start required-by -->
 <!-- generated:end required-by -->
 
+<!-- generated:start mini-map -->
+<!-- generated:end mini-map -->
+
 ## References
 `,
   );
 });
 
-test("every Note has the eight sections in spec order, with both generated blocks empty", async () => {
+test("every Note has the eight sections in spec order, with every generated block empty", async () => {
   const { vault } = await makeFixtureVault(GRAPH);
 
   await scaffold(vault);
@@ -146,7 +149,7 @@ test("every Note has the eight sections in spec order, with both generated block
   for (const [name, contents] of await notesIn(vault)) {
     const headings = contents.split("\n").filter((line) => line.startsWith("## "));
     assert.deepEqual(headings, SECTIONS, name);
-    for (const block of ["builds-on", "required-by"]) {
+    for (const block of ["builds-on", "required-by", "mini-map"]) {
       assert.ok(
         contents.includes(`<!-- generated:start ${block} -->\n<!-- generated:end ${block} -->`),
         `${name}: the ${block} block is not present and empty`,

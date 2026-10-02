@@ -38,6 +38,23 @@ node scripts/wiki.js scaffold wiki "Factorisation" "Continuity"
 
 A Node the Anchor Graph does not have is refused, and nothing is written.
 
+## Generate the reverse direction
+
+```sh
+npm run generate
+```
+
+A Note declares only what it requires. This writes everything that follows from that into
+each concept Note, between `<!-- generated:start … -->` and `<!-- generated:end … -->`
+markers: `## Builds on` (each prerequisite, with its one-sentence summary), `## Required by`
+(each Note that requires it), and a mermaid mini-map of the Note and its direct neighbours,
+arrows pointing at the prerequisite as in the Anchor Graph.
+
+Nothing outside the markers is touched, and `requires` is only ever read. **Anything inside
+the markers is overwritten on every run**, so a hand edit there is lost by design: change
+`requires`, or the other Note's `## In one sentence`, and regenerate. Running it again on an
+unchanged vault changes nothing, so after a graph change the diff is the review.
+
 ## Install the gate
 
 ```sh
