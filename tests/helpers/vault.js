@@ -36,20 +36,30 @@ export async function makeFixtureRoot() {
 }
 
 /**
+ * An Anchor Graph Note whose mermaid block holds the given graph. Shared with the git-repo
+ * fixture, so there is one definition of what a fixture Anchor Graph Note looks like.
+ *
+ * @param {string} mermaidBody the contents of the Note's mermaid block
+ */
+export function anchorNoteContents(mermaidBody) {
+  const fence = "```";
+  return `${ANCHOR_NOTE_FRONTMATTER}
+## The graph
+
+${fence}mermaid
+${mermaidBody.trim()}
+${fence}
+`;
+}
+
+/**
  * A fixture repository holding an Anchor Graph Note whose mermaid block is the given graph.
  *
  * @param {string} mermaidBody the contents of the Note's mermaid block
  * @returns {Promise<{root: string, vault: string, anchorNote: string}>}
  */
 export async function makeFixtureVault(mermaidBody) {
-  const fence = "```";
-  return makeFixtureVaultFromNote(`${ANCHOR_NOTE_FRONTMATTER}
-## The graph
-
-${fence}mermaid
-${mermaidBody.trim()}
-${fence}
-`);
+  return makeFixtureVaultFromNote(anchorNoteContents(mermaidBody));
 }
 
 /** A fixture repository whose Anchor Graph Note has exactly the given contents. */
@@ -66,8 +76,20 @@ export async function makeFixtureVaultFromNote(contents) {
  * @returns {Promise<{exitCode: number, stdout: string, stderr: string}>}
  */
 export function runWiki(args) {
+  return capture(process.execPath, [CLI, ...args]);
+}
+
+/**
+ * Run a command as a real child process and capture what a terminal would show. The one
+ * place a fixture spawns anything, so `runWiki` and the git-repo fixture cannot drift.
+ *
+ * No shell: a shell on Windows re-splits the arguments, and nothing here needs one.
+ *
+ * @returns {Promise<{exitCode: number, stdout: string, stderr: string}>}
+ */
+export function capture(command, args, options = {}) {
   return new Promise((resolve, reject) => {
-    const child = spawn(process.execPath, [CLI, ...args]);
+    const child = spawn(command, args, options);
     let stdout = "";
     let stderr = "";
     child.stdout.setEncoding("utf8");

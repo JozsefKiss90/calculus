@@ -1,0 +1,15 @@
+#!/bin/sh
+# The local half of the gate: the Wiki's invariants must hold before anything lands.
+#
+# This hook has no rules of its own, no list of paths it cares about and no suppressions.
+# It runs the one command a human runs, and the exit code is the entire contract: non-zero
+# refuses the commit. Every invariant and metric added to `check` later is enforced here
+# the moment it ships, with no change to this file.
+#
+# It checks the working tree, which is what `check` reads — the same thing you would see
+# running it yourself. A partial commit is therefore judged on the tree, not on the index.
+#
+# Install:          git config core.hooksPath .githooks
+# Skip, visibly:    git commit --no-verify     (CI still refuses it)
+
+npm run check

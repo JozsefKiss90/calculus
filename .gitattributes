@@ -1,0 +1,4 @@
+# Keep the hook LF in every working copy. `core.autocrlf` is on for at least one clone of
+# this repo, and a CRLF shell script fails at its shebang with `bad interpreter: /bin/sh^M`
+# — a gate that silently stops gating, which is the one failure mode a gate must not have.
+.githooks/** text eol=lf

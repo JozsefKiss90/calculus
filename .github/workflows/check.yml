@@ -1,0 +1,22 @@
+name: check
+
+# Every push, every branch. The hook is opt-in — a developer who never ran the setup step,
+# or who passed `--no-verify`, is caught here instead, and this is the gate that cannot be
+# skipped locally.
+on:
+  push:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      # The same two commands the hook and a human run. No install step: the tooling has no
+      # dependencies, which is what keeps CI and a terminal the same thing. The gate runs
+      # first, so a failing test never hides a structural violation.
+      - run: npm run check
+      - run: npm test
