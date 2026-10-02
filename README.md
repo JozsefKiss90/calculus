@@ -31,6 +31,11 @@ code spans and `\$` are not mathematics. KaTeX itself is vendored, pinned, in
 Which symbol and which word to write is decided in [`wiki/Conventions.md`](wiki/Conventions.md),
 the notation authority every Note follows.
 
+Interactives are drawn from a closed set of Archetypes, each with a parameter schema, in
+[`docs/archetype-catalogue.md`](docs/archetype-catalogue.md). An Interactive names one
+Archetype and fills in its parameters. It never names a rendering library or contains code
+([ADR-0004](docs/adr/0004-interactives-are-archetype-instances.md)).
+
 ## Scaffold the Notes
 
 ```sh
@@ -99,5 +104,6 @@ mocked. See [the testing decisions](.scratch/wiki-production-system/spec.md#test
 | `scripts/wiki.js` | The one CLI entry point |
 | `raw/` | The immutable raw source store |
 | `docs/adr/` | The decisions that govern the system |
+| `docs/archetype-catalogue.md` | The closed set of Archetypes every Interactive instantiates, with their parameter schemas |
 | `GLOSSARY.md` | The vocabulary |
 | `.scratch/` | Specs and tickets — this repo's issue tracker |
