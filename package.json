@@ -9,6 +9,7 @@
   },
   "scripts": {
     "check": "node scripts/wiki.js check wiki",
+    "scaffold": "node scripts/wiki.js scaffold wiki",
     "test": "node --test \"tests/**/*.test.js\""
   }
 }

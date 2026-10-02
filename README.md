@@ -21,6 +21,23 @@ not run at all. The report is a file you can read from a terminal without openin
 cat .wiki-health/report.json
 ```
 
+## Scaffold the Notes
+
+```sh
+npm run scaffold
+```
+
+Creates the stub Note for every Node in the Anchor Graph that does not have one yet — frontmatter,
+`requires` as wikilinks, and the eight-section skeleton — so every prerequisite link resolves
+before any content exists. It only ever creates: a Note that already exists is never touched,
+so running it again is safe and reports no change. To scaffold particular Nodes, name them:
+
+```sh
+node scripts/wiki.js scaffold wiki "Factorisation" "Continuity"
+```
+
+A Node the Anchor Graph does not have is refused, and nothing is written.
+
 ## Install the gate
 
 ```sh

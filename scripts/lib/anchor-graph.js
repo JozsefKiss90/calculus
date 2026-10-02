@@ -8,6 +8,12 @@
 // `subgraph` lines are grouping rather than Nodes, and an Edge's `-->|"label"|` pill is
 // commentary that carries no structural meaning.
 //
+// Grouping is not structure, but it is not nothing either: the subgraphs are the Wiki's
+// domain directories, so the loader records which one each Node belongs to. A Node
+// belongs to the subgraph it is named in; a Node named outside every subgraph — a
+// domain's head Node, named on the Terminal Node's line — belongs to the first subgraph
+// it appears in. No invariant reads it.
+//
 // The accepted dialect is deliberately narrow. An unrecognised line is an error naming
 // the line, because a loader that silently skips what it does not understand loses Edges
 // and reports a smaller graph than the one a human reviewed.
@@ -24,13 +30,40 @@ const ANCHOR_NOTE_SUFFIX = " Anchor Graph.md";
  * Load the vault's Anchor Graph.
  *
  * @param {string} vaultDir
- * @returns {Promise<{note: string, graph: ReturnType<typeof buildGraph>}>}
+ * @returns {Promise<{
+ *   note: string,
+ *   graph: ReturnType<typeof buildGraph>,
+ *   subgraphOf: (id: string) => string | undefined,
+ * }>}
  */
 export async function loadAnchorGraph(vaultDir) {
   const note = await findAnchorNote(vaultDir);
   const source = await readFile(join(vaultDir, note), "utf8");
   const block = extractMermaidBlock(source, note);
-  return { note, graph: buildGraph(parseMermaid(block, note)) };
+  const declarations = parseMermaid(block, note);
+  const membership = subgraphMembership(declarations.nodes);
+  return {
+    note,
+    graph: buildGraph(declarations),
+    /** The id of the subgraph a Node belongs to, or undefined for a Node in none. */
+    subgraphOf: (id) => membership.get(id),
+  };
+}
+
+/** Each Node's subgraph: where it is named, else the first one it appears in. */
+function subgraphMembership(mentions) {
+  const membership = new Map();
+  const namedInside = new Set();
+  for (const { id, name, subgraph } of mentions) {
+    if (subgraph === undefined || namedInside.has(id)) continue;
+    if (name !== undefined) {
+      membership.set(id, subgraph);
+      namedInside.add(id);
+    } else if (!membership.has(id)) {
+      membership.set(id, subgraph);
+    }
+  }
+  return membership;
 }
 
 async function findAnchorNote(vaultDir) {
@@ -90,6 +123,7 @@ function extractMermaidBlock(source, note) {
 function parseMermaid(block, note) {
   const nodes = [];
   const edges = [];
+  const open = [];
 
   for (const line of block) {
     const text = line.text.trim();
@@ -97,13 +131,23 @@ function parseMermaid(block, note) {
 
     if (text === "" || text.startsWith("%%")) continue;
     if (/^(flowchart|graph)\b/.test(text)) continue;
-    if (/^subgraph\b/.test(text) || text === "end") continue;
+
+    const subgraph = SUBGRAPH.exec(text);
+    if (subgraph) {
+      open.push(subgraph[1]);
+      continue;
+    }
+    if (text === "end") {
+      if (open.length === 0) throw new AnchorGraphError(`${origin}: "end" closes no subgraph`);
+      open.pop();
+      continue;
+    }
 
     const parsed = parseGraphLine(text, origin);
     if (!parsed) {
       throw new AnchorGraphError(`${origin}: cannot read this line of the Anchor Graph: ${text}`);
     }
-    nodes.push(...parsed.nodes);
+    nodes.push(...parsed.nodes.map((node) => ({ ...node, subgraph: open.at(-1) })));
     edges.push(...parsed.edges);
   }
 
@@ -113,6 +157,7 @@ function parseMermaid(block, note) {
   return { nodes, edges };
 }
 
+const SUBGRAPH = /^subgraph\s+([A-Za-z][A-Za-z0-9_-]*)/;
 const NODE_REF = /^([A-Za-z][A-Za-z0-9_-]*)(?:\[(.*?)\]|\((.*?)\)|\{(.*?)\})?\s*/;
 const ARROW = /^-->\s*(?:\|(.*?)\|)?\s*/;
 
