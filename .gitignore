@@ -1,14 +1,14 @@
 # Symlinked mirror of .agents/skills/ — commit the source, not the mirror.
 # core.symlinks=false on Windows means git walks these as real files,
 # which would duplicate every skill in the repo.
-.claude/skills/
+#.claude/skills/
 
 # smart-connections' embedding cache. Per-machine, regenerable, and it indexes
 # whatever the vault contains — which is why it must not be tracked: a cache of
 # the repo's specs and skills inside wiki/ breaks "the vault holds learning
 # content only".
-.smart-env/
+#.smart-env/
 
 # The machine-readable health report `check` writes beside the vault. Regenerated on
 # every run, so tracking it would dirty the tree on each check.
-.wiki-health/
+#.wiki-health/

@@ -1,0 +1,51 @@
+{
+  "generatedAt": "2026-10-02T00:00:16.197Z",
+  "vault": "C:\\Code\\calculus\\wiki",
+  "status": "pass",
+  "graph": {
+    "source": "anchor",
+    "note": "Module 1 Anchor Graph.md",
+    "nodes": 61,
+    "edges": 97,
+    "declaredTerminalNode": "Derivative",
+    "nodesWithNoDependents": [
+      "Derivative"
+    ],
+    "floorNodes": 9,
+    "reachableNodes": 61
+  },
+  "invariants": [
+    {
+      "id": 1,
+      "name": "acyclic",
+      "title": "The Edge graph is acyclic",
+      "status": "pass",
+      "failures": []
+    },
+    {
+      "id": 2,
+      "name": "single-terminal-node",
+      "title": "Exactly one Node has in-degree zero, and it is the declared Terminal Node",
+      "status": "pass",
+      "failures": []
+    },
+    {
+      "id": 3,
+      "name": "paths-terminate-at-the-floor",
+      "title": "Every path from the Terminal Node terminates at a Node with no prerequisites",
+      "status": "pass",
+      "failures": []
+    },
+    {
+      "id": 4,
+      "name": "all-nodes-reachable",
+      "title": "No Node is unreachable from the Terminal Node",
+      "status": "pass",
+      "failures": []
+    }
+  ],
+  "summary": {
+    "invariantsChecked": 4,
+    "invariantsFailed": 0
+  }
+}
