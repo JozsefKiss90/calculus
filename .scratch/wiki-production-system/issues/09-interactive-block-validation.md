@@ -6,13 +6,13 @@ The degradation requirement needs no work here: Obsidian renders the block as pl
 
 **Blocked by:** 05, 08
 
-**Status:** ready-for-human
+**Status:** done
 
 - [x] A block naming an Archetype outside the catalogue fails with a non-zero exit and a report naming the Note and the unknown name
 - [x] A missing required parameter, an unknown parameter, a wrong type and an out-of-range value each fail, and are each named distinctly in the report
 - [x] A valid instance of each of the thirteen Archetypes passes
 - [x] Malformed YAML inside the block is a validation failure with a useful message, not a crash
-- [ ] A Note containing a valid block is readable in Obsidian with the block visible as text — passes `check`, and the block's LaTeX is not read as Note mathematics (tested); **seeing it in Obsidian needs a human**
+- [x] A Note containing a valid block is readable in Obsidian with the block visible as text — passes `check`, and the block's LaTeX is not read as Note mathematics (tested); the author confirmed it in Obsidian
 
 ## Comments
 
@@ -74,5 +74,9 @@ it does not support. Things YAML reads in a way an author might not expect:
   endings and the test's regex expects LF. It is unrelated, so it was left alone.
 
 **Obsidian.** Nothing in the block is Obsidian syntax, and an unknown fence language renders
-as a code block. To confirm, paste any example from `docs/archetype-catalogue.md` into a Note
-and open it in Obsidian.
+as a code block.
+
+**Closed 2026-10-02.** The author pasted the `limit-table` example into *Approaching a value*,
+and it showed in Obsidian's reading view as a plain code block, every line readable, with
+`check` passing. The rulings listed above (rational without `denominator`, numbers written
+out in full, the test deviation) remain open for the author; none blocks this ticket.
