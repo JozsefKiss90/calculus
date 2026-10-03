@@ -5,13 +5,13 @@
 //
 //   node scripts/wiki.js check <vault directory>
 //   node scripts/wiki.js scaffold <vault directory> [<Node name>...]
-//   node scripts/wiki.js generate <vault directory>
+//   node scripts/wiki.js generate <vault directory> [--layer <N>]
 //
 // Exit codes: 0 every invariant holds and no metric is red, every Note asked for exists, or
 // every generated block is written; 1 the check ran and something failed or graded red, or
 // some Notes' blocks could not be written; 2 nothing could run at all — bad usage, no Anchor Graph, a graph that cannot
-// be read, an Archetype catalogue or Floor plausibility judgements that cannot be read, or a
-// scaffold that was refused.
+// be read, an Archetype catalogue or Floor plausibility judgements that cannot be read, a
+// scaffold that was refused, or Context Packs that could not be made.
 
 import { AnchorGraphError, loadAnchorGraph } from "./lib/anchor-graph.js";
 import { CatalogueError, loadCatalogue } from "./lib/archetype-catalogue.js";
@@ -26,6 +26,7 @@ import { buildErrorReport, buildReport, writeReport } from "./lib/report.js";
 import { renderSummary } from "./lib/summary.js";
 import { ScaffoldError, scaffold } from "./lib/scaffold.js";
 import { generate } from "./lib/generate.js";
+import { PackError, writeContextPacks } from "./lib/context-packs.js";
 
 // Module 1's Terminal Node: the declaration invariant 2 holds the graph against. A Module
 // has exactly one, and this is where this Module's is declared.
@@ -54,11 +55,14 @@ subcommands:
                             create the stub Note for every Node in the Anchor Graph, or
                             only the Nodes named; a Note that already exists is never
                             touched, and a Node the Anchor Graph lacks is refused
-  generate <vault directory>
+  generate <vault directory> [--layer <N>]
                             rewrite every concept Note's generated blocks (Builds on,
                             Required by and the prerequisite mini-map) from the Notes'
                             requires; nothing outside the markers is touched, and a hand
-                            edit inside them is overwritten
+                            edit inside them is overwritten. With --layer, then write one
+                            Context Pack per Node in computed Layer N to
+                            .context-packs/layer-<N>/ beside the vault, replacing that
+                            Layer's earlier Packs
 `;
 
 const EXIT_OK = 0;
@@ -77,6 +81,18 @@ async function main(argv) {
     return usageError(`unknown subcommand "${subcommand}"\n\n${USAGE}`);
   }
 
+  let layer;
+  if (subcommand === "generate" && rest.includes("--layer")) {
+    const at = rest.indexOf("--layer");
+    const value = rest[at + 1];
+    if (value === undefined || !/^\d+$/.test(value)) {
+      const given = value === undefined ? "nothing" : `"${value}"`;
+      return usageError(`--layer needs a Layer number, a whole number from 0, given ${given}\n\n${USAGE}`);
+    }
+    layer = Number(value);
+    rest.splice(at, 2);
+  }
+
   const option = rest.find((arg) => arg.startsWith("-"));
   if (option) return usageError(`${subcommand} takes no options, given "${option}"\n\n${USAGE}`);
   if (rest.length === 0) return usageError(`${subcommand} needs a vault directory\n\n${USAGE}`);
@@ -85,7 +101,7 @@ async function main(argv) {
   if (rest.length > 1) {
     return usageError(`${subcommand} takes one vault directory, given ${rest.length}\n\n${USAGE}`);
   }
-  return subcommand === "check" ? check(rest[0]) : generateBlocks(rest[0]);
+  return subcommand === "check" ? check(rest[0]) : generateWiki(rest[0], layer);
 }
 
 async function check(vaultDir) {
@@ -158,7 +174,7 @@ async function scaffoldNotes(vaultDir, nodeNames) {
   return EXIT_OK;
 }
 
-async function generateBlocks(vaultDir) {
+async function generateWiki(vaultDir, layer) {
   let result;
   try {
     result = await generate(vaultDir, await loadNotes(vaultDir));
@@ -168,8 +184,33 @@ async function generateBlocks(vaultDir) {
     process.stderr.write(`generate could not run, and wrote nothing:\n${error.message}\n`);
     return EXIT_UNRUNNABLE;
   }
+  process.stdout.write(blockLines(result));
 
-  const { updated, unchanged, refused } = result;
+  // After the blocks are written, so each Pack's skeleton is the Note as it now stands.
+  if (layer !== undefined && !(await packLayer(vaultDir, layer))) return EXIT_UNRUNNABLE;
+  return result.refused.length === 0 ? EXIT_OK : EXIT_FAILED;
+}
+
+/** Write one Layer's Context Packs and say so; false when none could be made. */
+async function packLayer(vaultDir, layer) {
+  let packs;
+  try {
+    packs = await writeContextPacks(vaultDir, await loadNotes(vaultDir), await loadCatalogue(), layer);
+  } catch (error) {
+    if (![PackError, CatalogueError, GraphError].some((kind) => error instanceof kind)) throw error;
+    process.stderr.write(`generate wrote no Context Packs:\n${error.message}\n`);
+    return false;
+  }
+  const { layerCount, directory, written } = packs;
+  const lines = written.map((path) => `wrote ${path}`);
+  const count = `${written.length} Context ${written.length === 1 ? "Pack" : "Packs"}`;
+  lines.push(`Layer ${layer} of ${layerCount} Layers: wrote ${count} to ${directory}, beside the vault`);
+  process.stdout.write(`${lines.join("\n")}\n`);
+  return true;
+}
+
+/** What `generate` did to each Note's blocks, as the lines it prints. */
+function blockLines({ updated, unchanged, refused }) {
   const notes = (count) => `${count} ${count === 1 ? "Note" : "Notes"}`;
   const lines = updated.map((path) => `updated ${path}`);
   for (const { path, problems } of refused) {
@@ -181,8 +222,7 @@ async function generateBlocks(vaultDir) {
       ? `no change: all ${notes(unchanged.length)} already up to date`
       : `updated ${notes(updated.length)}, ${unchanged.length} already up to date${leftAlone}`,
   );
-  process.stdout.write(`${lines.join("\n")}\n`);
-  return refused.length === 0 ? EXIT_OK : EXIT_FAILED;
+  return `${lines.join("\n")}\n`;
 }
 
 /**

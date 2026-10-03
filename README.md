@@ -76,6 +76,21 @@ the markers is overwritten on every run**, so a hand edit there is lost by desig
 `requires`, or the other Note's `## In one sentence`, and regenerate. Running it again on an
 unchanged vault changes nothing, so after a graph change the diff is the review.
 
+## Generate the Context Packs for a Layer
+
+```sh
+npm run generate -- --layer 0
+```
+
+After rewriting the blocks, this writes one Context Pack per Node in Layer 0 to
+`.context-packs/layer-0/`, beside the vault and gitignored. A Layer is computed, the longest
+path from a Node to the Floor, and Module 1 has 13 of them. A Pack is everything a Note
+Author reads for that Node, and the Wiki is not
+([ADR-0005](docs/adr/0005-authors-read-a-context-pack-not-the-wiki.md)). Each run replaces
+the Layer's earlier Packs. Hand one Pack to one Note Author
+([`.claude/agents/note-author.md`](.claude/agents/note-author.md)), and run the authors of a
+Layer in parallel.
+
 ## Install the gate
 
 ```sh

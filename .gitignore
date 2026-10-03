@@ -12,3 +12,8 @@
 # The machine-readable health report `check` writes beside the vault. Regenerated on
 # every run, so tracking it would dirty the tree on each check.
 .wiki-health/
+
+# Context Packs `generate --layer` writes beside the vault. Transient inputs for one run of
+# the Note Author; a Pack committed anywhere, and above all into wiki/, would be read as
+# content.
+.context-packs/

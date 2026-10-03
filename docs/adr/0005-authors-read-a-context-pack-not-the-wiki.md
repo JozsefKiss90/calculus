@@ -1,6 +1,6 @@
 # Authors read a Context Pack, not the Wiki
 
-Notes are written bottom-up by Layer — Layer 0's Floor Notes first, parallel within each Layer — and each authoring agent receives a script-generated Context Pack for exactly one Node. The agent does not read the rest of the Wiki. The Pack carries the Node's name and domain, the scaffolded skeleton, each prerequisite's one-sentence summary, each requiring Node's one-liner, the Archetype catalogue as names and one-line descriptions, the house style rules, and the `SRC -` notes for its domain.
+Notes are written bottom-up by Layer — Layer 0's Floor Notes first, parallel within each Layer — and each authoring agent receives a script-generated Context Pack for exactly one Node. The agent does not read the rest of the Wiki. The Pack carries the Node's name and domain, the scaffolded skeleton, each prerequisite's one-sentence summary, each requiring Node's one-liner, the Archetype catalogue as names and one-line descriptions, the house style rules, the notation authority (`wiki/Conventions.md`), and the source Notes for its domain — or, where there are none, which of two cases that is: no sources apply to a Floor Node's claims, or no source Note exists yet for the domain. *(Notation authority and the two empty cases added by ticket 15.)*
 
 ## Considered Options
 

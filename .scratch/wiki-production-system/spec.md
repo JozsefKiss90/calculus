@@ -258,7 +258,7 @@ Note Author and Interactive Author stay separate and sequential: merging them fo
 
 ### Context Packs
 
-Generated per Node, written to a transient directory outside the vault. Contents: Node name and domain; the scaffolded skeleton; each prerequisite's `## In one sentence`; each requiring Node's one-liner; the Archetype catalogue as names and one-liners; the house style rules; the source Notes for the Node's domain. Nothing else.
+Generated per Node, written to a transient directory outside the vault. Contents: Node name and domain; the scaffolded skeleton; each prerequisite's `## In one sentence`; each requiring Node's one-liner; the Archetype catalogue as names and one-liners; the house style rules; the notation authority, `wiki/Conventions.md`; the source Notes for the Node's domain, selected by the domain in their `tags`, or a statement of which case an empty sources section means — no sources apply to a Floor Node, or none exists yet for the domain. Nothing else. *(Notation authority and the two empty cases added by ticket 15.)*
 
 The rule attached to the Pack is as much a part of the design as the Pack: **the Note Author does not read the rest of the Wiki** (ADR-0005). Measured on the real graph, this costs almost nothing — at most 4 direct prerequisites, median 2.
 
