@@ -6,10 +6,10 @@ Alongside it, `wiki/Conventions.md` is created as the notation authority that th
 
 **Blocked by:** 05
 
-**Status:** ready-for-human
+**Status:** done
 
 - [x] A MathJax-only macro in a Note fails `check` with a non-zero exit and a report naming the Note and the offending expression
-- [ ] Valid KaTeX inline and display mathematics passes, and renders in Obsidian — passes `check` (tested, and the 55 expressions in `wiki/Conventions.md` parse); **rendering in Obsidian needs a human**
+- [x] Valid KaTeX inline and display mathematics passes, and renders in Obsidian — passes `check` (tested, and the 55 expressions in `wiki/Conventions.md` parse); **rendering in Obsidian needs a human**
 - [x] Both inline and display forms are validated, and a dollar sign inside a fenced code block is ignored
 - [x] `wiki/Conventions.md` exists with valid frontmatter and records the order-of-operations convention with both namings attributed
 - [x] A convention entry has a fixed shape: the symbol or term, this Wiki's choice, and any conflicting source convention with its attribution
@@ -53,3 +53,5 @@ reads `wiki/Conventions.md` directly instead of driving the CLI. It checks the e
 shape, the BIDMAS/PEMDAS entry and the 120-line budget. These are rules about one content
 file, not invariants `check` is specified to enforce. The alternatives are to amend the spec's testing
 decisions to admit content tests, or to delete the test and rely on review.
+
+**Closed 2026-10-03.** The author confirmed KaTeX renders in Obsidian. The testing-standard deviation is ruled on: the spec's Testing Decisions now admit a *content test* that reads one named content file for its shape and asserts nothing an invariant covers. `tests/conventions.test.js` stays under that rule. Attributions naming communities rather than books stand until a source Note replaces each.

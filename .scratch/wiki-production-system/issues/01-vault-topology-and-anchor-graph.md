@@ -64,3 +64,5 @@ in a dated record, rather than in live content.
 **Left for a human**, which is why this is `ready-for-human` rather than finished:
 open Obsidian on `wiki/` and confirm the Anchor Graph renders as a diagram, then set
 `status: reviewed` and `reviewed_by: human` on the Note. Both are human-only by spec.
+
+**2026-10-03.** The author confirmed the Anchor Graph renders in Obsidian and let the four judgements stand. The one thing left is the sign-off itself: `wiki/Module 1 Anchor Graph.md` is still `status: drafted`, `reviewed_by: none`, and only the author sets those two fields. The ticket closes when they do.

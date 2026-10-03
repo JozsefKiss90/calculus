@@ -191,6 +191,8 @@ Any failure is red and fails the build:
 
 12. Every file in `raw/` is tracked in `raw/checksums.sha256` and unchanged since extraction, and every source Note's `source_file` names one. *(Added by ticket 14.)*
 
+13. `status` and `reviewed_by` agree: a `stub` is reviewed by `none`, a `drafted` Note by `none` or `agent`, a `reviewed` Note by `human`. *(Added 2026-10-03 after the Layer 0 sign-off, where a hand edit left a Note at `drafted` with no reviewer; the contract already forbade the pairs, and the gate now holds them.)*
+
 These run at two different times, and conflating them was an error in an earlier draft of this spec. Invariants 1–4 are computed from the Anchor Graph file and are a regression gate **from the first commit**, before any Note exists. Invariants 5–10 are computed from the Notes and can only run once `scaffold` has created them. Invariant 11 joins the two and is what makes "agents never change the structure" enforceable rather than conventional; its failure message must name both directions of the mismatch, since adding a Node legitimately produces a one-sided mismatch until both sides are updated.
 
 Invariants 1–4 hold on the Anchor Graph as it stands, verified: 61 Nodes, 97 Edges, acyclic, single root at *Derivative*, 61 of 61 reachable, 9 Floor Nodes.
@@ -209,6 +211,8 @@ Carrying over the reference wiki's threshold-table shape, which was its stronges
 | Notes still `status: stub` after their Layer is opened | 0 | 1–3 | 4+ |
 | Floor plausibility: `requires: []` Notes flagged above 8th grade | 0 | 1 | 2+ |
 | Archetype coverage: Notes with no Interactive | <20% | 20–40% | >40% |
+
+A Cross-reference is a link in authored prose between two concept Notes neither of which lies in the other's Prerequisite Closure. A link to anything a Note requires, directly or transitively, or to anything that requires it, restates an ordering the graph already makes and is never counted. *(Ruled 2026-10-03 on ticket 11, which had excluded direct Edges only.)*
 
 Floor plausibility is the metric with no analogue in the reference wiki and the one most worth having: a Node with `requires: []` whose content is clearly above 8th grade is an unfinished expansion masquerading as a Floor Node, and it is the most likely silent failure in layered population. The check is a review judgement recorded in the report, not a computation.
 
@@ -306,6 +310,10 @@ Only the CLI, through its three subcommands.
 - **`check`** — each of the ten invariants gets a fixture that violates it and a fixture that satisfies it, asserting on exit code and on the report naming that specific violation. Each graded metric gets fixtures at its green, yellow and red boundaries.
 
 The highest-value tests are the negative ones. A `check` that passes a clean vault proves little; a `check` that catches an introduced cycle, a `requires` pointing at a deleted Note, a MathJax-only macro, and a `domain` that no longer matches its directory is the gate actually doing its job.
+
+### Content tests
+
+One exception to the seam, ruled on 2026-10-03 for the deviations tickets 07, 08 and 14 recorded. A **content test** may read one named content file directly — `wiki/Conventions.md`, `docs/archetype-catalogue.md`, the source Notes under `wiki/sources/` — and hold its shape: the entry format, the attribution rules, the closed families, a line budget. It never asserts anything a `check` invariant covers, and it never reads a concept Note. These files are rules other things rely on rather than content the pipeline produces, so a shape test on them guards the pipeline's inputs, not its implementation.
 
 ### Prior art
 

@@ -57,14 +57,27 @@ async function editNote(vault, name, change) {
 }
 
 /**
+ * A Note outside `name`'s Prerequisite Closure whose closure does not hold `name` either, so a
+ * link between the two is a Cross-reference and not an Edge restated: a Floor's sibling Floor,
+ * and Limits for Algebra. Nothing lies outside the Derivative's closure.
+ */
+function sibling(name) {
+  if (name === "Floor 1") return "Floor 2";
+  if (name.startsWith("Floor ")) return "Floor 1";
+  if (name === "Algebra") return "Limits";
+  if (name === "Limits") return "Floor 2";
+  return false;
+}
+
+/**
  * Write a Note the way an author would: a status past stub, a summary, and prose under
- * `## The idea`. By default the prose carries a Cross-reference to the Derivative — which no
- * Floor Note is joined to by an Edge — and an Interactive, and `updated` is today.
+ * `## The idea`. By default the prose carries a Cross-reference to a sibling — a Note neither
+ * above nor below it in the graph — and an Interactive, and `updated` is today.
  */
 async function write(vault, name, options = {}) {
   const {
     status = "drafted",
-    crossReference = "Derivative",
+    crossReference = sibling(name),
     interactive = true,
     updated = daysAgo(0),
     prose = "",
@@ -220,10 +233,11 @@ test("zero Cross-references: below 10% green, 10% and 25% yellow, above 25% red,
   }
 });
 
-test("an Edge never counts as a Cross-reference, whether in prose or in a generated block", async () => {
+test("a link down the Prerequisite Closure never counts as a Cross-reference, direct or transitive, in prose or in a generated block", async () => {
   const fixture = await scaffoldedVault();
-  // Floor 1's dependents are Algebra and Limits; Algebra's are the Derivative and its Floors.
-  await write(fixture.vault, "Floor 1", { crossReference: "Algebra", prose: "Limits builds on this: [[Limits]]." });
+  // Floor 1's dependents are Algebra and Limits, and through them the Derivative, which requires
+  // Floor 1 only transitively. Algebra's are the Derivative and its Floors.
+  await write(fixture.vault, "Floor 1", { crossReference: "Algebra", prose: "Limits builds on this: [[Limits]], and so does the [[Derivative]]." });
   await write(fixture.vault, "Algebra", { crossReference: "Floor 2", prose: "And [[Derivative]] needs it." });
   await write(fixture.vault, "Floor 3", { crossReference: "Floor 4" });
   assert.equal((await runWiki(["generate", fixture.vault])).exitCode, 0);
@@ -342,7 +356,7 @@ test("a yellow metric is in the human summary and the closing line, and the chec
   const { exitCode, stdout } = await check(fixture);
 
   assert.equal(exitCode, 0);
-  assert.match(stdout, /check passed: 12 of 12 invariants hold; metrics 5 green, 1 yellow, 0 red/);
+  assert.match(stdout, /check passed: 13 of 13 invariants hold; metrics 5 green, 1 yellow, 0 red/);
 });
 
 test("a red metric fails the check on its own, and the closing line says which", async () => {
@@ -355,5 +369,5 @@ test("a red metric fails the check on its own, and the closing line says which",
   assert.equal(exitCode, 1);
   assert.equal(report.summary.invariantsFailed, 0);
   assert.match(stdout, /RED +Broken wikilinks: 4/);
-  assert.match(stdout, /check failed: 12 of 12 invariants hold; metrics 5 green, 0 yellow, 1 red: Broken wikilinks/);
+  assert.match(stdout, /check failed: 13 of 13 invariants hold; metrics 5 green, 0 yellow, 1 red: Broken wikilinks/);
 });

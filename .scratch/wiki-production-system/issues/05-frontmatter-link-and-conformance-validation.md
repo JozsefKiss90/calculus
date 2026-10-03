@@ -6,7 +6,7 @@ And invariant 11, which joins the two graph sources: the graph built from the No
 
 **Blocked by:** 04
 
-**Status:** ready-for-human
+**Status:** done
 
 - [x] The Notes' frontmatter feeds the same graph loader as the Anchor Graph; there is still exactly one graph builder
 - [x] Each of invariants 5, 6, 7, 10 and 11 has a violating and a satisfying fixture; the violating run exits non-zero and the report names the invariant and the offending Note
@@ -99,3 +99,5 @@ Notes for later tickets:
   commented out, so every `check` dirtied the tree; this commit restores it.
 - **06 can read prerequisites through `buildNotesGraph` in `scripts/lib/notes.js`**,
   which returns the same graph object the Anchor Graph does.
+
+**Closed 2026-10-03.** The author reviewed the judgements above and let them stand: Notes are named by filename, the Anchor Graph's names are spelled the same way before comparing, and wikilinks resolve the way Obsidian resolves them.

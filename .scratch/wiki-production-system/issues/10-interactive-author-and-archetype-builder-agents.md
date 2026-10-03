@@ -6,7 +6,7 @@ Neither agent sets `status` or `reviewed_by`.
 
 **Blocked by:** 08, 09
 
-**Status:** ready-for-human
+**Status:** done
 
 - [x] The Interactive Author's input contract is exactly one drafted Note plus the Archetype schemas; it does not read the rest of the Wiki
 - [x] Its output passes invariant 9 validation
@@ -104,3 +104,5 @@ real addition. Both are fixed:
 - **`npm test` does not run on this machine's Node 20.11.** The `tests/**/*.test.js` glob needs
   Node 22, which `engines` already asks for. The suite was run as `node --test tests/*.test.js`:
   every test passes except the CRLF one that 09 recorded as pre-existing.
+
+**Closed 2026-10-03.** Every criterion was met and ticket 18 ran the full Layer 0 pipeline on this implementation unchanged; the author signed off all nine Floor Notes and closed 18. The judgements recorded above stand as made unless the author reopens them.

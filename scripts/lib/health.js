@@ -7,7 +7,7 @@ import { CatalogueError, loadCatalogue } from "./archetype-catalogue.js";
 import { FloorJudgementError, loadFloorJudgements } from "./floor-judgements.js";
 import { GraphError, graphShape, layersOf } from "./graph.js";
 import { checkStructuralInvariants } from "./structural-invariants.js";
-import { REVIEWERS, STATUSES, checkNoteInvariants } from "./note-invariants.js";
+import { REVIEWERS, STATUSES, checkNoteInvariants, checkReviewFields } from "./note-invariants.js";
 import { computeMetrics } from "./metrics.js";
 import { checkRawStore, loadRawStore } from "./raw-store.js";
 import { buildNotesGraph, isConcept, loadNotes, valueOf, vaultFiles } from "./notes.js";
@@ -54,6 +54,7 @@ export async function assessHealth(vaultDir, { terminalNode, today, notes, files
       ...checkStructuralInvariants(graph, { terminalNode }),
       ...checkNoteInvariants(notes, loaded, catalogue),
       checkRawStore(notes, await loadRawStore(vaultDir)),
+      checkReviewFields(notes),
     ],
     metrics: computeMetrics(notes, { files, today, judgements }),
   });

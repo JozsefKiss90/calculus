@@ -48,7 +48,7 @@ test("check on a freshly scaffolded vault exits 0, every invariant checked and h
   assert.equal(exitCode, 0, stdout);
   assert.deepEqual(
     report.invariants.map((entry) => [entry.id, entry.status]),
-    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((id) => [id, "pass"]),
+    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13].map((id) => [id, "pass"]),
   );
   assert.deepEqual(report.notes, { notes: 7, conceptNotes: 6 });
 });
@@ -162,6 +162,46 @@ test("invariant 7: a key that belongs only on a source Note is undeclared on a c
   assert.deepEqual(problems(report, 7), [["undeclared-key", LIMITS]]);
 });
 
+test("invariant 13: reviewed_by: human without status: reviewed, and agent on a stub, are each caught and named", async () => {
+  const fixture = await scaffoldedVault();
+  await editNote(fixture.vault, LIMITS, (note) => note.replace("reviewed_by: none", "reviewed_by: human"));
+  await editNote(fixture.vault, ALGEBRA, (note) => note.replace("reviewed_by: none", "reviewed_by: agent"));
+
+  const { exitCode, report, stdout } = await check(fixture);
+
+  assert.notEqual(exitCode, 0);
+  assert.deepEqual(problems(report, 13).sort(), [
+    ["review-fields-disagree", ALGEBRA],
+    ["review-fields-disagree", LIMITS],
+  ]);
+  assert.match(stdout, /limits\/Limits\.md: is status: stub and reviewed_by: human; a stub Note is reviewed by none/);
+  // Invariant 7 is satisfied: both values are inside their closed sets.
+  assert.deepEqual(problems(report, 7), []);
+});
+
+test("invariant 13: status: reviewed needs reviewed_by: human, and the pairs the pipeline writes all pass", async () => {
+  const fixture = await scaffoldedVault();
+  const summary = (note) => note.replace("## In one sentence\n", "## In one sentence\n\nA sentence.\n");
+  await editNote(fixture.vault, LIMITS, (note) => summary(note.replace("status: stub", "status: reviewed").replace("reviewed_by: none", "reviewed_by: agent")));
+  await editNote(fixture.vault, ALGEBRA, (note) => summary(note.replace("status: stub", "status: drafted").replace("reviewed_by: none", "reviewed_by: agent")));
+  await editNote(fixture.vault, FRACTIONS, (note) => summary(note.replace("status: stub", "status: drafted")));
+  await editNote(fixture.vault, ARITHMETIC, (note) => summary(note.replace("status: stub", "status: reviewed").replace("reviewed_by: none", "reviewed_by: human")));
+
+  const { report } = await check(fixture);
+
+  assert.deepEqual(problems(report, 13), [["review-fields-disagree", LIMITS]]);
+});
+
+test("invariant 13: a value outside its closed set is invariant 7's alone", async () => {
+  const fixture = await scaffoldedVault();
+  await editNote(fixture.vault, LIMITS, (note) => note.replace("reviewed_by: none", "reviewed_by: nobody"));
+
+  const { report } = await check(fixture);
+
+  assert.deepEqual(problems(report, 7), [["out-of-enum-value", LIMITS]]);
+  assert.deepEqual(problems(report, 13), []);
+});
+
 test("invariant 10: a drafted Note with an empty one-sentence summary is caught", async () => {
   const fixture = await scaffoldedVault();
   await editNote(fixture.vault, LIMITS, (note) => note.replace("status: stub", "status: drafted"));
@@ -178,6 +218,7 @@ test("invariant 10: a drafted Note with its one-sentence summary written passes,
   await editNote(fixture.vault, LIMITS, (note) =>
     note
       .replace("status: stub", "status: reviewed")
+      .replace("reviewed_by: none", "reviewed_by: human")
       .replace("## In one sentence\n", "## In one sentence\n\nA limit is the value a function approaches.\n"),
   );
 

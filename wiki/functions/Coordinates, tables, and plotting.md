@@ -82,6 +82,8 @@ Now read a point back. The curve crosses the $x$-axis, where $y = 0$, between $x
 
 **Labelling the $x$-axis left of the origin $-3$, $-2$, $-1$, with $-3$ next to the origin.** Each negative number sits as far left of the origin as its positive partner sits to the right, so moving left from the origin gives $-1$, then $-2$, then $-3$. With the wrong labels, $(-3, 0)$ is plotted where $(-1, 0)$ belongs.
 
+The tables of inputs and outputs used here return in another form in [[Inputs, outputs, and composition]]. You can read that later; nothing here depends on it.
+
 ## Builds on
 
 <!-- generated:start builds-on -->

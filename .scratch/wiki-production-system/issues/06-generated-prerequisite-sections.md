@@ -6,12 +6,12 @@ This is also the half of "add a Node later and tell me what that breaks" that 05
 
 **Blocked by:** 05
 
-**Status:** ready-for-human
+**Status:** done
 
 - [x] `generate` fills both generated sections correctly for every Note, including the Floor Nodes (nothing to build on) and the Terminal Node (nothing requires it)
 - [x] A second run produces an empty diff
 - [x] Authored prose outside the markers is byte-identical before and after
-- [ ] The mini-map renders in Obsidian and honours the Anchor Graph's edge direction
+- [x] The mini-map renders in Obsidian and honours the Anchor Graph's edge direction
 - [x] Adding a Node, scaffolding it, and re-running `generate` produces a diff confined to the Notes the change actually affects
 - [x] `generate` never writes a prerequisite entry; the reverse direction exists only inside the generated blocks
 - [x] A hand-edited generated block is overwritten on the next run, and that is documented rather than defended against
@@ -72,3 +72,5 @@ Notes for later tickets:
   shift in the diff the way the ticket describes.
 - **`check` does not verify that the generated blocks are current.** A stale block passes.
   If that should fail the build, it belongs with 11's graded metrics or a new invariant.
+
+**Closed 2026-10-03.** The author opened written Notes in Obsidian and confirmed the mini-map renders with arrows pointing at the prerequisite. The judgement that generated sections follow the Notes' own `requires`, with invariant 11 reporting any drift, stands.

@@ -96,6 +96,8 @@ Now a second one with a negative number: work out $\sqrt{(-6)^2 + 64}$.
 
 **Thinking $(-4) \times (-2) = -8$.** Two negatives have the same sign, so the product is positive: $(-4) \times (-2) = 8$. You can check it with division: $8 \div (-2) = -4$, as it should be.
 
+Which divisions come out exactly, and why, is taken up in [[Factors and multiples]]. You can read that later; nothing here depends on it.
+
 ## Builds on
 
 <!-- generated:start builds-on -->

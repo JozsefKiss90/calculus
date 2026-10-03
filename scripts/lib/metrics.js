@@ -14,7 +14,7 @@
 // joined by an Edge, in either direction, is never a Cross-reference, and a generated block
 // (which only ever lists Edges) is never read for one.
 
-import { GraphError, layersOf } from "./graph.js";
+import { GraphError, layersOf, reachableFrom } from "./graph.js";
 import { fencedBlocks, languageOf } from "./fences.js";
 import { BLOCKS, endMarker, startMarker } from "./generated-blocks.js";
 import { FLOOR_JUDGEMENTS_PATH } from "./floor-judgements.js";
@@ -50,7 +50,7 @@ const METRIC = {
     bands: { green: "<10%", yellow: "10–25%", red: ">25%" },
     actions: {
       green: "None.",
-      yellow: "When a listed Note is next edited, link it to a Note it contrasts with or where its idea reappears. A link to a prerequisite or a dependent is an Edge and does not count.",
+      yellow: "When a listed Note is next edited, link it to a Note it contrasts with or where its idea reappears. A link to anything in its Prerequisite Closure, or to a Note whose closure holds it, restates an Edge and does not count.",
       red: "The build is blocked. Add a Cross-reference to the listed Notes until no more than 25% of written Notes have none.",
     },
   },
@@ -239,14 +239,17 @@ function brokenWikilinks(notes, files) {
 
 /**
  * Written Notes that are neither end of any Cross-reference: a link in authored prose
- * between two distinct concept Notes not joined by an Edge. A Cross-reference makes no
- * ordering claim and has no direction, so it counts for both Notes it joins.
+ * between two distinct concept Notes, neither of which lies in the other's Prerequisite
+ * Closure. A link down the closure, direct or transitive, restates an ordering the graph
+ * already makes, so it is not a Cross-reference (ticket 11, ruled 2026-10-03). A
+ * Cross-reference makes no ordering claim and has no direction, so it counts for both Notes.
  */
 function zeroCrossReferences(concepts, written, graph) {
   if (graph.unbuildable) return unmeasured(METRIC.zeroCrossReferences, graph);
 
   const byName = indexByName(concepts);
-  const joinedByEdge = new Set(graph.edges.flatMap(({ from, to }) => [`${from}\n${to}`, `${to}\n${from}`]));
+  const closures = new Map(concepts.map((note) => [note.path, reachableFrom(graph, note.path)]));
+  const ordered = (a, b) => closures.get(a)?.has(b) || closures.get(b)?.has(a);
   const pairs = new Set();
   const referenced = new Set();
 
@@ -255,7 +258,7 @@ function zeroCrossReferences(concepts, written, graph) {
       const found = byName.get(target.toLowerCase()) ?? [];
       if (found.length !== 1) continue;
       const [other] = found;
-      if (other.path === note.path || joinedByEdge.has(`${note.path}\n${other.path}`)) continue;
+      if (other.path === note.path || ordered(note.path, other.path)) continue;
       pairs.add([note.path, other.path].sort().join("\n"));
       referenced.add(note.path);
       referenced.add(other.path);

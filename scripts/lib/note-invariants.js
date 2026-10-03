@@ -59,7 +59,23 @@ const INVARIANT = {
     name: "notes-match-anchor-graph",
     title: "The graph built from the Notes' requires is identical to the Anchor Graph",
   },
+  reviewFieldsAgree: {
+    id: 13,
+    name: "review-fields-agree",
+    title: "status and reviewed_by agree: a stub is reviewed by none, a drafted Note by none or agent, a reviewed Note by human",
+  },
 };
+
+/**
+ * The `reviewed_by` values each `status` admits. A Note is reviewed only when a human signed
+ * it off; an agent's review leaves it drafted; nothing has reviewed a stub. Ticket 16 named the
+ * gap and the Layer 0 sign-off showed why a hand edit needs the gate, not the contract, to hold it.
+ */
+const REVIEWERS_FOR = new Map([
+  ["stub", ["none"]],
+  ["drafted", ["none", "agent"]],
+  ["reviewed", ["human"]],
+]);
 
 /**
  * The frontmatter schema (ADR-0003). `values` closes an enum; `list` marks an array of
@@ -118,6 +134,27 @@ export function checkNoteInvariants(notes, anchor, catalogue) {
     summaryBeforeDrafted(notes),
     notesMatchAnchorGraph(notes, anchor.graph),
   ];
+}
+
+/**
+ * Invariant 13, run after the raw store so the report keeps its numbering. A pair outside the
+ * closed sets is invariant 7's and is not repeated here.
+ */
+export function checkReviewFields(notes) {
+  const failures = [];
+  for (const note of notes) {
+    const status = valueOf(note, "status");
+    const reviewer = valueOf(note, "reviewed_by");
+    const allowed = REVIEWERS_FOR.get(status);
+    if (!allowed || !REVIEWERS.includes(reviewer) || allowed.includes(reviewer)) continue;
+    failures.push(
+      failure(note, "review-fields-disagree", `is status: ${status} and reviewed_by: ${reviewer}; a ${status} Note is reviewed by ${allowed.join(" or ")}`, {
+        status,
+        reviewed_by: reviewer,
+      }),
+    );
+  }
+  return verdict(INVARIANT.reviewFieldsAgree, failures);
 }
 
 const verdict = (invariant, failures) => ({

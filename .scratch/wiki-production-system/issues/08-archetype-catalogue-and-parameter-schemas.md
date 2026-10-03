@@ -6,7 +6,7 @@ This is a design deliverable, not an implementation. It ships ahead of 09 and 10
 
 **Blocked by:** 01
 
-**Status:** ready-for-human
+**Status:** done
 
 - [x] All thirteen Archetypes have a complete parameter schema; none is a placeholder
 - [x] Each schema is declarative and names no rendering library, framework or expression language
@@ -79,3 +79,5 @@ CLI. It holds the shape the validator and agents will rely on:
 It does not type-check example values. That is 09's validator, and 09's "a valid instance of
 each of the thirteen Archetypes passes" can use these examples as its fixtures. The LaTeX in
 the examples was checked by hand against the vendored KaTeX and all of it parses.
+
+**Closed 2026-10-03.** The author ruled: no expression language and the nine closed families stand, with a new family the price of a curve outside them; degrees everywhere except where the catalogue says radians; `Conventions.md` now has an *Infinity* entry that records the `span` spelling `inf` and `-inf`. The catalogue test is a content test under the rule the spec's Testing Decisions now state. The budget question went to ticket 19.

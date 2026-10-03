@@ -23,7 +23,7 @@ A directed prerequisite relation between two Nodes: the source cannot be underst
 _Avoid_: link, dependency, relation
 
 **Cross-reference**:
-A link between two Notes that makes no claim about ordering — an aside, a contrast, a place the idea reappears. Never an Edge, and never counted as one.
+A link between two Notes that makes no claim about ordering — an aside, a contrast, a place the idea reappears. Never between a Note and anything in its Prerequisite Closure, in either direction: such a link restates an Edge and is never counted as a Cross-reference.
 _Avoid_: related link, see-also
 
 **Anchor Graph**:

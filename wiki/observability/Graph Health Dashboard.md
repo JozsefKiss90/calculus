@@ -18,7 +18,7 @@ The Wiki's health as `npm run check` computes it, written here by `npm run gener
 
 ## Verdict
 
-**check passes**: 12 of 12 invariants hold; metrics 5 green, 1 yellow, 0 red.
+**check passes**: 13 of 13 invariants hold; metrics 6 green, 0 yellow, 0 red.
 
 ## The Module at a glance
 
@@ -61,24 +61,18 @@ The Wiki's health as `npm run check` computes it, written here by `npm run gener
 | 10 | Every Note at status drafted or above has a non-empty \#\# In one sentence | pass | 0 |
 | 11 | The graph built from the Notes' requires is identical to the Anchor Graph | pass | 0 |
 | 12 | Every raw file is tracked and unchanged, and every source Note's source\_file names one | pass | 0 |
+| 13 | status and reviewed\_by agree: a stub is reviewed by none, a drafted Note by none or agent, a reviewed Note by human | pass | 0 |
 
 ## Metrics
 
 | Metric | Level | Measure | Green | Yellow | Red |
 |---|---|---|---|---|---|
 | Broken wikilinks | green | 0 | 0 | 1–3 | 4+ |
-| Notes with zero Cross-references | yellow | 2 of 9 written Notes (22.2%) | \<10% | 10–25% | \>25% |
+| Notes with zero Cross-references | green | 0 of 9 written Notes (0%) | \<10% | 10–25% | \>25% |
 | Stale updated (\>30d, non-reviewed) | green | 0 of 9 written Notes (0%) | \<10% | 10–20% | \>20% |
 | Notes still stub after their Layer is opened | green | 0 | 0 | 1–3 | 4+ |
 | Archetype coverage: Notes with no Interactive | green | 0 of 9 written Notes (0%) | \<20% | 20–40% | \>40% |
 | Floor plausibility: Floor Notes flagged above 8th grade | green | 0 | 0 | 1 | 2+ |
-
-### Notes with zero Cross-references: yellow
-
-**Action:** When a listed Note is next edited, link it to a Note it contrasts with or where its idea reappears. A link to a prerequisite or a dependent is an Edge and does not count.
-
-- [[Multiplication, division, squares, and roots]]: has no Cross-reference to or from another Note
-- [[Coordinates, tables, and plotting]]: has no Cross-reference to or from another Note
 
 ### Floor plausibility: Floor Notes flagged above 8th grade: green
 

@@ -80,6 +80,11 @@ Mathematics is KaTeX: `check` rejects anything else.
 - **Same:** $(a, c)$ for an open interval — [[OpenStax Calculus Volume 1, section 2.2]].
 - **Elsewhere:** reversed square brackets for an excluded end, $]a, b[$ and $[a, b[$ — France and parts of continental Europe. The same $(a, b)$ also names the point with coordinates $a$ and $b$; say which.
 
+### Infinity
+
+- **This Wiki:** $\infty$ and $-\infty$, and an interval with no end on one side is written with a round bracket there: $[2, \infty)$, $(-\infty, 0)$. Infinity is never a number, so $\infty$ never sits inside a square bracket. In an `interactive` block's `span` parameter it is spelled `inf` and `-inf`, as `'[2, inf)'`.
+- **Elsewhere:** none known.
+
 ### Inverse trigonometric functions
 
 - **This Wiki:** $\arcsin x$, $\arccos x$, $\arctan x$. A power of a trigonometric function is $\sin^2 x$, meaning $(\sin x)^2$.

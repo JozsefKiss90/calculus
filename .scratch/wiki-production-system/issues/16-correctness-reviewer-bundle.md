@@ -6,7 +6,7 @@ It may set `reviewed_by: agent`. It may not set `status: reviewed` or `reviewed_
 
 **Blocked by:** 06, 14
 
-**Status:** ready-for-human
+**Status:** done
 
 - [x] A bundle contains the Note, its direct prerequisites' Notes and its Layer siblings, and is generated rather than assembled by hand
 - [x] Findings land somewhere a human reads, keyed to the Note they concern
@@ -43,3 +43,7 @@ A prerequisite or sibling still at stub is named, not pasted, so its empty skele
 - **Anchor Graph faults go in a finding, not a flag file.** The reviewer reports them in the findings file, for example *Distributive law…* using letters that only *Variables, substitution, and brackets*, a Node above it, teaches. I did not have it file to `.scratch/anchor-graph-flags/` as the Note Author does, so a human triages one file per Note.
 - **`check` does not enforce the review fields' combinations.** For example, nothing stops `reviewed_by: agent` on a stub, or `reviewed_by: human` without `status: reviewed`. The contract forbids both, and the enums still hold. An invariant could enforce it if you want the gate, not the contract, to hold it.
 - **`npm test` does not run on Node 20 here.** The `tests/**` glob needs Node 22, as `engines` says. I ran `node --test tests/*.test.js`. One unrelated failure was already there: `precommit-and-ci-gate` test 170 fails on CRLF line endings in the working copy of the CI workflow.
+
+**Closed 2026-10-03.** Every criterion was met and ticket 18 ran the full Layer 0 pipeline on this implementation unchanged; the author signed off all nine Floor Notes and closed 18. The judgements recorded above stand as made unless the author reopens them.
+
+**2026-10-03, reopened for one item and closed again.** The author took the fourth judgement the other way: `check` now holds the review fields' combinations as invariant 13, *status and reviewed_by agree*: a stub is reviewed by none, a drafted Note by none or agent, a reviewed Note by human. The Layer 0 sign-off had shown why: a hand edit left one Note at `drafted` with no reviewer, and only a re-read caught it. Tests are in `tests/check-notes.test.js`; the spec lists the invariant.

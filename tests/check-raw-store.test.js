@@ -75,7 +75,7 @@ test("a source Note citing a tracked, unchanged raw file passes every invariant"
   assert.equal(exitCode, 0, stdout);
   assert.deepEqual(
     report.invariants.map((entry) => [entry.id, entry.status]),
-    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((id) => [id, "pass"]),
+    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13].map((id) => [id, "pass"]),
   );
   assert.equal(invariant(report, 12).name, "raw-store-unchanged");
   assert.deepEqual(report.notes, { notes: 5, conceptNotes: 3 });

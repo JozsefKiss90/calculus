@@ -4,9 +4,9 @@
 
 **Blocked by:** 02
 
-**Status:** ready-for-human
+**Status:** done
 
-- [ ] One run creates 61 Notes across the five domains, and Obsidian's graph view shows no unresolved links
+- [x] One run creates 61 Notes across the five domains, and Obsidian's graph view shows no unresolved links
 - [x] Every created Note has the eight sections in spec order, with the two generated sections present but empty between their markers
 - [x] A second run writes nothing and reports no change
 - [x] A run after a Note has been hand-edited leaves that Note's content byte-identical
@@ -80,3 +80,5 @@ Notes for the tickets that extend this:
   `CI runs the same npm scripts…` fails before and after this change, because
   `core.autocrlf` checks `check.yml` out with CRLF and its `/^on:\n/` regex expects LF.
   This is a test-or-attributes fix that belongs to 03's area, not to this ticket.
+
+**Closed 2026-10-03.** The author opened the vault in Obsidian and confirmed the graph view shows no unresolved links.

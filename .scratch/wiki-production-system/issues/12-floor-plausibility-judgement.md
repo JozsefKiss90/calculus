@@ -4,7 +4,7 @@
 
 **Blocked by:** 11
 
-**Status:** ready-for-human
+**Status:** done
 
 - [x] `check` lists every Note with no prerequisites, so the judgement set is derived from the graph
 - [x] A recorded judgement per Floor Note — plausible, or flagged with a reason — lives in a single file outside the Notes
@@ -59,3 +59,5 @@ The CRLF failure in `tests/precommit-and-ci-gate.test.js` noted under 11 is stil
 failing test.
 
 Note for 17: the dashboard can read `floorNotes` and `judged` directly from the metric.
+
+**Closed 2026-10-03.** Every criterion was met and ticket 18 ran the full Layer 0 pipeline on this implementation unchanged; the author signed off all nine Floor Notes and closed 18. The judgements recorded above stand as made unless the author reopens them.

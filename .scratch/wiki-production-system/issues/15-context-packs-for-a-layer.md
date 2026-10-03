@@ -8,7 +8,7 @@ The Note Author contract comes with it: one Pack, one Node, and it does not read
 
 **Blocked by:** 06, 07, 08, 13
 
-**Status:** ready-for-human
+**Status:** done
 
 - [x] Layer is computed; the Layer 0 run emits nine Packs, and the computed Layer count for Module 1 is 13
 - [x] A Pack contains exactly the specified contents and nothing more, with a test asserting on the absence of anything else
@@ -69,3 +69,5 @@ From 18, which ran the nine Layer 0 Packs through real Note Authors. These are w
 
   The *Signed arithmetic* error is the one ticket 16 caught in the earlier draft, made again by a fresh author from a fresh Pack. A house style rule along the lines of "test every *always*, *never* or *any* claim against 0, negatives and equal values" might catch these before review.
 - **Writing through a bash heredoc corrupts LaTeX.** One author's first write turned `\f` in `\frac` into a form feed. The Note Author contract could say to write the Note with the Write or Edit tool.
+
+**Closed 2026-10-03.** Every criterion was met and ticket 18 ran the full Layer 0 pipeline on this implementation unchanged; the author signed off all nine Floor Notes and closed 18. The judgements recorded above stand as made unless the author reopens them.

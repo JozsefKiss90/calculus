@@ -6,7 +6,7 @@ A red metric exits non-zero, which the gate wired in 03 already enforces. Floor 
 
 **Blocked by:** 05
 
-**Status:** ready-for-human
+**Status:** done
 
 - [x] Each of the five metrics has fixtures at its green, yellow and red boundaries, asserting both the level in the report and the exit code
 - [x] A red metric exits non-zero; a yellow metric exits zero and is visible in both the report and the human summary
@@ -86,3 +86,5 @@ Note for 17: the dashboard reads `report.metrics` and `summary.metrics`.
 Unrelated and still failing: `tests/precommit-and-ci-gate.test.js`'s "CI runs the same npm
 scripts" fails on this Windows checkout, because the workflow file has CRLF line endings
 and the test's regex expects a bare LF. It fails the same way without this ticket's changes.
+
+**Closed 2026-10-03.** The author reversed the open judgement: a Cross-reference now excludes the whole Prerequisite Closure in both directions, not the direct Edge only, because a prose link down the closure restates an ordering the graph already makes and Layer 1 prose will mostly point down it. `zeroCrossReferences` builds each Note's closure with `reachableFrom`; the spec, the glossary and the metric's action text say the same. On the real vault this moved the metric from yellow to red, since the Floor Notes' authored links all pointed up to the Notes that require them; the author directed one marked aside to a sibling Floor Note in each of *Signed arithmetic and order of operations*, *Multiplication, division, squares, and roots* and *Coordinates, tables, and plotting*, and the metric is green at 0 of 9. The stale rule and malformed dates counting as stale stand.

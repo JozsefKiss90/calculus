@@ -6,7 +6,7 @@ The log is generated, not hand-written. The reference wiki's log was hand-mainta
 
 **Blocked by:** 06, 11
 
-**Status:** ready-for-human
+**Status:** done
 
 - [x] `generate` writes all three, and a second run on an unchanged vault produces an empty diff
 - [x] Every number on the dashboard comes from the same computation `check` gates on; a test changes a vault and asserts the report and the dashboard agree
@@ -24,3 +24,5 @@ The dashboard is a `kind: observability` Note, so it is held to every invariant.
 The log appends an entry only when a Note's `status` or `reviewed_by` moved, a metric's level or the verdict changed, or `--layer` dispatched a Layer. This is how "an entry per pipeline run" squares with "a second run produces an empty diff". It finds what moved by comparing the vault with the state the last entry recorded, kept as JSON in an HTML comment at the log's foot. Two `--layer` runs in a row log two entries, since each dispatches the Layer again.
 
 `tests/index-dashboard-log.test.js` covers all of it through the CLI. The real vault's three files are committed as `generate` wrote them.
+
+**Closed 2026-10-03.** Every criterion was met and ticket 18 ran the full Layer 0 pipeline on this implementation unchanged; the author signed off all nine Floor Notes and closed 18. The judgements recorded above stand as made unless the author reopens them.

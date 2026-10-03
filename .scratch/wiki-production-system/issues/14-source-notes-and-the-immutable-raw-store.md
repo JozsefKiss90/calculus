@@ -6,7 +6,7 @@ The Source Curator agent contract comes with it: its input is a named reference,
 
 **Blocked by:** 05, 07
 
-**Status:** ready-for-human
+**Status:** done
 
 - [x] `raw/` holds the extract, and `check` fails if the content of a tracked raw file changes
 - [x] A source Note with a missing or invalid `source_file`, `source_type` or `date_ingested` fails `check`
@@ -34,3 +34,5 @@ From 14, which implemented it. The reference curated end to end is OpenStax *Cal
 - **Testing-standard deviation.** `tests/conventions.test.js` now reads `wiki/sources/` as well as `Conventions.md`. That stretches 07's ruled deviation. The alternative is to move the attribution rules into `check`.
 
 **For 15:** a source Note's `domain` is `sources` (invariant 6), so "the source Notes for the Node's domain" cannot come from `domain`. This one carries `tags: [limits]`, and the contract tells the Curator to tag each domain a reference serves. A Pack can select on that tag.
+
+**Closed 2026-10-03.** The author ruled: the `source_type` enum stands and grows when a sixth kind appears; the five proposed **This Wiki** lines stand; the line budget is pinned at 140 as a soft diagnostic and the fix is a slice per Pack, filed as ticket 19; the conventions test reading `wiki/sources/` is a content test under the rule the spec's Testing Decisions now state.

@@ -304,6 +304,21 @@ Health: check passes.
 - Archetype coverage: Notes with no Interactive: green
 - Floor plausibility: Floor Notes flagged above 8th grade: green
 
+## 2026-10-03 · no Layer
+
+No Note moved state.
+
+61 concept Notes: 52 stub, 0 drafted, 9 reviewed.
+
+Health: check passes.
+
+- Broken wikilinks: green
+- Notes with zero Cross-references: green
+- Stale updated (\>30d, non-reviewed): green
+- Notes still stub after their Layer is opened: green
+- Archetype coverage: Notes with no Interactive: green
+- Floor plausibility: Floor Notes flagged above 8th grade: green
+
 <!-- log-state: what the last entry recorded, which the next generate run compares against. Written by generate; never edit by hand.
 {
   "notes": {
@@ -373,7 +388,7 @@ Health: check passes.
     "status": "pass",
     "metrics": {
       "broken-wikilinks": "green",
-      "zero-cross-references": "yellow",
+      "zero-cross-references": "green",
       "stale-updated": "green",
       "stubs-in-opened-layers": "green",
       "archetype-coverage": "green",

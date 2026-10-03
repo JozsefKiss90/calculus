@@ -8,7 +8,7 @@ This ticket needs no code and is blocked only by 01, so it runs in parallel with
 
 **Blocked by:** 01
 
-**Status:** ready-for-human
+**Status:** done
 
 - [x] The house style rules exist as one file short enough to go into every Context Pack whole
 - [x] Every rule is stated so an agent can comply without being shown an example Note
@@ -47,3 +47,5 @@ asked. Beyond the two things a hand edit never touches, it lists what is not a h
 all: adding, renaming or moving a Note, sign-off, raw and source material, and CLI-written
 files. It ends on `check` naming nothing in the edited Note. `check` passes with it in
 place; it has no frontmatter, so it is not a Note.
+
+**Closed 2026-10-03.** The author read `docs/house-style.md` and `wiki/CLAUDE.md` and let the five judgements stand. Both had already governed the Layer 0 drafts and reviews unchanged.

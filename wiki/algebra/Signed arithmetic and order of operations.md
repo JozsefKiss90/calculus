@@ -98,6 +98,8 @@ caption: Each line is the same calculation, worked one BIDMAS rank at a time.
 
 **Thinking a negative times a negative is negative**, as in $(-6) \times (-2) = -12$. Two numbers with the same sign multiply to a positive answer, so $(-6) \times (-2) = 12$. Check it with a pattern: $(-6) \times 2 = -12$, $(-6) \times 1 = -6$, $(-6) \times 0 = 0$. Each step down in the second number adds $6$, so $(-6) \times (-1) = 6$ and $(-6) \times (-2) = 12$.
 
+If you want the number line itself set out in more detail, with decimals and ordering on it, [[Decimals, ordering, and number lines]] does that. Nothing here depends on it.
+
 ## Builds on
 
 <!-- generated:start builds-on -->
