@@ -24,7 +24,7 @@ The Wiki's health as `npm run check` computes it, written here by `npm run gener
 
 | Layer | Notes | Stub | Drafted | Reviewed |
 | ---: | ---: | ---: | ---: | ---: |
-| 0 | 9 | 0 | 9 | 0 |
+| 0 | 9 | 0 | 0 | 9 |
 | 1 | 11 | 11 | 0 | 0 |
 | 2 | 10 | 10 | 0 | 0 |
 | 3 | 9 | 9 | 0 | 0 |
@@ -37,9 +37,9 @@ The Wiki's health as `npm run check` computes it, written here by `npm run gener
 | 10 | 1 | 1 | 0 | 0 |
 | 11 | 1 | 1 | 0 | 0 |
 | 12 | 1 | 1 | 0 | 0 |
-| **All** | **61** | **52** | **9** | **0** |
+| **All** | **61** | **52** | **0** | **9** |
 
-9 Notes are reviewed by an agent and wait for human sign-off. 0 Notes are signed off by a human.
+0 Notes are reviewed by an agent and wait for human sign-off. 9 Notes are signed off by a human.
 
 ## The graph
 
@@ -82,17 +82,7 @@ The Wiki's health as `npm run check` computes it, written here by `npm run gener
 
 ### Floor plausibility: Floor Notes flagged above 8th grade: green
 
-9 Floor Notes: 0 plausible, 0 flagged, 9 unjudged.
-
-- [[Division restrictions]]: has no recorded judgement; record plausible or flagged in observability/Floor Plausibility.md
-- [[Equivalent fractions and cancellation]]: has no recorded judgement; record plausible or flagged in observability/Floor Plausibility.md
-- [[Factors and multiples]]: has no recorded judgement; record plausible or flagged in observability/Floor Plausibility.md
-- [[Inverse operations]]: has no recorded judgement; record plausible or flagged in observability/Floor Plausibility.md
-- [[Multiplication, division, squares, and roots]]: has no recorded judgement; record plausible or flagged in observability/Floor Plausibility.md
-- [[Signed arithmetic and order of operations]]: has no recorded judgement; record plausible or flagged in observability/Floor Plausibility.md
-- [[Coordinates, tables, and plotting]]: has no recorded judgement; record plausible or flagged in observability/Floor Plausibility.md
-- [[Inputs, outputs, and composition]]: has no recorded judgement; record plausible or flagged in observability/Floor Plausibility.md
-- [[Decimals, ordering, and number lines]]: has no recorded judgement; record plausible or flagged in observability/Floor Plausibility.md
+9 Floor Notes: 9 plausible, 0 flagged, 0 unjudged.
 
 ## Live view
 

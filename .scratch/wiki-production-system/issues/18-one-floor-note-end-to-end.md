@@ -6,14 +6,14 @@ This is the only ticket that answers the question the project turns on: does thi
 
 **Blocked by:** 10, 12, 15, 16, 17
 
-**Status:** ready-for-human
+**Status:** done
 
-- [ ] One Floor Note reaches `status: reviewed` and `reviewed_by: human` through every stage, with no stage skipped and no hand-patching of a generated block
-- [ ] `check` exits 0 at every stage, and the dashboard and log show each transition
-- [ ] The Note is readable and complete in Obsidian alone, with the Interactive visible as a readable block
-- [ ] The author judges the Note good enough to learn from — the one criterion no script checks
+- [x] One Floor Note reaches `status: reviewed` and `reviewed_by: human` through every stage, with no stage skipped and no hand-patching of a generated block
+- [x] `check` exits 0 at every stage, and the dashboard and log show each transition
+- [x] The Note is readable and complete in Obsidian alone, with the Interactive visible as a readable block
+- [x] The author judges the Note good enough to learn from — the one criterion no script checks
 - [x] Anything the Pack lacked for writing it is recorded against 15 rather than patched in place
-- [ ] Human sign-off was the only route to reviewed, and no agent set either field
+- [x] Human sign-off was the only route to reviewed, and no agent set either field
 
 ## Comments
 
@@ -36,3 +36,9 @@ This is the only ticket that answers the question the project turns on: does thi
 - **Catalogue ambiguity.** It does not say whether `grid-plotter`'s `join` draws straight segments or a smooth curve. *Coordinates, tables, and plotting* left `join` off for that reason.
 
 **Left for the author:** sign-off (`status: reviewed`, `reviewed_by: human`) on each Note judged good enough to learn from, the nine Floor plausibility verdicts, and triage of the five Archetype gaps. No agent set either sign-off field.
+
+**Closed 2026-10-03.** The author read all nine Floor Notes in Obsidian, judged each good enough to learn from, recorded nine `plausible` verdicts in `observability/Floor Plausibility.md`, and set `status: reviewed` and `reviewed_by: human` on each by hand. No agent wrote either field or any verdict. `generate` logged the nine transitions from `drafted, reviewed by agent` to `reviewed, reviewed by human`; `check` passes with 12 of 12 invariants and no red metric. The dashboard reports 9 Notes signed off by a human and 0 awaiting sign-off.
+
+Two hand-edit slips were repaired with the author's approval before check went green: in eight Notes the sign-off edit had replaced `requires: []` and left the stale `reviewed_by: agent` line, and the plausibility table had a blank line after its header that hid every row. A session fixed `requires` and the stale line only; the log carries one spurious reviewed → drafted → reviewed round-trip for *Decimals, ordering, and number lines* from an editor revert during that repair.
+
+The one remaining yellow is two Notes with no Cross-references, *Multiplication, division, squares, and roots* and *Coordinates, tables, and plotting*, to be linked when next edited. The open Anchor Graph query about *Variables, substitution, and brackets* is still the author's to settle.

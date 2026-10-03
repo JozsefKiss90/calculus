@@ -17,3 +17,12 @@ Note is ever a Floor Note again. Only a human writes this file. No agent records
 
 | Note | Verdict | Reason |
 |---|---|---|
+| [[Division restrictions]] | plausible | |
+| [[Equivalent fractions and cancellation]] | plausible | |
+| [[Factors and multiples]] | plausible | |
+| [[Inverse operations]] | plausible | |
+| [[Multiplication, division, squares, and roots]] | plausible | |
+| [[Signed arithmetic and order of operations]] | plausible | |
+| [[Coordinates, tables, and plotting]] | plausible | |
+| [[Inputs, outputs, and composition]] | plausible | |
+| [[Decimals, ordering, and number lines]] | plausible | |

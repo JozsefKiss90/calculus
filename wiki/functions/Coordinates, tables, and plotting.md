@@ -2,8 +2,8 @@
 kind: concept
 domain: functions
 requires: []
-status: drafted
-reviewed_by: agent
+status: reviewed
+reviewed_by: human
 created: 2026-10-02
 updated: 2026-10-03
 ---
