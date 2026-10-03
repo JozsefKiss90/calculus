@@ -16,6 +16,17 @@ updated: 2026-10-02
 
 ## The idea
 
+```interactive
+archetype: limit-table
+function:
+  family: rational
+  coefficients: [1, 0, -1]
+  denominator: [1, -1]
+  label: 'f(x) = \frac{x^2 - 1}{x - 1}'
+approach: 1
+caption: There is no output at 1 itself, but both columns close in on 2.
+```
+
 ## Worked example
 
 ## Common mistakes

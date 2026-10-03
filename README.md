@@ -111,5 +111,7 @@ mocked. See [the testing decisions](.scratch/wiki-production-system/spec.md#test
 | `raw/` | The immutable raw source store |
 | `docs/adr/` | The decisions that govern the system |
 | `docs/archetype-catalogue.md` | The closed set of Archetypes every Interactive instantiates, with their parameter schemas |
+| `docs/house-style.md` | The voice every Note is written in, copied whole into each Context Pack |
+| `wiki/CLAUDE.md` | What governs a hand edit to one Note, and what it must leave alone |
 | `GLOSSARY.md` | The vocabulary |
 | `.scratch/` | Specs and tickets — this repo's issue tracker |

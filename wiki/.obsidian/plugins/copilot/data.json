@@ -372,9 +372,321 @@
       "folder": "copilot/skills"
     }
   },
-  "providers": {},
-  "configuredModels": [],
-  "backends": {},
+  "providers": {
+    "7a337346-3118-4966-82d6-fdeebac7b28e": {
+      "providerType": "anthropic",
+      "displayName": "Claude",
+      "origin": {
+        "kind": "agent",
+        "agentType": "claude"
+      },
+      "requiresApiKey": false,
+      "providerId": "7a337346-3118-4966-82d6-fdeebac7b28e",
+      "addedAt": 1790967062496,
+      "apiKeyKeychainId": null
+    }
+  },
+  "configuredModels": [
+    {
+      "providerId": "7a337346-3118-4966-82d6-fdeebac7b28e",
+      "info": {
+        "id": "default",
+        "displayName": "Default (recommended)",
+        "description": "Opus 5.5 · Best for everyday, complex tasks"
+      },
+      "configuredModelId": "bfc220ab-7386-481e-8dde-7e01e7ae32e9",
+      "configuredAt": 1790967063436
+    },
+    {
+      "providerId": "7a337346-3118-4966-82d6-fdeebac7b28e",
+      "info": {
+        "id": "opus",
+        "displayName": "Opus 5.5",
+        "description": "For complex work and everyday tasks"
+      },
+      "configuredModelId": "360c03b0-31a1-4e0f-97bb-85b758e4e414",
+      "configuredAt": 1790967063437
+    },
+    {
+      "providerId": "7a337346-3118-4966-82d6-fdeebac7b28e",
+      "info": {
+        "id": "fable",
+        "displayName": "Fable 5.1",
+        "description": "For your toughest challenges"
+      },
+      "configuredModelId": "c90223f0-a94b-4627-a5e2-4110a983d707",
+      "configuredAt": 1790967063438
+    },
+    {
+      "providerId": "7a337346-3118-4966-82d6-fdeebac7b28e",
+      "info": {
+        "id": "sonnet",
+        "displayName": "Sonnet 5.5",
+        "description": "Most efficient for simpler tasks"
+      },
+      "configuredModelId": "0c117662-9abe-4f91-b10c-05c7f97395df",
+      "configuredAt": 1790967063438
+    },
+    {
+      "providerId": "7a337346-3118-4966-82d6-fdeebac7b28e",
+      "info": {
+        "id": "haiku",
+        "displayName": "Haiku 4.5",
+        "description": "Fastest for quick answers"
+      },
+      "configuredModelId": "6d295bb2-669e-40a6-a049-b6208fef3818",
+      "configuredAt": 1790967063439
+    },
+    {
+      "providerId": "7a337346-3118-4966-82d6-fdeebac7b28e",
+      "info": {
+        "id": "claude-sonnet-5",
+        "displayName": "Sonnet 5",
+        "modalities": {
+          "input": [
+            "text",
+            "image",
+            "pdf"
+          ],
+          "output": [
+            "text"
+          ]
+        },
+        "limits": {
+          "context": 1000000,
+          "output": 128000
+        },
+        "reasoning": true,
+        "toolCall": true,
+        "releaseDate": "2026-06-29",
+        "cost": {
+          "input": 2,
+          "output": 10,
+          "cacheRead": 0.2,
+          "cacheWrite": 2.5
+        },
+        "description": "Efficient for routine tasks"
+      },
+      "configuredModelId": "067f9fe6-3466-4e3c-a4ea-78287f961b82",
+      "configuredAt": 1790967063439
+    },
+    {
+      "providerId": "7a337346-3118-4966-82d6-fdeebac7b28e",
+      "info": {
+        "id": "claude-opus-5",
+        "displayName": "Opus 5",
+        "modalities": {
+          "input": [
+            "text",
+            "image",
+            "pdf"
+          ],
+          "output": [
+            "text"
+          ]
+        },
+        "limits": {
+          "context": 1000000,
+          "output": 128000
+        },
+        "reasoning": true,
+        "toolCall": true,
+        "releaseDate": "2026-07-24",
+        "cost": {
+          "input": 5,
+          "output": 25,
+          "cacheRead": 0.5,
+          "cacheWrite": 6.25
+        },
+        "description": "Best for everyday, complex tasks"
+      },
+      "configuredModelId": "5aad51eb-e01d-4dcc-913a-1dca8597ff6d",
+      "configuredAt": 1790967063440
+    },
+    {
+      "providerId": "7a337346-3118-4966-82d6-fdeebac7b28e",
+      "info": {
+        "id": "claude-fable-5",
+        "displayName": "Fable 5",
+        "modalities": {
+          "input": [
+            "text",
+            "image",
+            "pdf"
+          ],
+          "output": [
+            "text"
+          ]
+        },
+        "limits": {
+          "context": 1000000,
+          "output": 128000
+        },
+        "reasoning": true,
+        "toolCall": true,
+        "releaseDate": "2026-06-07",
+        "cost": {
+          "input": 10,
+          "output": 50,
+          "cacheRead": 1,
+          "cacheWrite": 12.5
+        },
+        "description": "Most capable for your hardest and longest-running tasks"
+      },
+      "configuredModelId": "4b95d767-f578-4e2c-81c4-5dd65e2859b7",
+      "configuredAt": 1790967063440
+    },
+    {
+      "providerId": "7a337346-3118-4966-82d6-fdeebac7b28e",
+      "info": {
+        "id": "claude-opus-4-8",
+        "displayName": "Opus 4.8",
+        "modalities": {
+          "input": [
+            "text",
+            "image",
+            "pdf"
+          ],
+          "output": [
+            "text"
+          ]
+        },
+        "limits": {
+          "context": 1000000,
+          "output": 128000
+        },
+        "reasoning": true,
+        "toolCall": true,
+        "releaseDate": "2026-05-28",
+        "cost": {
+          "input": 5,
+          "output": 25,
+          "cacheRead": 0.5,
+          "cacheWrite": 6.25
+        },
+        "description": "Best for everyday, complex tasks"
+      },
+      "configuredModelId": "c18a620b-518c-44cb-b32c-8c24612daeef",
+      "configuredAt": 1790967063440
+    },
+    {
+      "providerId": "7a337346-3118-4966-82d6-fdeebac7b28e",
+      "info": {
+        "id": "claude-opus-4-7",
+        "displayName": "Opus 4.7",
+        "modalities": {
+          "input": [
+            "text",
+            "image",
+            "pdf"
+          ],
+          "output": [
+            "text"
+          ]
+        },
+        "limits": {
+          "context": 1000000,
+          "output": 128000
+        },
+        "reasoning": true,
+        "toolCall": true,
+        "releaseDate": "2026-04-14",
+        "cost": {
+          "input": 5,
+          "output": 25,
+          "cacheRead": 0.5,
+          "cacheWrite": 6.25
+        },
+        "description": "Best for everyday, complex tasks"
+      },
+      "configuredModelId": "1aa3815e-6bf4-41ae-a48f-afe867721ff3",
+      "configuredAt": 1790967063440
+    },
+    {
+      "providerId": "7a337346-3118-4966-82d6-fdeebac7b28e",
+      "info": {
+        "id": "claude-opus-4-6",
+        "displayName": "Opus 4.6",
+        "modalities": {
+          "input": [
+            "text",
+            "image",
+            "pdf"
+          ],
+          "output": [
+            "text"
+          ]
+        },
+        "limits": {
+          "context": 1000000,
+          "output": 128000
+        },
+        "reasoning": true,
+        "toolCall": true,
+        "releaseDate": "2026-02-04",
+        "cost": {
+          "input": 5,
+          "output": 25,
+          "cacheRead": 0.5,
+          "cacheWrite": 6.25
+        },
+        "description": "Best for everyday, complex tasks"
+      },
+      "configuredModelId": "341c41f0-ed06-4aba-9dd2-151a43b6c99e",
+      "configuredAt": 1790967063441
+    },
+    {
+      "providerId": "7a337346-3118-4966-82d6-fdeebac7b28e",
+      "info": {
+        "id": "claude-sonnet-4-6",
+        "displayName": "Sonnet 4.6",
+        "modalities": {
+          "input": [
+            "text",
+            "image",
+            "pdf"
+          ],
+          "output": [
+            "text"
+          ]
+        },
+        "limits": {
+          "context": 1000000,
+          "output": 128000
+        },
+        "reasoning": true,
+        "toolCall": true,
+        "releaseDate": "2026-02-17",
+        "cost": {
+          "input": 3,
+          "output": 15,
+          "cacheRead": 0.3,
+          "cacheWrite": 3.75
+        },
+        "description": "Efficient for routine tasks"
+      },
+      "configuredModelId": "d0e5e974-a26e-46db-9f6e-617938f5dac1",
+      "configuredAt": 1790967063441
+    }
+  ],
+  "backends": {
+    "claude": {
+      "enabledModels": [
+        "bfc220ab-7386-481e-8dde-7e01e7ae32e9",
+        "360c03b0-31a1-4e0f-97bb-85b758e4e414",
+        "c90223f0-a94b-4627-a5e2-4110a983d707",
+        "0c117662-9abe-4f91-b10c-05c7f97395df",
+        "6d295bb2-669e-40a6-a049-b6208fef3818",
+        "067f9fe6-3466-4e3c-a4ea-78287f961b82",
+        "5aad51eb-e01d-4dcc-913a-1dca8597ff6d",
+        "4b95d767-f578-4e2c-81c4-5dd65e2859b7",
+        "c18a620b-518c-44cb-b32c-8c24612daeef",
+        "1aa3815e-6bf4-41ae-a48f-afe867721ff3",
+        "341c41f0-ed06-4aba-9dd2-151a43b6c99e",
+        "d0e5e974-a26e-46db-9f6e-617938f5dac1"
+      ]
+    }
+  },
   "copilotPlusCatalog": {
     "models": [
       {

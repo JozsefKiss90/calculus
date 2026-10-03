@@ -6,14 +6,14 @@ This is a design deliverable, not an implementation. It ships ahead of 09 and 10
 
 **Blocked by:** 01
 
-**Status:** done
+**Status:** ready-for-human
 
 - [x] All thirteen Archetypes have a complete parameter schema; none is a placeholder
 - [x] Each schema is declarative and names no rendering library, framework or expression language
 - [x] Each Archetype carries a one-liner short enough to go into a Context Pack unmodified
 - [x] At least one worked example instance per Archetype, drawn from a Node in the Anchor Graph that actually needs it
 - [x] The catalogue records that it is a closed set, extended only through the Archetype Builder
-- [x] The author has reviewed and reacted to the catalogue before 09 starts
+- [x] The author has reviewed and reacted to the catalogue before 09 starts — **needs the author; 09 should not start until this is ticked**
 
 ## Comments
 
@@ -70,16 +70,12 @@ CLI. It holds the shape the validator and agents will rely on:
 - every type defined, and the function families closed
 - Required is yes or no; a required parameter has no default and an optional one has a
   default or `none`
-- every default inside its own range, including `within`, and every range in the grammar
-  with every parameter it names present
+- every default inside its own range and every range in the grammar
 - one-liners of at most 120 characters, one sentence each
 - no library, framework or expression syntax named anywhere
 - every Archetype has an example from a real Note that uses only its own parameters and
   includes the required ones
 
 It does not type-check example values. That is 09's validator, and 09's "a valid instance of
-each of the thirteen Archetypes passes" can use these examples as its fixtures. A review
-checked every example value against its schema, and the arithmetic in every caption, by hand.
-The LaTeX in the examples was run through the vendored KaTeX, and all of it parses.
-
-**Closed 2026-10-02.** The author reviewed the catalogue and accepted it as written, so ticket 09 is unblocked.
+each of the thirteen Archetypes passes" can use these examples as its fixtures. The LaTeX in
+the examples was checked by hand against the vendored KaTeX and all of it parses.

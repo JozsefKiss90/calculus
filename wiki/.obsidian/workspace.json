@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Module 1 Anchor Graph.md",
+                "file": "calculus/Derivative.md",
                 "mode": "preview",
                 "source": false
               },
-              "icon": "lucide-file-text",
-              "title": "Module 1 Anchor Graph"
+              "icon": "lucide-file",
+              "title": "Derivative"
             }
           }
         ]
@@ -40,10 +40,7 @@
             "state": {
               "type": "file-explorer",
               "state": {
-                "sortOrder": "alphabetical",
-                "autoReveal": false,
-                "showSearch": false,
-                "searchQuery": ""
+                "sortOrder": "alphabetical"
               },
               "icon": "lucide-folder-closed",
               "title": "Files"
@@ -182,12 +179,32 @@
       "daily-notes:Open today's daily note": false,
       "templates:Insert template": false,
       "command-palette:Open command palette": false,
-      "bases:Create new base": false,
       "copilot:Open Copilot Agent Chat": false
     }
   },
   "active": "c3443cff9db862b6",
   "lastOpenFiles": [
-    "Module 1 Anchor Graph.md"
+    "Conventions.md.tmp.5608.a66ea4f8ebac",
+    "sources/OpenStax Calculus Volume 1, section 2.2.md",
+    "sources/OpenStax Calculus Volume 1, section 2.2.md.tmp.5608.2b1bc061b2d0",
+    "Conventions.md.tmp.5608.c657dd48d9b5",
+    "sed9ZKOKD",
+    "CLAUDE.md",
+    "CLAUDE.md.tmp.5608.ef4d8d0f50e5",
+    "observability/Floor Plausibility.md",
+    "observability/Floor Plausibility.md.tmp.5608.2cd107c4edaa",
+    "algebra/Algebraic fractions and rationalisation.md",
+    "trigonometry/Limit of (cos h - 1) over h as h approaches zero.md",
+    "limits/Calculating limits.md",
+    "trigonometry/Limit of sin h over h as h approaches zero.md",
+    "trigonometry/Angles, circumference, and arc length.md",
+    "limits/Continuity.md",
+    "limits/Approaching a value.md",
+    "trigonometry/Trigonometric identities.md",
+    "limits/Absolute value, intervals, and inequalities.md",
+    "Conventions.md",
+    "Module 1 Anchor Graph.md",
+    "Conventions.md.tmp.5608.23c43ec572ab",
+    "trigonometry/Pythagorean, addition, double-angle, and half-angle identities.md"
   ]
 }
