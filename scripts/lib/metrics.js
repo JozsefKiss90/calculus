@@ -1,7 +1,8 @@
-// The five computed graded metrics: the spec's green / yellow / red thresholds table, each row
-// with the action mandated at each level. A red metric fails `check` exactly as a broken
-// invariant does; a yellow one passes and is shown. Floor plausibility is the table's sixth
-// row and is not here, because it is a recorded review judgement rather than a computation.
+// The graded metrics: the spec's green / yellow / red thresholds table, each row with the
+// action mandated at each level. A red metric fails `check` exactly as a broken invariant
+// does; a yellow one passes and is shown. Five are computed. The sixth, Floor plausibility,
+// is a recorded review judgement: this only lists the Floor Notes, matches them to the
+// verdicts a human wrote down (floor-judgements.js) and counts the flagged ones.
 //
 // Three of the five are percentages, and they divide over the written concept Notes — those
 // at `drafted` or `reviewed`. A stub has no prose to link from or put an Interactive in, so
@@ -16,6 +17,7 @@
 import { GraphError, layersOf } from "./graph.js";
 import { fencedBlocks, languageOf } from "./fences.js";
 import { BLOCKS, endMarker, startMarker } from "./generated-blocks.js";
+import { FLOOR_JUDGEMENTS_PATH } from "./floor-judgements.js";
 import { buildNotesGraph, indexByName, isConcept, linkTarget, valueOf } from "./notes.js";
 
 const WRITTEN = new Set(["drafted", "reviewed"]);
@@ -78,6 +80,19 @@ const METRIC = {
       red: "The build is blocked. Draft the listed stubs, or hold the Layer's drafts back and land the Layer together.",
     },
   },
+  floorPlausibility: {
+    id: "floor-plausibility",
+    title: "Floor plausibility: Floor Notes flagged above 8th grade",
+    unit: "count",
+    yellowFrom: 1,
+    redAbove: 1,
+    bands: { green: "0", yellow: "1", red: "2+" },
+    actions: {
+      green: "None.",
+      yellow: "Expand the flagged Floor Note: propose the prerequisites it needs as a change to the Anchor Graph, for the author to make. Re-judge it only if the flag was wrong.",
+      red: "The build is blocked. Expand the flagged Floor Notes in the Anchor Graph, or re-judge a flag that was wrong, until no more than one is flagged.",
+    },
+  },
   archetypeCoverage: {
     id: "archetype-coverage",
     title: "Archetype coverage: Notes with no Interactive",
@@ -98,8 +113,10 @@ const METRIC = {
  * @param {object} options
  * @param {string[]} options.files every file in the vault, as vault-relative paths
  * @param {string} options.today the date staleness is measured to, as YYYY-MM-DD
+ * @param {import("./floor-judgements.js").Judgement[]} options.judgements the recorded Floor
+ *   plausibility verdicts
  */
-export function computeMetrics(notes, { files, today }) {
+export function computeMetrics(notes, { files, today, judgements }) {
   const concepts = notes.filter(isConcept);
   const written = concepts.filter((note) => WRITTEN.has(valueOf(note, "status")));
 
@@ -117,6 +134,7 @@ export function computeMetrics(notes, { files, today }) {
     staleUpdated(written, today),
     stubsInOpenedLayers(concepts, graph),
     archetypeCoverage(written),
+    floorPlausibility(concepts, judgements),
   ];
 }
 
@@ -192,7 +210,7 @@ function wikilinkTargets(text) {
 }
 
 // ---------------------------------------------------------------------------------------
-// The five metrics
+// The six metrics
 
 /**
  * Every wikilink in every Note's body that names no file in the vault. A link resolves the
@@ -315,5 +333,69 @@ function archetypeCoverage(written) {
     count: without.length,
     of: written.length,
     notes: without.map((note) => offender(note, "has no Interactive")),
+  });
+}
+
+// ---------------------------------------------------------------------------------------
+// The recorded one
+
+/**
+ * Floor Notes with a recorded `flagged` verdict. A Floor Note is a concept Note whose
+ * `requires` is empty, read from the Notes, so the set to judge is never maintained by hand.
+ * The verdicts are never inferred: a Floor Note nobody has judged is unjudged, which is
+ * neither plausible nor flagged, and a judgement whose Note is no longer a Floor Note is
+ * stale and counts for nothing.
+ */
+function floorPlausibility(concepts, judgements) {
+  const isFloor = (note) => {
+    const requires = valueOf(note, "requires");
+    return Array.isArray(requires) && requires.length === 0;
+  };
+  const floors = concepts.filter(isFloor);
+  const byName = indexByName(concepts);
+  const verdictOf = new Map();
+  const stale = [];
+
+  for (const judgement of judgements) {
+    const found = byName.get(judgement.note.toLowerCase()) ?? [];
+    const where = `${FLOOR_JUDGEMENTS_PATH} line ${judgement.line}`;
+    if (found.length !== 1) {
+      const why = found.length === 0 ? "names no concept Note" : "names more than one concept Note";
+      stale.push({ judgement: judgement.note, line: judgement.line, message: `${where}: [[${judgement.note}]] ${why}` });
+    } else if (!isFloor(found[0])) {
+      stale.push({
+        note: found[0].path,
+        line: judgement.line,
+        message: `${where}: ${found[0].path} has a non-empty requires, so it is not a Floor Note and its judgement counts for nothing`,
+      });
+    } else {
+      verdictOf.set(found[0].path, judgement);
+    }
+  }
+
+  const floorNotes = floors.map((note) => {
+    const judgement = verdictOf.get(note.path);
+    return judgement
+      ? { note: note.path, verdict: judgement.verdict, reason: judgement.reason }
+      : { note: note.path, verdict: "unjudged", reason: "" };
+  });
+  const withVerdict = (verdict) => floorNotes.filter((entry) => entry.verdict === verdict);
+  const flagged = withVerdict("flagged");
+
+  return graded(METRIC.floorPlausibility, {
+    count: flagged.length,
+    judged: {
+      floorNotes: floorNotes.length,
+      plausible: withVerdict("plausible").length,
+      flagged: flagged.length,
+      unjudged: withVerdict("unjudged").length,
+    },
+    floorNotes,
+    unjudged: withVerdict("unjudged").map(({ note }) => ({
+      note,
+      message: `${note}: has no recorded judgement; record plausible or flagged in ${FLOOR_JUDGEMENTS_PATH}`,
+    })),
+    stale,
+    notes: flagged.map(({ note, reason }) => ({ note, reason, message: `${note}: flagged above 8th grade: ${reason}` })),
   });
 }

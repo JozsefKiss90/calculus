@@ -39,6 +39,14 @@ export function renderSummary(report, reportPath) {
     const bands = Object.entries(metric.bands).map(([level, band]) => `${level} ${band}`).join(" · ");
     lines.push(`  ${metric.level.toUpperCase().padEnd(8)}${metric.title}: ${measureOf(metric)}  (${bands})`);
     if (metric.reason) lines.push(`              not measured: ${metric.reason}`);
+    if (metric.judged) {
+      const { floorNotes, plausible, flagged, unjudged } = metric.judged;
+      lines.push(`              ${counted(floorNotes, "Floor Note")}: ${plausible} plausible, ${flagged} flagged, ${unjudged} unjudged`);
+    }
+    // Work waiting on a human is shown at every level, since it is not graded.
+    for (const pending of [...(metric.unjudged ?? []), ...(metric.stale ?? [])]) {
+      lines.push(`              ${pending.message}`);
+    }
     // Green needs nothing done, so only a yellow or red metric spells out its action and Notes.
     if (metric.level !== "yellow" && metric.level !== "red") continue;
     lines.push(`              action: ${metric.action}`);

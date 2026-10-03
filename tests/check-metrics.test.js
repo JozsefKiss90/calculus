@@ -119,7 +119,7 @@ function assertLevel({ exitCode, report, stdout }, id, level) {
   assert.equal(report.status, level === "red" ? "fail" : "pass");
 }
 
-test("a freshly scaffolded vault has all five metrics green, with nothing written to measure", async () => {
+test("a freshly scaffolded vault has all six metrics green, with nothing written to measure", async () => {
   const result = await check(await scaffoldedVault());
 
   assert.equal(result.exitCode, 0, result.stdout);
@@ -131,9 +131,10 @@ test("a freshly scaffolded vault has all five metrics green, with nothing writte
       ["stale-updated", "green"],
       ["stubs-in-opened-layers", "green"],
       ["archetype-coverage", "green"],
+      ["floor-plausibility", "green"],
     ],
   );
-  assert.deepEqual(result.report.summary.metrics, { green: 5, yellow: 0, red: 0, skipped: 0 });
+  assert.deepEqual(result.report.summary.metrics, { green: 6, yellow: 0, red: 0, skipped: 0 });
 });
 
 test("every metric states its thresholds and the mandated action for the level it is at", async () => {
@@ -341,7 +342,7 @@ test("a yellow metric is in the human summary and the closing line, and the chec
   const { exitCode, stdout } = await check(fixture);
 
   assert.equal(exitCode, 0);
-  assert.match(stdout, /check passed: 11 of 11 invariants hold; metrics 4 green, 1 yellow, 0 red/);
+  assert.match(stdout, /check passed: 11 of 11 invariants hold; metrics 5 green, 1 yellow, 0 red/);
 });
 
 test("a red metric fails the check on its own, and the closing line says which", async () => {
@@ -354,5 +355,5 @@ test("a red metric fails the check on its own, and the closing line says which",
   assert.equal(exitCode, 1);
   assert.equal(report.summary.invariantsFailed, 0);
   assert.match(stdout, /RED +Broken wikilinks: 4/);
-  assert.match(stdout, /check failed: 11 of 11 invariants hold; metrics 4 green, 0 yellow, 1 red: Broken wikilinks/);
+  assert.match(stdout, /check failed: 11 of 11 invariants hold; metrics 5 green, 0 yellow, 1 red: Broken wikilinks/);
 });

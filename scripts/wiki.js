@@ -10,10 +10,12 @@
 // Exit codes: 0 every invariant holds and no metric is red, every Note asked for exists, or
 // every generated block is written; 1 the check ran and something failed or graded red, or
 // some Notes' blocks could not be written; 2 nothing could run at all — bad usage, no Anchor Graph, a graph that cannot
-// be read, an Archetype catalogue that cannot be read, or a scaffold that was refused.
+// be read, an Archetype catalogue or Floor plausibility judgements that cannot be read, or a
+// scaffold that was refused.
 
 import { AnchorGraphError, loadAnchorGraph } from "./lib/anchor-graph.js";
 import { CatalogueError, loadCatalogue } from "./lib/archetype-catalogue.js";
+import { FloorJudgementError, loadFloorJudgements } from "./lib/floor-judgements.js";
 import { GraphError, graphShape } from "./lib/graph.js";
 import { checkStructuralInvariants } from "./lib/structural-invariants.js";
 import { checkNoteInvariants } from "./lib/note-invariants.js";
@@ -88,13 +90,17 @@ async function main(argv) {
 async function check(vaultDir) {
   let loaded;
   let catalogue;
+  let judgements;
   try {
     loaded = await loadAnchorGraph(vaultDir);
     catalogue = await loadCatalogue();
+    judgements = await loadFloorJudgements(vaultDir);
   } catch (error) {
-    // Only a graph or an Archetype catalogue that cannot be read is a report; anything else
-    // is a bug in this tool and should surface as one rather than as a verdict about the Wiki.
-    if (![AnchorGraphError, GraphError, CatalogueError].some((kind) => error instanceof kind)) throw error;
+    // Only a graph, an Archetype catalogue or a judgements file that cannot be read is a
+    // report; anything else is a bug in this tool and should surface as one rather than as a
+    // verdict about the Wiki.
+    const unreadable = [AnchorGraphError, GraphError, CatalogueError, FloorJudgementError];
+    if (!unreadable.some((kind) => error instanceof kind)) throw error;
     return await reportUnrunnable(vaultDir, error);
   }
 
@@ -108,7 +114,7 @@ async function check(vaultDir) {
       ...checkStructuralInvariants(graph, { terminalNode: TERMINAL_NODE }),
       ...checkNoteInvariants(notes, loaded, catalogue),
     ],
-    metrics: computeMetrics(notes, { files: await vaultFiles(vaultDir), today: localDate() }),
+    metrics: computeMetrics(notes, { files: await vaultFiles(vaultDir), today: localDate(), judgements }),
   });
 
   const reportPath = await writeReport(vaultDir, report);
