@@ -16,6 +16,7 @@ import { fencedBlocks, languageOf } from "./fences.js";
 import { validateInteractive } from "./interactives.js";
 import { findMaths, katexRejection } from "./maths.js";
 import { noteNameFor } from "./note-names.js";
+import { rawPathOf } from "./raw-store.js";
 import { CONCEPT, SUMMARY_HEADING, buildNotesGraph, indexByName, isConcept, resolveLink, summaryOf, valueOf } from "./notes.js";
 
 const INVARIANT = {
@@ -58,7 +59,8 @@ const INVARIANT = {
 
 /**
  * The frontmatter schema (ADR-0003). `values` closes an enum; `list` marks an array of
- * scalars; `only` limits a key to one `kind` of Note.
+ * scalars; `only` limits a key to one `kind` of Note, and with `required` requires it on that
+ * kind alone; `format` says what is wrong with a value, or returns undefined.
  */
 const SCHEMA = {
   kind: { required: true, values: [CONCEPT, "source", "reference", "observability"] },
@@ -70,10 +72,29 @@ const SCHEMA = {
   updated: { required: true },
   aliases: { list: true },
   tags: { list: true },
-  source_file: { only: "source" },
-  source_type: { only: "source" },
-  date_ingested: { only: "source" },
+  // A source Note names the extract in raw/ it was curated from; invariant 12 holds it there.
+  source_file: {
+    only: "source",
+    required: true,
+    format: (value) =>
+      rawPathOf(value) === undefined ? "which is not a path to an extract in raw/, such as raw/<file>" : undefined,
+  },
+  source_type: { only: "source", required: true, values: ["textbook", "lecture-notes", "paper", "reference-work", "curriculum"] },
+  date_ingested: {
+    only: "source",
+    required: true,
+    format: (value) => (isDate(value) ? undefined : "which is not a date written YYYY-MM-DD"),
+  },
 };
+
+/** A real calendar date written YYYY-MM-DD: 2026-02-30 has the shape and is no date. */
+function isDate(value) {
+  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value);
+  if (!match) return false;
+  const [, year, month, day] = match.map(Number);
+  const date = new Date(Date.UTC(year, month - 1, day));
+  return date.getUTCFullYear() === year && date.getUTCMonth() === month - 1 && date.getUTCDate() === day;
+}
 
 /** The statuses at which a Note's one-sentence summary has to exist. */
 const SUMMARISED = new Set(["drafted", "reviewed"]);
@@ -186,13 +207,15 @@ function frontmatterConforms(notes) {
         failures.push(
           failure(note, "out-of-enum-value", `${key} is "${entry.value}", which is not one of ${rule.values.join(", ")}`),
         );
+      } else if (rule.format?.(entry.value)) {
+        failures.push(failure(note, "malformed-value", `${key} is "${entry.value}", ${rule.format(entry.value)}`));
       }
     }
 
     for (const [key, rule] of Object.entries(SCHEMA)) {
-      if (rule.required && !entries.has(key)) {
-        failures.push(failure(note, "missing-key", `${key} is required and absent`));
-      }
+      if (!rule.required || entries.has(key) || (rule.only && kind !== rule.only)) continue;
+      const on = rule.only ? ` on a kind: ${rule.only} Note` : "";
+      failures.push(failure(note, "missing-key", `${key} is required${on} and absent`));
     }
 
     failures.push(...repeatedPrerequisites(note));

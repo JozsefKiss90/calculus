@@ -189,6 +189,8 @@ Any failure is red and fails the build:
 
 11. The graph built from the Notes' `requires` is identical to the Anchor Graph.
 
+12. Every file in `raw/` is tracked in `raw/checksums.sha256` and unchanged since extraction, and every source Note's `source_file` names one. *(Added by ticket 14.)*
+
 These run at two different times, and conflating them was an error in an earlier draft of this spec. Invariants 1–4 are computed from the Anchor Graph file and are a regression gate **from the first commit**, before any Note exists. Invariants 5–10 are computed from the Notes and can only run once `scaffold` has created them. Invariant 11 joins the two and is what makes "agents never change the structure" enforceable rather than conventional; its failure message must name both directions of the mismatch, since adding a Node legitimately produces a one-sided mismatch until both sides are updated.
 
 Invariants 1–4 hold on the Anchor Graph as it stands, verified: 61 Nodes, 97 Edges, acyclic, single root at *Derivative*, 61 of 61 reachable, 9 Floor Nodes.

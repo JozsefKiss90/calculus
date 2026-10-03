@@ -20,6 +20,7 @@ import { GraphError, graphShape } from "./lib/graph.js";
 import { checkStructuralInvariants } from "./lib/structural-invariants.js";
 import { checkNoteInvariants } from "./lib/note-invariants.js";
 import { computeMetrics } from "./lib/metrics.js";
+import { checkRawStore, loadRawStore } from "./lib/raw-store.js";
 import { isConcept, loadNotes, vaultFiles } from "./lib/notes.js";
 import { buildErrorReport, buildReport, writeReport } from "./lib/report.js";
 import { renderSummary } from "./lib/summary.js";
@@ -113,6 +114,7 @@ async function check(vaultDir) {
     invariants: [
       ...checkStructuralInvariants(graph, { terminalNode: TERMINAL_NODE }),
       ...checkNoteInvariants(notes, loaded, catalogue),
+      checkRawStore(notes, await loadRawStore(vaultDir)),
     ],
     metrics: computeMetrics(notes, { files: await vaultFiles(vaultDir), today: localDate(), judgements }),
   });

@@ -342,7 +342,7 @@ test("a yellow metric is in the human summary and the closing line, and the chec
   const { exitCode, stdout } = await check(fixture);
 
   assert.equal(exitCode, 0);
-  assert.match(stdout, /check passed: 11 of 11 invariants hold; metrics 5 green, 1 yellow, 0 red/);
+  assert.match(stdout, /check passed: 12 of 12 invariants hold; metrics 5 green, 1 yellow, 0 red/);
 });
 
 test("a red metric fails the check on its own, and the closing line says which", async () => {
@@ -355,5 +355,5 @@ test("a red metric fails the check on its own, and the closing line says which",
   assert.equal(exitCode, 1);
   assert.equal(report.summary.invariantsFailed, 0);
   assert.match(stdout, /RED +Broken wikilinks: 4/);
-  assert.match(stdout, /check failed: 11 of 11 invariants hold; metrics 5 green, 0 yellow, 1 red: Broken wikilinks/);
+  assert.match(stdout, /check failed: 12 of 12 invariants hold; metrics 5 green, 0 yellow, 1 red: Broken wikilinks/);
 });

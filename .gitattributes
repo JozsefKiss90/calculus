@@ -6,3 +6,7 @@
 # Third-party code, kept byte-for-byte as released: no line-ending conversion, so the
 # checksum in its README holds in every clone, and no diffs of 600 KB of someone else's code.
 scripts/vendor/katex/katex.mjs -text -diff linguist-vendored
+
+# The raw store, byte for byte as extracted: invariant 12 compares each file with its SHA-256
+# in raw/checksums.sha256, and a clone that rewrote line endings would change every one.
+raw/** -text

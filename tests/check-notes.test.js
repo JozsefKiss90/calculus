@@ -29,6 +29,9 @@ const FRACTIONS = "algebra/Equivalent fractions and cancellation.md";
 const ARITHMETIC = "algebra/Signed arithmetic and order of operations.md";
 const LIMITS = "limits/Limits.md";
 
+/** The SHA-256 of zero bytes, a known value: what `sha256sum` prints for an empty file. */
+const EMPTY_FILE_SHA256 = "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855";
+
 const scaffoldedVault = (graph = GRAPH) => makeScaffoldedVault(graph);
 
 async function editNote(vault, path, change) {
@@ -45,7 +48,7 @@ test("check on a freshly scaffolded vault exits 0, every invariant checked and h
   assert.equal(exitCode, 0, stdout);
   assert.deepEqual(
     report.invariants.map((entry) => [entry.id, entry.status]),
-    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map((id) => [id, "pass"]),
+    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((id) => [id, "pass"]),
   );
   assert.deepEqual(report.notes, { notes: 7, conceptNotes: 6 });
 });
@@ -271,8 +274,12 @@ test("files without frontmatter, and Notes that are not concepts, are left out o
   await writeFile(join(vault, "CLAUDE.md"), "# How to edit this vault\n\nSee [[No such Note]].\n", "utf8");
   await writeFile(join(vault, "index.md"), "requires: [[Derivative]]\n\n- [[Limits]]\n", "utf8");
   await writeFile(join(vault, "log.md"), "# Log\n\ndifficulty: 3\n", "utf8");
-  // A source Note carries frontmatter and is no Node.
+  // A source Note carries frontmatter and is no Node. Its extract is tracked, so invariant 12 holds.
   await mkdir(join(vault, "sources"), { recursive: true });
+  await mkdir(join(fixture.root, "raw"), { recursive: true });
+  await writeFile(join(fixture.root, "raw", "stewart.pdf"), "", "utf8");
+  await writeFile(join(fixture.root, "raw", "checksums.sha256"), `${EMPTY_FILE_SHA256}  stewart.pdf
+`, "utf8");
   await writeFile(
     join(vault, "sources", "Stewart Calculus.md"),
     `---

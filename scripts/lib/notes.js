@@ -56,16 +56,20 @@ export async function loadNotes(vaultDir) {
  * resolve to, Markdown or attachment. Dot-directories are not content.
  */
 export async function vaultFiles(vaultDir) {
-  return filesUnder(vaultDir, "");
+  return filesUnder(vaultDir, { dotEntries: false });
 }
 
-async function filesUnder(vaultDir, relativeDir) {
+/**
+ * Every file under a directory as a path relative to it, with forward slashes, in path
+ * order. `dotEntries: false` leaves out files and directories whose names start with a dot.
+ */
+export async function filesUnder(root, { dotEntries = true } = {}, relativeDir = "") {
   const found = [];
-  const entries = await readdir(join(vaultDir, relativeDir), { withFileTypes: true });
+  const entries = await readdir(join(root, relativeDir), { withFileTypes: true });
   for (const entry of entries.sort((a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0))) {
-    if (entry.name.startsWith(".")) continue;
+    if (!dotEntries && entry.name.startsWith(".")) continue;
     const path = relativeDir === "" ? entry.name : `${relativeDir}/${entry.name}`;
-    if (entry.isDirectory()) found.push(...(await filesUnder(vaultDir, path)));
+    if (entry.isDirectory()) found.push(...(await filesUnder(root, { dotEntries }, path)));
     else if (entry.isFile()) found.push(path);
   }
   return found;
