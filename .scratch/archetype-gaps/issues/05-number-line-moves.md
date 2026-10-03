@@ -1,6 +1,6 @@
 # 05: Archetype gap: number-line-moves
 
-**Status:** needs-triage
+**Status:** ready-for-human
 
 **Raised by:** the Interactive Author, for [[Signed arithmetic and order of operations]] (`wiki/algebra/Signed arithmetic and order of operations.md`)
 
@@ -36,3 +36,7 @@ The point a learner most needs to see is that $4 - (-6)$ and $4 + 6$ are the sam
 - One line of caption saying what to notice.
 
 ## Comments
+
+**Triage, 2026-10-03: accepted.** The Note teaches signed addition and subtraction as directed moves, and its commonest mistake is subtracting a negative. `number-line` cannot show either, because its bracket has no direction. The stepper the Note has shows only the rewriting of symbols. Build it as a new Archetype, not as a change to `number-line`, because the Builder appends and never edits. The side-by-side view of $a - (-b)$ and $a + b$ is the part that matters most, so make it more than an afterthought.
+
+**Archetype Builder, 2026-10-03: built `number-line-moves`.** It is a new section at the end of `docs/archetype-catalogue.md`, with `number-line` left as written, and all three validations pass. Please look at four choices. (1) The comparison is `matching`, a second aligned number line beneath with the other operation and the number's sign flipped, so $a - (-b)$ sits above $a + b$ (and $a + (-b)$ above $a - b$). It defaults to `true`, so every instance shows it unless switched off, and `show-equation`, also on by default, writes the chain $4 - (-6) = 4 + 6 = 10$. Right and left arrows are drawn in two colours, the same on both lines. (2) An instance holds one move, not the "one or more moves" the gap asks for. A chain of moves needs each move to carry an operation and a signed number together, and the catalogue has no composite type for that (the existing ones are `function`, `piece`, `step` and `quantity`). Parallel lists of operations and amounts would need a Range term tying two lists to the same length, which the grammar also lacks. The Note's three cases, $5 + (-8)$, $4 - (-6)$ and $7 - (-5)$, are each one move, so I left chains out rather than change the grammar. If you want them, a `move` composite type is your decision. (3) I added `show-wrong-way`, off by default, which draws the struck-through arrow of the learner who moves by the operation alone and ignores the number's sign, such as $7 - (-5)$ going left to $2$. It is there for the Note's common mistake, and is in the spirit of `function-machine`'s `reversed-and-wrong`. Drop it if it is more than you want. (4) The grammar cannot require the landing point $start \pm amount$ to lie within `range`, so `amount`'s Meaning tells the Interactive Author to choose it so it does. `amount` may be $0$, which draws no arrow.

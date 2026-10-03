@@ -1,6 +1,6 @@
 # 03: Archetype gap: fraction-bar
 
-**Status:** needs-triage
+**Status:** ready-for-human
 
 **Raised by:** the Interactive Author, for [[Equivalent fractions and cancellation]] (`wiki/algebra/Equivalent fractions and cancellation.md`)
 
@@ -25,3 +25,7 @@ The same picture would also show the Note's common mistake of changing only the 
 - Optionally a second bar beneath, for comparing two fractions, so a learner can see that two shadings cover the same length or do not.
 
 ## Comments
+
+**Triage, 2026-10-03: accepted.** The Note already has an `expression-stepper`, so this is not for coverage. It is accepted because the shaded bar is the reason equivalent fractions are equal, and the stepper shows only the arithmetic. Later Notes on algebraic fractions are likely to want the same picture. Keep the splitting factor a positive whole number, so the bar never passes through a non-whole number of parts.
+
+**Archetype Builder, 2026-10-03: `fraction-bar`.** Added as the last section of `docs/archetype-catalogue.md`, with two examples from [[Equivalent fractions and cancellation]]: 2 over 3 split into 12 parts with 8 shaded, and 3 over 4 above a fixed bar of 3 over 12 for the denominator-only mistake. All three validations pass. Per triage, `split` is an `integer` from 1, held `within split-range`, an `interval` in `[1, 12]` whose whole numbers are the only stops the slider makes, so the bar never has a non-whole number of parts and never 0 over 0. Three things to look at. First, the grammar has no Range term for "at most another parameter", so `check` cannot hold `shaded` to at most `parts`. Rather than leave such an instance meaningless, I made a shaded count above `parts` a fraction bigger than one, drawn as further whole bars end to end; if you would rather the Archetype show only proper fractions, that needs a new Range term (such as `at most p`). The same gap means `compare-shaded` can exceed `compare-parts`, treated the same way. Second, the second bar is fixed and does not split, which is what the common mistake needs; a second splitting factor for it was left out to keep the schema small. Third, the ranges (`parts` up to 12, `split` up to 12, so at most 144 parts, and `shaded` up to 24) are my guesses at what stays readable on one bar.

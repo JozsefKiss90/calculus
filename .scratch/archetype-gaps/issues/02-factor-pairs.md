@@ -1,6 +1,6 @@
 # 02: Archetype gap: factor-pairs
 
-**Status:** needs-triage
+**Status:** ready-for-human
 
 **Raised by:** the Interactive Author, for [[Factors and multiples]] (`wiki/algebra/Factors and multiples.md`)
 
@@ -31,3 +31,7 @@ The same Note also wants two numbers' lists compared, with what they share picke
 - Optionally negative factor pairs, each positive pair beside its negative twin, as the Note's last paragraph of `## The idea` describes.
 
 ## Comments
+
+**Triage, 2026-10-03: accepted.** The listing method is the core of *Factors and multiples*, and the Note has no Interactive without it. Scope it to one positive whole number: trial divisors stepped up from 1, the pair each exact divisor gives, and the stop when the divisor times itself passes the number. Comparing two numbers' lists for the HCF or LCM is optional. Leave out negative factor pairs: the revised Note treats them as an extension, and factors are positive unless a minus sign is shown.
+
+**Archetype Builder, 2026-10-03: `factor-finder`.** Added as a new section at the end of `## Archetypes` in `docs/archetype-catalogue.md`, after `function-machine`, with three examples from [[Factors and multiples]] (36; 24 and 36 for the HCF; 4 and 6 for the LCM); all three validations pass. Choices to look at: `number` is an `integer` in `[1, 10000]`, so only positive whole numbers are possible, and there is no negative-pairs parameter, per triage. The divisor test, the rejected non-whole quotient, the stop at the first divisor whose square passes the number, the square pair written once and the prime marking are fixed behaviour described in a paragraph under the table, not parameters; the learner controls only `reveal` (step one test at a time, or all at once) and `show-list`. The optional comparison is carried by `compare-with` (a second integer, `differs from number`) and `compare: enum(factors, multiples)` (`needs compare-with`). In `multiples` mode the trial search is replaced by the two lists of multiples, which overloads one Archetype with two pictures; if you would rather keep the Archetype to the listing method alone, delete `compare`, `multiples-listed` and the third example. The length of the multiples lists is a count, `multiples-listed` (default 6, `[2, 20]`), not an upper bound, because a bound has no sensible literal default; with too small a count no LCM is reached and the Interactive says so. The One-liner says "stopping past its square root", a phrase the Note itself never uses (it says "times itself"); reword it if that matters for a Floor Note's Context Pack.

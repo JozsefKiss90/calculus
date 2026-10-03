@@ -708,3 +708,210 @@ h: 1
 show-geometry: false
 caption: The quotient never strays further from 0 than half of h does, so as h shrinks it goes to 0.
 ```
+
+### `function-machine`
+
+**One-liner:** A number fed through a chain of machines, output to input, then undone in reverse or run with the order swapped.
+
+**Serves:** inputs and outputs, composition and its order, inverse operations and undoing steps.
+
+| Parameter | Type | Required | Default | Range | Meaning |
+|---|---|---|---|---|---|
+| `machines` | `list of function` | yes | — | `[1, 4] items` | The machines, first to act first. Each is one function, written on the machine as its label: a `linear` function $[m, c]$ adds, subtracts, multiplies or divides, the `quadratic` $[1, 0, 0]$ squares and the `square-root` $[1, 0, 0]$ takes the square root. |
+| `input` | `number` | yes | — | `[-1000, 1000]` | The starting number. The learner can change it, and each machine's output is shown as it passes on to the next. |
+| `undo` | `enum(none, reversed, reversed-and-wrong)` | no | `none` | — | Whether the chain is undone beneath, from the final output back to the start. `reversed` swaps each machine for its inverse and takes them last first. `reversed-and-wrong` also undoes them in the order they were done, and runs that answer forwards to show it misses the output. |
+| `swap` | `boolean` | no | `false` | — | Runs the same machines in the opposite order beside the chain, from the same input, so the two final outputs can be compared. |
+| `table` | `list of number` | no | `none` | `[1, 8] items; [-1000, 1000]` | Inputs tabulated beside the chain, each with the whole chain's output. |
+| `decimals` | `integer` | no | `2` | `[0, 6]` | Decimal places for every number passed along. |
+| `caption` | `text` | no | `none` | — | One line saying what to notice. |
+
+A machine with no output for the number it is given, such as a square root of a negative number, says so and passes nothing on. When undoing, a machine that cannot be undone, such as multiplying by $0$, or squaring a number that might have been negative, is marked as such, with every input that gives its output.
+
+**Example** — [[Inverse operations]]: multiply by 3, then add 4, takes 5 to 19. Undone last step first, 19 goes back to 15 and then 5.
+
+```interactive
+archetype: function-machine
+machines:
+  - family: linear
+    coefficients: [3, 0]
+    label: '\times 3'
+  - family: linear
+    coefficients: [1, 4]
+    label: '+ 4'
+input: 5
+undo: reversed-and-wrong
+caption: Undo the last step first and 19 goes back to 5. Divide first and you reach 2 and a third, which runs forwards to 11.
+```
+
+**Example** — [[Inputs, outputs, and composition]]: add 3 then square, beside square then add 3, with the input 2.
+
+```interactive
+archetype: function-machine
+machines:
+  - family: linear
+    coefficients: [1, 3]
+    label: 'x + 3'
+  - family: quadratic
+    coefficients: [1, 0, 0]
+    label: 'x^2'
+input: 2
+swap: true
+caption: In one order 2 becomes 5 and then 25, in the other 4 and then 7. Try -1, where both orders give 4.
+```
+
+**Example** — [[Inputs, outputs, and composition]]: the rule multiply by 2, then add 1, as one machine with its table of inputs and outputs.
+
+```interactive
+archetype: function-machine
+machines:
+  - family: linear
+    coefficients: [2, 1]
+    label: '2x + 1'
+input: 3
+table: [-1, 0, 1, 2, 3]
+decimals: 0
+caption: Each input gives exactly one output. The input 3 gives 7 every time.
+```
+
+### `factor-finder`
+
+**One-liner:** Lists a whole number's factors by testing 1, 2, 3 in turn, pairing each exact divisor and stopping past its square root.
+
+**Serves:** factors and factor pairs, primes, highest common factor and lowest common multiple.
+
+| Parameter | Type | Required | Default | Range | Meaning |
+|---|---|---|---|---|---|
+| `number` | `integer` | yes | — | `[1, 10000]` | The positive whole number whose factors are found. |
+| `reveal` | `enum(one-at-a-time, all-at-once)` | no | `one-at-a-time` | — | Whether the learner steps the trial divisor up from 1 one test at a time, or sees every test at once. |
+| `show-list` | `boolean` | no | `true` | — | Writes the finished list of factors, in order, once the search stops. |
+| `compare-with` | `integer` | no | `none` | `[1, 10000]; differs from number` | A second positive whole number, whose list is shown beside the first so what the two share can be picked out. |
+| `compare` | `enum(factors, multiples)` | no | `factors` | `needs compare-with` | What the two numbers' lists hold. `factors` lists each number's factors, marks the common factors and marks the highest as the HCF. `multiples` lists each number's multiples instead of searching for factors, marks the common multiples and marks the lowest as the LCM. |
+| `multiples-listed` | `integer` | no | `6` | `[2, 20]; only when compare is multiples` | How many multiples of each number are listed, starting from the number itself. |
+| `caption` | `text` | no | `none` | — | One line saying what to notice. |
+
+Each test shows the number divided by the trial divisor and the quotient. A whole quotient gives a factor pair, the divisor times the quotient; a quotient that is not whole is shown and rejected, giving no pair. The search stops at the first divisor whose square is bigger than the number, with that square shown as the reason. When a divisor times itself is the number, its pair is written once, as one factor. A number with exactly two factors is marked as a prime. When the lists of multiples share no number, the Interactive says so rather than marking an LCM.
+
+**Example** — [[Factors and multiples]]: the factors of 36, found by testing 1, 2, 3 and so on until 7 times 7 passes 36.
+
+```interactive
+archetype: factor-finder
+number: 36
+caption: 5 leaves a remainder, 6 times 6 is written once, and 7 times 7 is 49, past 36, so the search stops.
+```
+
+**Example** — [[Factors and multiples]]: the factors of 24 and of 36 side by side, with the common factors and the HCF, 12, marked.
+
+```interactive
+archetype: factor-finder
+number: 24
+compare-with: 36
+compare: factors
+reveal: all-at-once
+caption: Six factors are in both lists, and the highest of them, 12, is the HCF.
+```
+
+**Example** — [[Factors and multiples]]: the multiples of 4 and of 6 side by side, with the first shared one, 12, marked as the LCM.
+
+```interactive
+archetype: factor-finder
+number: 4
+compare-with: 6
+compare: multiples
+multiples-listed: 6
+caption: 12 is the first number in both lists, so it is the LCM, not 4 times 6, which is 24.
+```
+
+### `fraction-bar`
+
+**One-liner:** A bar cut into equal parts with some shaded, every part cut again by a whole number, so the shaded amount stays put.
+
+**Serves:** fractions as parts of a whole, equivalent fractions, cancelling and simplest form.
+
+| Parameter | Type | Required | Default | Range | Meaning |
+|---|---|---|---|---|---|
+| `parts` | `integer` | yes | — | `[1, 12]` | How many equal parts the whole bar is cut into: the starting denominator. |
+| `shaded` | `integer` | yes | — | `[0, 24]` | How many of those parts are shaded: the starting numerator. More shaded parts than `parts` is a fraction bigger than one, drawn as further whole bars, end to end. |
+| `split` | `integer` | no | `1` | `[1, 12]; within split-range` | The starting splitting factor. Every part is cut into this many smaller equal parts, so the bar has `parts` times `split` parts and `shaded` times `split` of them are shaded. |
+| `split-range` | `interval` | no | `[1, 6]` | `[1, 12]` | The splitting factors the learner moves through, one whole number at a time, never anything between. |
+| `show-working` | `boolean` | no | `true` | — | Writes the fraction as it now reads, with the numerator and denominator each shown as the starting number times the splitting factor. |
+| `compare-parts` | `integer` | no | `none` | `[1, 144]; needs compare-shaded` | Draws a second bar beneath, the same length, cut into this many equal parts. It does not split as the first bar does. |
+| `compare-shaded` | `integer` | no | `none` | `[0, 144]; needs compare-parts` | How many of the second bar's parts are shaded. |
+| `caption` | `text` | no | `none` | — | One line saying what to notice. |
+
+The cuts the bar started with stay drawn more heavily than the new ones, so a learner can see each old part become several new parts. The shaded stretch is the same length at every splitting factor. When there is a second bar, the two shaded stretches line up beneath each other, and the Interactive says whether they cover the same length.
+
+**Example** — [[Equivalent fractions and cancellation]]: a bar cut into 3 equal parts with 2 shaded, then every part cut into 4, so 2 over 3 reads as 8 over 12.
+
+```interactive
+archetype: fraction-bar
+parts: 3
+shaded: 2
+split-range: [1, 4]
+caption: Cut every part into 4 and the bar has 12 parts, with 8 shaded. The shaded amount has not moved.
+```
+
+**Example** — [[Equivalent fractions and cancellation]]: 3 over 4 above a bar showing 3 over 12, the mistake of changing only the denominator.
+
+```interactive
+archetype: fraction-bar
+parts: 4
+shaded: 3
+split-range: [1, 3]
+compare-parts: 12
+compare-shaded: 3
+caption: 3 twelfths covers a third of what 3 quarters does. Cut every quarter into 3 and the top bar reads 9 twelfths.
+```
+
+### `number-line-moves`
+
+**One-liner:** Adds or subtracts a signed number as an arrow along a number line, beside the matching move with both signs flipped.
+
+**Serves:** adding and subtracting negative numbers, subtracting a negative as adding a positive, directed number.
+
+| Parameter | Type | Required | Default | Range | Meaning |
+|---|---|---|---|---|---|
+| `start` | `number` | yes | — | `within range` | The number the move starts from, marked and labelled. |
+| `operation` | `enum(add, subtract)` | yes | — | — | Whether the number is added or subtracted. |
+| `amount` | `number` | yes | — | `[-1000000, 1000000]` | The signed number added or subtracted. Adding a positive or subtracting a negative moves right; adding a negative or subtracting a positive moves left. Choose it so the landing point lies within `range`. |
+| `matching` | `boolean` | no | `true` | — | Draws a second number line beneath, aligned with the first, with the matching move from the same start: the other operation, with the number's sign flipped, so $a - (-b)$ sits above $a + b$ and $a + (-b)$ above $a - b$. Both arrows point the same way, are the same length and land on the same number. |
+| `show-equation` | `boolean` | no | `true` | — | Writes the calculation and its matching calculation as one chain equal to the landing point, such as $4 - (-6) = 4 + 6 = 10$, updating as the learner changes the move. |
+| `show-wrong-way` | `boolean` | no | `false` | — | Also draws, faint and struck through, the arrow a learner takes who ignores the number's sign and moves by the operation alone, with where it would land. |
+| `controls` | `list of enum(start, operation, amount)` | no | `[start, operation, amount]` | `[0, 3] items` | What the learner may change. Each change redraws the arrow, the landing point and, when shown, the matching move and the equation. |
+| `range` | `interval` | no | `[-10, 10]` | `[-1000000, 1000000]` | The part of the line shown. |
+| `tick` | `number` | no | `1` | `[0.0001, 1000]` | The distance between labelled ticks. A start or number the learner changes moves one tick at a time. |
+| `caption` | `text` | no | `none` | — | One line saying what to notice. |
+
+The arrow starts at `start` and is labelled with what is done, such as $+\,(-8)$ or $-\,(-6)$. It points right or left, as the operation and the number's sign together decide, and its end is marked and labelled as the landing point. Arrows to the right and arrows to the left are drawn in two different colours, the same on both lines, so a learner can see that a subtraction of a negative is a move to the right before reading any numbers. A number of zero draws no arrow, and the landing point is the start.
+
+**Example** — [[Signed arithmetic and order of operations]]: $4 - (-6)$ above $4 + 6$, the same jump of 6 to the right, landing on 10.
+
+```interactive
+archetype: number-line-moves
+start: 4
+operation: subtract
+amount: -6
+range: [-2, 12]
+caption: Taking away -6 and adding 6 are the same arrow, 6 to the right from 4, landing on 10.
+```
+
+**Example** — [[Signed arithmetic and order of operations]]: $7 - (-5)$ moves right to 12, with the mistaken move left to 2 struck through.
+
+```interactive
+archetype: number-line-moves
+start: 7
+operation: subtract
+amount: -5
+show-wrong-way: true
+range: [0, 14]
+caption: Subtracting -5 moves right, to 12, just as adding 5 does. Moving left to 2 ignores the sign of -5.
+```
+
+**Example** — [[Signed arithmetic and order of operations]]: $5 + (-8)$ starts at 5 and moves 8 to the left, landing on $-3$, the same as $5 - 8$.
+
+```interactive
+archetype: number-line-moves
+start: 5
+operation: add
+amount: -8
+caption: Adding -8 is a move 8 to the left, from 5 down past 0 to -3, the same as taking away 8.
+```

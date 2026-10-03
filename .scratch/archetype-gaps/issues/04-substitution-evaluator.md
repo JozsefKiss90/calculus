@@ -1,6 +1,6 @@
 # 04: Archetype gap: substitution-evaluator
 
-**Status:** needs-triage
+**Status:** wontfix
 
 **Raised by:** the Interactive Author, for [[Division restrictions]] (`wiki/algebra/Division restrictions.md`)
 
@@ -38,3 +38,5 @@ The Note is a Floor Node and assumes no graphs, so the substitution has to be sh
 - Optionally, the excluded values listed or marked, so the learner can find them and then try them.
 
 ## Comments
+
+**Triage, 2026-10-03: not accepted.** *Division restrictions* already has an Interactive, and its hand check at three values reads well as prose. Above the Floor, choosing an input and reading its output is what `function-plot` with `trace` already does. `limit-table` already shows a value that is undefined. A third Archetype for evaluation would grow the closed set for one check in one Note. Two caveats. The passage quoted under "What the Note needs" is out of date: the Note no longer solves "denominator = 0", and works back from 0 by undoing operations. And substitution is an open question against the Anchor Graph: does *Variables, substitution, and brackets* teach it? If that is settled in a way that puts substitution on the Floor, and several Floor Notes ask for this, reopen it.
