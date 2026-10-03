@@ -22,7 +22,7 @@ updated: 2026-10-02
 ## Builds on
 
 <!-- generated:start builds-on -->
-- [[Equivalent fractions and cancellation]]
+- [[Equivalent fractions and cancellation]] — Equivalent fractions are fractions with the same value, such as $\frac{2}{3}$ and $\frac{8}{12}$, and you get from one to another by multiplying or dividing the numerator and the denominator by the same non-zero number, which in the dividing direction is called cancelling.
 <!-- generated:end builds-on -->
 
 ## Required by

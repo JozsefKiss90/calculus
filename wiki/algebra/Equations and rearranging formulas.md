@@ -22,7 +22,7 @@ updated: 2026-10-02
 ## Builds on
 
 <!-- generated:start builds-on -->
-- [[Inverse operations]]
+- [[Inverse operations]] — An inverse operation undoes another operation, so subtraction undoes addition, division undoes multiplication by a number other than $0$, and taking the square root undoes squaring a number that is positive or $0$.
 <!-- generated:end builds-on -->
 
 ## Required by

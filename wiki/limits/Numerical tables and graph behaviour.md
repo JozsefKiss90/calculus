@@ -23,8 +23,8 @@ updated: 2026-10-02
 ## Builds on
 
 <!-- generated:start builds-on -->
-- [[Coordinates, tables, and plotting]]
-- [[Decimals, ordering, and number lines]]
+- [[Coordinates, tables, and plotting]] — Coordinates name each point on a grid by an ordered pair $(x, y)$, measured from the origin along a horizontal $x$-axis and a vertical $y$-axis, and a table of values for a rule turns into a graph when you plot each pair as a point and join the points.
+- [[Decimals, ordering, and number lines]] — A decimal writes a number by place value, so that you can compare two decimals digit by digit and place each one at its own point on a number line, where the number further right is always the larger.
 <!-- generated:end builds-on -->
 
 ## Required by

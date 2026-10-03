@@ -23,8 +23,8 @@ updated: 2026-10-02
 ## Builds on
 
 <!-- generated:start builds-on -->
-- [[Coordinates, tables, and plotting]]
-- [[Signed arithmetic and order of operations]]
+- [[Coordinates, tables, and plotting]] — Coordinates name each point on a grid by an ordered pair $(x, y)$, measured from the origin along a horizontal $x$-axis and a vertical $y$-axis, and a table of values for a rule turns into a graph when you plot each pair as a point and join the points.
+- [[Signed arithmetic and order of operations]] — Signed arithmetic is the set of rules for adding, subtracting, multiplying and dividing positive and negative numbers, and the order of operations, BIDMAS, fixes which part of a calculation you work out first.
 <!-- generated:end builds-on -->
 
 ## Required by

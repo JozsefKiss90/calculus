@@ -22,7 +22,7 @@ updated: 2026-10-02
 ## Builds on
 
 <!-- generated:start builds-on -->
-- [[Multiplication, division, squares, and roots]]
+- [[Multiplication, division, squares, and roots]] — Multiplication and division undo each other, squaring a number multiplies it by itself, and the square root of a number is the non-negative number whose square it is.
 <!-- generated:end builds-on -->
 
 ## Required by

@@ -22,7 +22,7 @@ updated: 2026-10-02
 ## Builds on
 
 <!-- generated:start builds-on -->
-- [[Signed arithmetic and order of operations]]
+- [[Signed arithmetic and order of operations]] — Signed arithmetic is the set of rules for adding, subtracting, multiplying and dividing positive and negative numbers, and the order of operations, BIDMAS, fixes which part of a calculation you work out first.
 <!-- generated:end builds-on -->
 
 ## Required by

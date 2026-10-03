@@ -26,7 +26,7 @@ updated: 2026-10-02
 <!-- generated:start builds-on -->
 - [[Factorisation]]
 - [[Algebraic fractions and rationalisation]]
-- [[Division restrictions]]
+- [[Division restrictions]] — Division restrictions are the values a letter cannot take because they would make a denominator equal to zero, and dividing by zero has no answer.
 <!-- generated:end builds-on -->
 
 ## Required by

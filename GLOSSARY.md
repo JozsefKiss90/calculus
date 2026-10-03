@@ -60,6 +60,10 @@ _Avoid_: level, tier, stage, depth
 The generated, self-contained briefing handed to an agent for one Node: everything it needs to write that Note, and nothing else. An agent reads its Context Pack instead of the Wiki.
 _Avoid_: ticket, brief, prompt, task
 
+**Review Bundle**:
+The generated briefing handed to a Correctness Reviewer for one written Note: the Note, its prerequisites' Notes and its Layer siblings' Notes, whole. Where a Context Pack keeps an author's view narrow, a Review Bundle widens a reviewer's to what the author could not see.
+_Avoid_: review pack, review context
+
 ### Interactive material
 
 **Archetype**:

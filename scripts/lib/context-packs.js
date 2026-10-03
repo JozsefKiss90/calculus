@@ -28,7 +28,7 @@ import { layersOf } from "./graph.js";
 import { buildNotesGraph, isConcept, summaryOf, valueOf } from "./notes.js";
 
 const HOUSE_STYLE_PATH = fileURLToPath(new URL("../../docs/house-style.md", import.meta.url));
-const NOTATION_AUTHORITY = "Conventions.md";
+export const NOTATION_AUTHORITY = "Conventions.md";
 
 /** Where a Layer's Packs go, relative to the directory holding the vault. */
 const packDirectory = (layer) => posix.join(".context-packs", `layer-${layer}`);
@@ -148,7 +148,7 @@ function sourcesSection({ floor, domain, vaultName, sources }) {
 }
 
 /** A whole file as a fenced block, the fence longer than any backtick run inside it. */
-function fence(text) {
+export function fence(text) {
   const body = text.replace(/\r\n/g, "\n").replace(/\n*$/, "\n");
   const longest = Math.max(0, ...[...body.matchAll(/`+/g)].map(([run]) => run.length));
   const marker = "`".repeat(Math.max(4, longest + 1));

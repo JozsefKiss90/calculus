@@ -5,13 +5,13 @@
 //
 //   node scripts/wiki.js check <vault directory>
 //   node scripts/wiki.js scaffold <vault directory> [<Node name>...]
-//   node scripts/wiki.js generate <vault directory> [--layer <N>]
+//   node scripts/wiki.js generate <vault directory> [--layer <N>] [--review <Note name>]
 //
 // Exit codes: 0 every invariant holds and no metric is red, every Note asked for exists, or
 // every generated block is written; 1 the check ran and something failed or graded red, or
 // some Notes' blocks could not be written; 2 nothing could run at all — bad usage, no Anchor Graph, a graph that cannot
 // be read, an Archetype catalogue or Floor plausibility judgements that cannot be read, a
-// scaffold that was refused, or Context Packs that could not be made.
+// scaffold that was refused, or Context Packs or a Review Bundle that could not be made.
 
 import { AnchorGraphError, loadAnchorGraph } from "./lib/anchor-graph.js";
 import { CatalogueError, loadCatalogue } from "./lib/archetype-catalogue.js";
@@ -25,6 +25,7 @@ import { renderSummary } from "./lib/summary.js";
 import { ScaffoldError, scaffold } from "./lib/scaffold.js";
 import { generate } from "./lib/generate.js";
 import { PackError, writeContextPacks } from "./lib/context-packs.js";
+import { BundleError, writeReviewBundle } from "./lib/review-bundles.js";
 
 // Module 1's Terminal Node: the declaration invariant 2 holds the graph against. A Module
 // has exactly one, and this is where this Module's is declared.
@@ -53,7 +54,7 @@ subcommands:
                             create the stub Note for every Node in the Anchor Graph, or
                             only the Nodes named; a Note that already exists is never
                             touched, and a Node the Anchor Graph lacks is refused
-  generate <vault directory> [--layer <N>]
+  generate <vault directory> [--layer <N>] [--review <Note name>]
                             rewrite every concept Note's generated blocks (Builds on,
                             Required by and the prerequisite mini-map) from the Notes'
                             requires; nothing outside the markers is touched, and a hand
@@ -64,7 +65,9 @@ subcommands:
                             dispatched. With --layer, also write one
                             Context Pack per Node in computed Layer N to
                             .context-packs/layer-<N>/ beside the vault, replacing that
-                            Layer's earlier Packs
+                            Layer's earlier Packs. With --review, then write the
+                            Review Bundle for that one written Note to
+                            .review-bundles/<Note name>.md beside the vault
 `;
 
 const EXIT_OK = 0;
@@ -95,6 +98,18 @@ async function main(argv) {
     rest.splice(at, 2);
   }
 
+  let review;
+  if (subcommand === "generate" && rest.includes("--review")) {
+    const at = rest.indexOf("--review");
+    review = rest[at + 1];
+    if (review === undefined || review.startsWith("-")) {
+      return usageError(`--review needs the name of the Note to review
+
+${USAGE}`);
+    }
+    rest.splice(at, 2);
+  }
+
   const option = rest.find((arg) => arg.startsWith("-"));
   if (option) return usageError(`${subcommand} takes no options, given "${option}"\n\n${USAGE}`);
   if (rest.length === 0) return usageError(`${subcommand} needs a vault directory\n\n${USAGE}`);
@@ -103,7 +118,7 @@ async function main(argv) {
   if (rest.length > 1) {
     return usageError(`${subcommand} takes one vault directory, given ${rest.length}\n\n${USAGE}`);
   }
-  return subcommand === "check" ? check(rest[0]) : generateWiki(rest[0], layer);
+  return subcommand === "check" ? check(rest[0]) : generateWiki(rest[0], layer, review);
 }
 
 async function check(vaultDir) {
@@ -149,7 +164,7 @@ async function scaffoldNotes(vaultDir, nodeNames) {
   return EXIT_OK;
 }
 
-async function generateWiki(vaultDir, layer) {
+async function generateWiki(vaultDir, layer, review) {
   let result;
   try {
     result = await generate(vaultDir, await loadNotes(vaultDir));
@@ -163,12 +178,13 @@ async function generateWiki(vaultDir, layer) {
 
   // After the blocks are written, so each Pack's skeleton is the Note as it now stands.
   const packs = layer === undefined ? undefined : await packLayer(vaultDir, layer);
+  const bundled = review === undefined || (await bundleNote(vaultDir, review));
 
   // Last, so the views record the vault as this run leaves it, and the Packs it wrote.
   const views = await writeViews(vaultDir, { terminalNode: TERMINAL_NODE, today: localDate(), packs: packs || undefined });
   process.stdout.write(viewLines(views));
 
-  if (packs === false) return EXIT_UNRUNNABLE;
+  if (packs === false || !bundled) return EXIT_UNRUNNABLE;
   return result.refused.length === 0 ? EXIT_OK : EXIT_FAILED;
 }
 
@@ -198,6 +214,23 @@ async function packLayer(vaultDir, layer) {
   lines.push(`Layer ${layer} of ${layerCount} Layers: wrote ${count} to ${directory}, beside the vault`);
   process.stdout.write(`${lines.join("\n")}\n`);
   return { layer, nodes: written.length };
+}
+
+/** Write one Note's Review Bundle and say so; false when it could not be made. */
+async function bundleNote(vaultDir, name) {
+  let bundle;
+  try {
+    bundle = await writeReviewBundle(vaultDir, await loadNotes(vaultDir), name);
+  } catch (error) {
+    if (![BundleError, GraphError].some((kind) => error instanceof kind)) throw error;
+    process.stderr.write(`generate wrote no Review Bundle:
+${error.message}
+`);
+    return false;
+  }
+  process.stdout.write(`wrote ${bundle.written}, beside the vault
+`);
+  return true;
 }
 
 /** What `generate` did to each Note's blocks, as the lines it prints. */

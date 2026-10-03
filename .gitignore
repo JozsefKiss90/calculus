@@ -17,3 +17,7 @@
 # the Note Author; a Pack committed anywhere, and above all into wiki/, would be read as
 # content.
 .context-packs/
+
+# Review Bundles `generate --review` writes beside the vault. Transient inputs for one run of
+# the Correctness Reviewer, like the Packs.
+.review-bundles/

@@ -108,6 +108,21 @@ the Layer's earlier Packs. Hand one Pack to one Note Author
 ([`.claude/agents/note-author.md`](.claude/agents/note-author.md)), and run the authors of a
 Layer in parallel.
 
+## Generate a Review Bundle for a drafted Note
+
+```sh
+npm run generate -- --review "Factors and multiples"
+```
+
+After rewriting the blocks, this writes `.review-bundles/Factors and multiples.md`, beside
+the vault and gitignored. It holds what the Note's author could not see: the Note, its
+prerequisites' Notes whole, its Layer siblings whole, and the Nodes it may and may not build
+on. Hand it to a Correctness Reviewer
+([`.claude/agents/correctness-reviewer.md`](.claude/agents/correctness-reviewer.md)). Its
+findings go to `.scratch/correctness-reviews/<Note name>.md`. It sets `reviewed_by: agent`
+only when nothing blocks. `status: reviewed` and `reviewed_by: human` are yours to set, on
+sign-off. A stub has nothing to review, and is refused.
+
 ## Install the gate
 
 ```sh

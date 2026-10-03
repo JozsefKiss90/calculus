@@ -18,13 +18,13 @@ The Wiki's health as `npm run check` computes it, written here by `npm run gener
 
 ## Verdict
 
-**check passes**: 12 of 12 invariants hold; metrics 6 green, 0 yellow, 0 red.
+**check passes**: 12 of 12 invariants hold; metrics 4 green, 2 yellow, 0 red.
 
 ## The Module at a glance
 
 | Layer | Notes | Stub | Drafted | Reviewed |
 | ---: | ---: | ---: | ---: | ---: |
-| 0 | 9 | 9 | 0 | 0 |
+| 0 | 9 | 0 | 9 | 0 |
 | 1 | 11 | 11 | 0 | 0 |
 | 2 | 10 | 10 | 0 | 0 |
 | 3 | 9 | 9 | 0 | 0 |
@@ -37,9 +37,9 @@ The Wiki's health as `npm run check` computes it, written here by `npm run gener
 | 10 | 1 | 1 | 0 | 0 |
 | 11 | 1 | 1 | 0 | 0 |
 | 12 | 1 | 1 | 0 | 0 |
-| **All** | **61** | **61** | **0** | **0** |
+| **All** | **61** | **52** | **9** | **0** |
 
-0 Notes are reviewed by an agent and wait for human sign-off. 0 Notes are signed off by a human.
+2 Notes are reviewed by an agent and wait for human sign-off. 0 Notes are signed off by a human.
 
 ## The graph
 
@@ -67,11 +67,26 @@ The Wiki's health as `npm run check` computes it, written here by `npm run gener
 | Metric | Level | Measure | Green | Yellow | Red |
 |---|---|---|---|---|---|
 | Broken wikilinks | green | 0 | 0 | 1–3 | 4+ |
-| Notes with zero Cross-references | green | 0 of 0 written Notes (0%) | \<10% | 10–25% | \>25% |
-| Stale updated (\>30d, non-reviewed) | green | 0 of 0 written Notes (0%) | \<10% | 10–20% | \>20% |
+| Notes with zero Cross-references | yellow | 2 of 9 written Notes (22.2%) | \<10% | 10–25% | \>25% |
+| Stale updated (\>30d, non-reviewed) | green | 0 of 9 written Notes (0%) | \<10% | 10–20% | \>20% |
 | Notes still stub after their Layer is opened | green | 0 | 0 | 1–3 | 4+ |
-| Archetype coverage: Notes with no Interactive | green | 0 of 0 written Notes (0%) | \<20% | 20–40% | \>40% |
+| Archetype coverage: Notes with no Interactive | yellow | 3 of 9 written Notes (33.3%) | \<20% | 20–40% | \>40% |
 | Floor plausibility: Floor Notes flagged above 8th grade | green | 0 | 0 | 1 | 2+ |
+
+### Notes with zero Cross-references: yellow
+
+**Action:** When a listed Note is next edited, link it to a Note it contrasts with or where its idea reappears. A link to a prerequisite or a dependent is an Edge and does not count.
+
+- [[Multiplication, division, squares, and roots]]: has no Cross-reference to or from another Note
+- [[Coordinates, tables, and plotting]]: has no Cross-reference to or from another Note
+
+### Archetype coverage: Notes with no Interactive: yellow
+
+**Action:** Run the Interactive Author on the listed Notes, filing an Archetype gap where no Archetype fits.
+
+- [[Factors and multiples]]: has no Interactive
+- [[Inverse operations]]: has no Interactive
+- [[Inputs, outputs, and composition]]: has no Interactive
 
 ### Floor plausibility: Floor Notes flagged above 8th grade: green
 

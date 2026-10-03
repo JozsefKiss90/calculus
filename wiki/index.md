@@ -4,21 +4,21 @@ The entry point to the Wiki: every concept Note in the Module, in the order it c
 
 ## Progress
 
-61 concept Notes: 61 stub, 0 drafted, 0 reviewed. The health of the Wiki is on the [[Graph Health Dashboard]], and what the pipeline did is in the [[log]].
+61 concept Notes: 52 stub, 9 drafted, 0 reviewed. The health of the Wiki is on the [[Graph Health Dashboard]], and what the pipeline did is in the [[log]].
 
 ## Learning sequence
 
 ### Layer 0 — the Floor
 
-- [[Coordinates, tables, and plotting]] *stub*
-- [[Decimals, ordering, and number lines]] *stub*
-- [[Division restrictions]] *stub*
-- [[Equivalent fractions and cancellation]] *stub*
-- [[Factors and multiples]] *stub*
-- [[Inputs, outputs, and composition]] *stub*
-- [[Inverse operations]] *stub*
-- [[Multiplication, division, squares, and roots]] *stub*
-- [[Signed arithmetic and order of operations]] *stub*
+- [[Coordinates, tables, and plotting]] — Coordinates name each point on a grid by an ordered pair $(x, y)$, measured from the origin along a horizontal $x$-axis and a vertical $y$-axis, and a table of values for a rule turns into a graph when you plot each pair as a point and join the points. *drafted*
+- [[Decimals, ordering, and number lines]] — A decimal writes a number by place value, so that you can compare two decimals digit by digit and place each one at its own point on a number line, where the number further right is always the larger. *drafted*
+- [[Division restrictions]] — Division restrictions are the values a letter cannot take because they would make a denominator equal to zero, and dividing by zero has no answer. *drafted*
+- [[Equivalent fractions and cancellation]] — Equivalent fractions are fractions with the same value, such as $\frac{2}{3}$ and $\frac{8}{12}$, and you get from one to another by multiplying or dividing the numerator and the denominator by the same non-zero number, which in the dividing direction is called cancelling. *drafted*
+- [[Factors and multiples]] — A factor of a whole number divides it exactly, leaving no remainder, and a multiple of a whole number is that number times a whole number, so $3$ is a factor of $12$ and $12$ is a multiple of $3$. *drafted*
+- [[Inputs, outputs, and composition]] — A function is a rule that turns each input into exactly one output, and composing two functions means feeding the output of the first in as the input of the second. *drafted*
+- [[Inverse operations]] — An inverse operation undoes another operation, so subtraction undoes addition, division undoes multiplication by a number other than $0$, and taking the square root undoes squaring a number that is positive or $0$. *drafted*
+- [[Multiplication, division, squares, and roots]] — Multiplication and division undo each other, squaring a number multiplies it by itself, and the square root of a number is the non-negative number whose square it is. *drafted*
+- [[Signed arithmetic and order of operations]] — Signed arithmetic is the set of rules for adding, subtracting, multiplying and dividing positive and negative numbers, and the order of operations, BIDMAS, fixes which part of a calculation you work out first. *drafted*
 
 ### Layer 1
 
