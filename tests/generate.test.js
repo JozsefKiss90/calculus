@@ -209,7 +209,15 @@ test("adding a Node, scaffolding it and regenerating changes only the Notes the 
   await editNote(vault, LIMITS, (note) => note.replace("requires:\n", 'requires:\n  - "[[Absolute value]]"\n'));
   const { stdout } = await generate(vault);
 
-  assert.deepEqual(changed(before, await snapshot(vault)), ["Module 1 Anchor Graph.md", "limits/Absolute value.md", LIMITS]);
+  // The views follow every graph change: the index gains the Note, the dashboard recounts, the log records it.
+  assert.deepEqual(changed(before, await snapshot(vault)), [
+    "Module 1 Anchor Graph.md",
+    "index.md",
+    "limits/Absolute value.md",
+    LIMITS,
+    "log.md",
+    "observability/Graph Health Dashboard.md",
+  ]);
   assert.match(stdout, /updated 2 Notes, 5 already up to date/);
   assert.equal(block(await read(vault, "limits/Absolute value.md"), "required-by"), "- [[Limits]]");
 

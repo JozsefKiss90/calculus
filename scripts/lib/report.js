@@ -2,8 +2,9 @@
 //
 // It is a JSON file outside the vault rather than a Dataview query inside it, because a
 // query only materialises when a human opens Obsidian, which makes it invisible to every
-// agent it is meant to govern (ADR-0002). The Dataview dashboard added in 17 mirrors this
-// file; it never computes anything of its own.
+// agent it is meant to govern (ADR-0002). The Graph Health Dashboard `generate` writes into
+// the vault mirrors this report, rendered from the same computation; it never computes
+// anything of its own.
 //
 // The path is fixed: `.wiki-health/report.json` beside the vault directory, so `cat
 // .wiki-health/report.json` from the repo root reads the last run's result.
@@ -30,7 +31,7 @@ export async function writeReport(vaultDir, report) {
  * The build fails on a broken invariant or a red metric, and on nothing else: a yellow
  * metric is reported and passes.
  */
-export function buildReport({ vaultDir, graph, notes, invariants, metrics }) {
+export function buildReport({ vaultDir, graph, notes, progress, invariants, metrics }) {
   const failed = invariants.filter((entry) => entry.status === "fail");
   const checked = invariants.filter((entry) => entry.status !== "skipped");
   const levels = { green: 0, yellow: 0, red: 0, skipped: 0 };
@@ -42,6 +43,7 @@ export function buildReport({ vaultDir, graph, notes, invariants, metrics }) {
     status: failed.length === 0 && levels.red === 0 ? "pass" : "fail",
     graph,
     notes,
+    progress,
     invariants,
     metrics,
     summary: {
@@ -61,6 +63,7 @@ export function buildErrorReport({ vaultDir, message }) {
     error: message,
     graph: null,
     notes: null,
+    progress: null,
     invariants: [],
     metrics: [],
     summary: { invariantsChecked: 0, invariantsFailed: 0, metrics: { green: 0, yellow: 0, red: 0, skipped: 0 } },

@@ -154,7 +154,12 @@ test("generate --layer emits one Pack per Node in that computed Layer, beside th
     "Limit of sin h over h as h approaches zero.md",
   ]);
   assert.match(stdout, /Layer 1 of 4 Layers: wrote 2 Context Packs to \.context-packs\/layer-1, beside the vault/);
-  assert.deepEqual(await snapshot(vault), before, "generate --layer wrote into the vault");
+  // The one change in the vault is the log recording the Layer dispatched (ticket 17).
+  const after = await snapshot(vault);
+  assert.notEqual(after.get("log.md"), before.get("log.md"));
+  after.delete("log.md");
+  before.delete("log.md");
+  assert.deepEqual(after, before, "generate --layer wrote a Pack into the vault");
 });
 
 test("a Pack holds exactly the Node, its skeleton, its neighbours' one-liners, the catalogue, the house style, the notation authority and its sources", async () => {

@@ -19,6 +19,10 @@ import { noteNameFor } from "./note-names.js";
 import { rawPathOf } from "./raw-store.js";
 import { CONCEPT, SUMMARY_HEADING, buildNotesGraph, indexByName, isConcept, resolveLink, summaryOf, valueOf } from "./notes.js";
 
+/** The closed sets of `status` and `reviewed_by`, in the order a Note moves through them. */
+export const STATUSES = ["stub", "drafted", "reviewed"];
+export const REVIEWERS = ["none", "agent", "human"];
+
 const INVARIANT = {
   requiresResolve: {
     id: 5,
@@ -66,8 +70,8 @@ const SCHEMA = {
   kind: { required: true, values: [CONCEPT, "source", "reference", "observability"] },
   domain: { required: true },
   requires: { required: true, list: true },
-  status: { required: true, values: ["stub", "drafted", "reviewed"] },
-  reviewed_by: { required: true, values: ["none", "agent", "human"] },
+  status: { required: true, values: STATUSES },
+  reviewed_by: { required: true, values: REVIEWERS },
   created: { required: true },
   updated: { required: true },
   aliases: { list: true },

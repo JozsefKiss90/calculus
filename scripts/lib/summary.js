@@ -4,10 +4,10 @@
 // reads and the field an agent gates on cannot disagree — the same reason 17's dashboard
 // is generated from the report rather than maintained (ADR-0002).
 
-const counted = (count, singular, pluralForm = `${singular}s`) =>
-  `${count} ${count === 1 ? singular : pluralForm}`;
+import { counted } from "./markdown-text.js";
 
-const measureOf = (metric) => {
+/** A metric's value as one phrase, the same wherever it is shown. */
+export const measureOf = (metric) => {
   if (metric.level === "skipped") return "not measured";
   if (metric.unit !== "percent") return String(metric.count);
   return `${metric.count} of ${counted(metric.of, "written Note")} (${metric.percent}%)`;
@@ -53,6 +53,13 @@ export function renderSummary(report, reportPath) {
     for (const offender of metric.notes) lines.push(`              ${offender.message}`);
   }
 
+  lines.push("", `check ${report.status === "pass" ? "passed" : "failed"}: ${tally(report)}`, `report: ${reportPath}`);
+
+  return `${lines.join("\n")}\n`;
+}
+
+/** A report's invariants and metrics, counted in one line: shared by the summary and the dashboard. */
+export function tally(report) {
   const { invariantsChecked, invariantsFailed, metrics } = report.summary;
   const skipped = report.invariants.length - invariantsChecked;
   const notChecked = skipped === 0 ? "" : `, ${skipped} not checked`;
@@ -62,8 +69,5 @@ export function renderSummary(report, reportPath) {
       : `${counted(invariantsFailed, "invariant")} of ${invariantsChecked} broken${notChecked}`;
   const notMeasured = metrics.skipped === 0 ? "" : `, ${metrics.skipped} not measured`;
   const red = report.metrics.filter((metric) => metric.level === "red").map((metric) => metric.title);
-  const graded = `metrics ${metrics.green} green, ${metrics.yellow} yellow, ${metrics.red} red${notMeasured}${red.length === 0 ? "" : `: ${red.join(", ")}`}`;
-  lines.push("", `check ${report.status === "pass" ? "passed" : "failed"}: ${invariants}; ${graded}`, `report: ${reportPath}`);
-
-  return `${lines.join("\n")}\n`;
+  return `${invariants}; metrics ${metrics.green} green, ${metrics.yellow} yellow, ${metrics.red} red${notMeasured}${red.length === 0 ? "" : `: ${red.join(", ")}`}`;
 }

@@ -4,7 +4,8 @@
 // requires, 61 of 61 reachable, 9 Floor Nodes. They live here rather than in the vault,
 // because a count written into content is a count that drifts (ADR-0003). Since 05 the
 // scaffolded Notes are held to it too: 61 concept Notes beside two reference Notes — the
-// Anchor Graph Note and, since 07, wiki/Conventions.md — and, since 14, one source Note;
+// Anchor Graph Note and, since 07, wiki/Conventions.md — since 14, one source Note, and,
+// since 17, the generated Graph Health Dashboard;
 // and every invariant from 1 to 12 that exists so far passes.
 //
 // This is the one test that does not use a fixture vault, because the frozen graph is the
@@ -34,7 +35,7 @@ test("check on the real vault passes and reports the frozen graph's shape", asyn
     floorNodes: 9,
     reachableNodes: 61,
   });
-  assert.deepEqual(report.notes, { notes: 64, conceptNotes: 61 });
+  assert.deepEqual(report.notes, { notes: 65, conceptNotes: 61 });
   assert.deepEqual(
     report.invariants.map((entry) => entry.status),
     [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map(() => "pass"),

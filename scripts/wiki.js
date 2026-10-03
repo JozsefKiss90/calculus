@@ -15,14 +15,12 @@
 
 import { AnchorGraphError, loadAnchorGraph } from "./lib/anchor-graph.js";
 import { CatalogueError, loadCatalogue } from "./lib/archetype-catalogue.js";
-import { FloorJudgementError, loadFloorJudgements } from "./lib/floor-judgements.js";
-import { GraphError, graphShape } from "./lib/graph.js";
+import { GraphError } from "./lib/graph.js";
 import { checkStructuralInvariants } from "./lib/structural-invariants.js";
-import { checkNoteInvariants } from "./lib/note-invariants.js";
-import { computeMetrics } from "./lib/metrics.js";
-import { checkRawStore, loadRawStore } from "./lib/raw-store.js";
-import { isConcept, loadNotes, vaultFiles } from "./lib/notes.js";
-import { buildErrorReport, buildReport, writeReport } from "./lib/report.js";
+import { loadNotes } from "./lib/notes.js";
+import { writeReport } from "./lib/report.js";
+import { assessHealth } from "./lib/health.js";
+import { writeViews } from "./lib/views.js";
 import { renderSummary } from "./lib/summary.js";
 import { ScaffoldError, scaffold } from "./lib/scaffold.js";
 import { generate } from "./lib/generate.js";
@@ -59,7 +57,11 @@ subcommands:
                             rewrite every concept Note's generated blocks (Builds on,
                             Required by and the prerequisite mini-map) from the Notes'
                             requires; nothing outside the markers is touched, and a hand
-                            edit inside them is overwritten. With --layer, then write one
+                            edit inside them is overwritten. Then rewrite index.md and
+                            observability/Graph Health Dashboard.md from the computation
+                            check gates on, and append an entry to log.md when a Note
+                            moved state, a metric changed level or a Layer was
+                            dispatched. With --layer, also write one
                             Context Pack per Node in computed Layer N to
                             .context-packs/layer-<N>/ beside the vault, replacing that
                             Layer's earlier Packs
@@ -105,35 +107,8 @@ async function main(argv) {
 }
 
 async function check(vaultDir) {
-  let loaded;
-  let catalogue;
-  let judgements;
-  try {
-    loaded = await loadAnchorGraph(vaultDir);
-    catalogue = await loadCatalogue();
-    judgements = await loadFloorJudgements(vaultDir);
-  } catch (error) {
-    // Only a graph, an Archetype catalogue or a judgements file that cannot be read is a
-    // report; anything else is a bug in this tool and should surface as one rather than as a
-    // verdict about the Wiki.
-    const unreadable = [AnchorGraphError, GraphError, CatalogueError, FloorJudgementError];
-    if (!unreadable.some((kind) => error instanceof kind)) throw error;
-    return await reportUnrunnable(vaultDir, error);
-  }
-
-  const { note, graph } = loaded;
-  const notes = await loadNotes(vaultDir);
-  const report = buildReport({
-    vaultDir,
-    graph: { source: "anchor", note, ...graphShape(graph, TERMINAL_NODE) },
-    notes: { notes: notes.length, conceptNotes: notes.filter(isConcept).length },
-    invariants: [
-      ...checkStructuralInvariants(graph, { terminalNode: TERMINAL_NODE }),
-      ...checkNoteInvariants(notes, loaded, catalogue),
-      checkRawStore(notes, await loadRawStore(vaultDir)),
-    ],
-    metrics: computeMetrics(notes, { files: await vaultFiles(vaultDir), today: localDate(), judgements }),
-  });
+  const report = await assessHealth(vaultDir, { terminalNode: TERMINAL_NODE, today: localDate() });
+  if (report.status === "error") return await reportUnrunnable(vaultDir, report);
 
   const reportPath = await writeReport(vaultDir, report);
   process.stdout.write(renderSummary(report, reportPath));
@@ -187,11 +162,27 @@ async function generateWiki(vaultDir, layer) {
   process.stdout.write(blockLines(result));
 
   // After the blocks are written, so each Pack's skeleton is the Note as it now stands.
-  if (layer !== undefined && !(await packLayer(vaultDir, layer))) return EXIT_UNRUNNABLE;
+  const packs = layer === undefined ? undefined : await packLayer(vaultDir, layer);
+
+  // Last, so the views record the vault as this run leaves it, and the Packs it wrote.
+  const views = await writeViews(vaultDir, { terminalNode: TERMINAL_NODE, today: localDate(), packs: packs || undefined });
+  process.stdout.write(viewLines(views));
+
+  if (packs === false) return EXIT_UNRUNNABLE;
   return result.refused.length === 0 ? EXIT_OK : EXIT_FAILED;
 }
 
-/** Write one Layer's Context Packs and say so; false when none could be made. */
+/** What `generate` did to the index, the dashboard and the log, as the lines it prints. */
+function viewLines({ written, unchanged }) {
+  const lines = written.map((path) => `wrote ${path}`);
+  if (unchanged.length > 0) lines.push(`already up to date: ${unchanged.join(", ")}`);
+  return `${lines.join("\n")}\n`;
+}
+
+/**
+ * Write one Layer's Context Packs and say so: the Layer and how many Nodes it holds, or false
+ * when none could be made.
+ */
 async function packLayer(vaultDir, layer) {
   let packs;
   try {
@@ -206,7 +197,7 @@ async function packLayer(vaultDir, layer) {
   const count = `${written.length} Context ${written.length === 1 ? "Pack" : "Packs"}`;
   lines.push(`Layer ${layer} of ${layerCount} Layers: wrote ${count} to ${directory}, beside the vault`);
   process.stdout.write(`${lines.join("\n")}\n`);
-  return true;
+  return { layer, nodes: written.length };
 }
 
 /** What `generate` did to each Note's blocks, as the lines it prints. */
@@ -255,15 +246,14 @@ function localDate() {
  * A run that could not reach the invariants still leaves a report behind, so the pipeline
  * reads one answer whatever went wrong.
  */
-async function reportUnrunnable(vaultDir, error) {
-  const report = buildErrorReport({ vaultDir, message: error.message });
+async function reportUnrunnable(vaultDir, report) {
   try {
     await writeReport(vaultDir, report);
   } catch {
     // The report is beside the vault; if that directory is unwritable, the message on
     // stderr is all there is, and the exit code still gates the build.
   }
-  process.stderr.write(`${error.message}\n`);
+  process.stderr.write(`${report.error}\n`);
   return EXIT_UNRUNNABLE;
 }
 

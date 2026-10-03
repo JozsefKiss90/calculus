@@ -76,6 +76,23 @@ the markers is overwritten on every run**, so a hand edit there is lost by desig
 `requires`, or the other Note's `## In one sentence`, and regenerate. Running it again on an
 unchanged vault changes nothing, so after a graph change the diff is the review.
 
+The same run then writes three views, and every count in them is computed, never typed:
+
+- `wiki/index.md` is the entry point. It lists every concept Note Layer by Layer, the Floor
+  first, with each Note's status and one-sentence summary.
+- `wiki/observability/Graph Health Dashboard.md` mirrors the report `check` gates on. It is
+  rendered from the same computation, so it cannot disagree with
+  `.wiki-health/report.json` ([ADR-0002](docs/adr/0002-script-authoritative-graph-health.md)).
+  It shows the verdict, the stub / drafted / reviewed breakdown per Layer, every invariant
+  and every metric with its action.
+- `wiki/log.md` records what the pipeline did. A run gets an entry, with the date, the Layers
+  touched, each Note that moved state and the metric levels, only when something changed: a
+  Note's `status` or `reviewed_by`, a metric's level, or a Layer dispatched with `--layer`.
+  The log keeps the state its last entry recorded in a hidden comment at its foot, and
+  compares the next run against it.
+
+All three are overwritten or appended to by `generate`. Never edit them by hand.
+
 ## Generate the Context Packs for a Layer
 
 ```sh
