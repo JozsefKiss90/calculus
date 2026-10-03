@@ -65,6 +65,21 @@ The chain sends $2$ to $7$. Swapping the order changed the output from $25$ to $
 
 Both give $4$ here, but one matching input does not make the orders the same: the input $2$ already showed they differ.
 
+```interactive
+archetype: function-machine
+machines:
+  - family: linear
+    coefficients: [1, 3]
+    label: '+ 3'
+  - family: quadratic
+    coefficients: [1, 0, 0]
+    label: '\text{square}'
+input: 2
+swap: true
+decimals: 0
+caption: In one order 2 becomes 5 and then 25, in the other 4 and then 7. Try -1, where both orders give 4.
+```
+
 **The general rule, read off the numbers.** In "A then B" you added $3$ and then squared the whole result, so with input $x$ the output is
 
 $$(x + 3)^2.$$

@@ -18,7 +18,7 @@ The Wiki's health as `npm run check` computes it, written here by `npm run gener
 
 ## Verdict
 
-**check passes**: 12 of 12 invariants hold; metrics 4 green, 2 yellow, 0 red.
+**check passes**: 12 of 12 invariants hold; metrics 5 green, 1 yellow, 0 red.
 
 ## The Module at a glance
 
@@ -70,7 +70,7 @@ The Wiki's health as `npm run check` computes it, written here by `npm run gener
 | Notes with zero Cross-references | yellow | 2 of 9 written Notes (22.2%) | \<10% | 10–25% | \>25% |
 | Stale updated (\>30d, non-reviewed) | green | 0 of 9 written Notes (0%) | \<10% | 10–20% | \>20% |
 | Notes still stub after their Layer is opened | green | 0 | 0 | 1–3 | 4+ |
-| Archetype coverage: Notes with no Interactive | yellow | 3 of 9 written Notes (33.3%) | \<20% | 20–40% | \>40% |
+| Archetype coverage: Notes with no Interactive | green | 0 of 9 written Notes (0%) | \<20% | 20–40% | \>40% |
 | Floor plausibility: Floor Notes flagged above 8th grade | green | 0 | 0 | 1 | 2+ |
 
 ### Notes with zero Cross-references: yellow
@@ -79,14 +79,6 @@ The Wiki's health as `npm run check` computes it, written here by `npm run gener
 
 - [[Multiplication, division, squares, and roots]]: has no Cross-reference to or from another Note
 - [[Coordinates, tables, and plotting]]: has no Cross-reference to or from another Note
-
-### Archetype coverage: Notes with no Interactive: yellow
-
-**Action:** Run the Interactive Author on the listed Notes, filing an Archetype gap where no Archetype fits.
-
-- [[Factors and multiples]]: has no Interactive
-- [[Inverse operations]]: has no Interactive
-- [[Inputs, outputs, and composition]]: has no Interactive
 
 ### Floor plausibility: Floor Notes flagged above 8th grade: green
 

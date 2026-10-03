@@ -65,4 +65,33 @@ Nothing untaught is used. This is a Floor Note, and signed multiplication and de
 
 None.
 
+## Review 4
+
+**Date:** 2026-10-03
+
+**Outcome:** No blocking finding, so `reviewed_by` is now `agent`. Human sign-off is next.
+
+The prose is unchanged since Review 3, which found nothing. Only the two `factor-finder` blocks in `## Worked example` are new, and `reviewed_by` had gone back to `none` when they were added. Each block was checked against the Archetype in `docs/archetype-catalogue.md` and against the Note's own working.
+
+**First block** (`number: 36`, defaults `reveal: one-at-a-time` and `show-list: true`). It is valid against the schema, since $36$ is in $[1, 10000]$. As the catalogue defines it, the Archetype shows these tests:
+
+- $36 \div 1 = 36$, $36 \div 2 = 18$, $36 \div 3 = 12$ and $36 \div 4 = 9$, each a pair;
+- $36 \div 5 = 7.2$, shown and rejected;
+- $36 \div 6 = 6$, written once;
+- a stop at $7$, the first divisor whose square, $49$, is bigger than $36$.
+
+The finished list is $1, 2, 3, 4, 6, 9, 12, 18, 36$. That is step for step the Note's bulleted working and its list. $36$ has nine factors, so the Archetype marks no prime. The caption's three claims all hold:
+
+- $5$ leaves a remainder, which is the Note's "divides it exactly, leaving no remainder" in its opening sentence;
+- $6 \times 6$ is written once;
+- $7 \times 7 = 49$ is bigger than $36$.
+
+**Second block** (`number: 4`, `compare-with: 6`, `compare: multiples`, default `multiples-listed: 6`). It is valid: $6$ differs from $4$, `compare` has its `compare-with`, and the default count of $6$ is used. The lists shown are $4, 8, 12, 16, 20, 24$ and $6, 12, 18, 24, 30, 36$. The common multiples are $12$ and $24$, and the lowest, $12$, is marked as the LCM. That agrees with the Note's LCM working and with its common multiples $12, 24, 36$: $36$ lies past the fourth multiple of $4$ shown, so it is not marked, but nothing claims it is. The caption is right: $12$ is the first number in both lists, and $4 \times 6 = 24$. It also matches the common mistake "Taking the product as the LCM". The Interactive lists the multiples of $6$ up to $36$, where the prose stops at $24, \ldots$. The two do not conflict.
+
+Running `check` on a scratch copy of the vault gives PASS for invariant 9: both blocks name a known Archetype and validate against its schema. The search, the pairs, the square root and the comparison are Floor material, so neither block uses anything untaught. No `unsourced` finding applies to a Floor Note. Neither caption contradicts a Layer sibling or departs from `Conventions.md`. Each is plain British English, as the `text` type requires.
+
+### Findings
+
+None.
+
 ## Comments

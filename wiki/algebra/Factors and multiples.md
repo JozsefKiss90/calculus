@@ -48,6 +48,12 @@ You also meet **negative factor pairs**, which leave the lists of factors and th
 
 The factors of $36$ are $1, 2, 3, 4, 6, 9, 12, 18, 36$.
 
+```interactive
+archetype: factor-finder
+number: 36
+caption: 5 leaves a remainder, 6 times 6 is written once, and 7 times 7 is 49, past 36, so the search stops.
+```
+
 **Find the HCF of $24$ and $36$.** The factor pairs of $24$ are $1 \times 24$, $2 \times 12$, $3 \times 8$ and $4 \times 6$, so its factors are $1, 2, 3, 4, 6, 8, 12, 24$. The numbers in both lists are $1, 2, 3, 4, 6, 12$. The highest is $12$. Check: $24 \div 12 = 2$ and $36 \div 12 = 3$, both whole numbers.
 
 **Find the LCM of $4$ and $6$.** List multiples of each:
@@ -56,6 +62,14 @@ The factors of $36$ are $1, 2, 3, 4, 6, 9, 12, 18, 36$.
 - multiples of $6$: $6, 12, 18, 24, \ldots$
 
 The first number in both lists is $12$, so the LCM is $12$.
+
+```interactive
+archetype: factor-finder
+number: 4
+compare-with: 6
+compare: multiples
+caption: 12 is the first number in both lists, so it is the LCM, not 4 times 6, which is 24.
+```
 
 **Find the factor pair of $12$ that adds to $7$, and the one that adds to $-7$.** Add each pair: $1 + 12 = 13$, $2 + 6 = 8$, $3 + 4 = 7$. The pair is $3$ and $4$. For $-7$, use the negative twin: $(-3) \times (-4) = 12$ and $(-3) + (-4) = -7$.
 

@@ -47,7 +47,36 @@ Now undo them backwards, last step first.
 
 Check by running the steps forwards from $5$: $5 \times 3 = 15$, then $15 + 4 = 19$. That matches, so the starting number is $5$.
 
+```interactive
+archetype: function-machine
+machines:
+  - family: linear
+    coefficients: [3, 0]
+    label: '\times 3'
+  - family: linear
+    coefficients: [1, 4]
+    label: '+4'
+input: 5
+undo: reversed-and-wrong
+caption: Undo the last step first and 19 goes back to 15, then 5. Divide first and you reach 2 and a third, which runs forwards to 11, not 19.
+```
+
 A second example, with a square. A positive number is squared, then $2$ is subtracted, and the result is $47$. Undo the last step first: the inverse of "subtract $2$" is "add $2$", so $47 + 2 = 49$. Then the inverse of "square" is "take the square root", and $\sqrt{49} = 7$. Check: $7 \times 7 = 49$ and $49 - 2 = 47$. Without the word *positive*, the starting number could also have been $-7$, since $(-7) \times (-7) = 49$ too.
+
+```interactive
+archetype: function-machine
+machines:
+  - family: quadratic
+    coefficients: [1, 0, 0]
+    label: '\text{square}'
+  - family: linear
+    coefficients: [1, -2]
+    label: '-2'
+input: 7
+undo: reversed
+decimals: 0
+caption: Adding 2 takes 47 back to 49, but 7 and -7 both square to 49, so only the word positive tells you the start was 7.
+```
 
 ## Common mistakes
 

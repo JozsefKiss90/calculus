@@ -142,6 +142,88 @@ Health: check passes.
 - Archetype coverage: Notes with no Interactive: yellow
 - Floor plausibility: Floor Notes flagged above 8th grade: green
 
+## 2026-10-03 · Layer 0
+
+3 Notes moved state:
+
+| Note | Layer | Was | Now |
+|---|---:|---|---|
+| [[Factors and multiples]] | 0 | drafted, reviewed by agent | drafted |
+| [[Inputs, outputs, and composition]] | 0 | drafted, reviewed by agent | drafted |
+| [[Inverse operations]] | 0 | drafted, reviewed by agent | drafted |
+
+61 concept Notes: 52 stub, 9 drafted, 0 reviewed.
+
+Health: check passes.
+
+- Broken wikilinks: green
+- Notes with zero Cross-references: yellow
+- Stale updated (\>30d, non-reviewed): green
+- Notes still stub after their Layer is opened: green
+- Archetype coverage: Notes with no Interactive: green
+- Floor plausibility: Floor Notes flagged above 8th grade: green
+
+## 2026-10-03 · Layer 0
+
+3 Notes moved state:
+
+| Note | Layer | Was | Now |
+|---|---:|---|---|
+| [[Factors and multiples]] | 0 | drafted | drafted, reviewed by agent |
+| [[Inputs, outputs, and composition]] | 0 | drafted | drafted, reviewed by agent |
+| [[Inverse operations]] | 0 | drafted | drafted, reviewed by agent |
+
+61 concept Notes: 52 stub, 9 drafted, 0 reviewed.
+
+Health: check passes.
+
+- Broken wikilinks: green
+- Notes with zero Cross-references: yellow
+- Stale updated (\>30d, non-reviewed): green
+- Notes still stub after their Layer is opened: green
+- Archetype coverage: Notes with no Interactive: green
+- Floor plausibility: Floor Notes flagged above 8th grade: green
+
+## 2026-10-03 · Layer 0
+
+2 Notes moved state:
+
+| Note | Layer | Was | Now |
+|---|---:|---|---|
+| [[Inputs, outputs, and composition]] | 0 | drafted, reviewed by agent | drafted |
+| [[Inverse operations]] | 0 | drafted, reviewed by agent | drafted |
+
+61 concept Notes: 52 stub, 9 drafted, 0 reviewed.
+
+Health: check passes.
+
+- Broken wikilinks: green
+- Notes with zero Cross-references: yellow
+- Stale updated (\>30d, non-reviewed): green
+- Notes still stub after their Layer is opened: green
+- Archetype coverage: Notes with no Interactive: green
+- Floor plausibility: Floor Notes flagged above 8th grade: green
+
+## 2026-10-03 · Layer 0
+
+2 Notes moved state:
+
+| Note | Layer | Was | Now |
+|---|---:|---|---|
+| [[Inputs, outputs, and composition]] | 0 | drafted | drafted, reviewed by agent |
+| [[Inverse operations]] | 0 | drafted | drafted, reviewed by agent |
+
+61 concept Notes: 52 stub, 9 drafted, 0 reviewed.
+
+Health: check passes.
+
+- Broken wikilinks: green
+- Notes with zero Cross-references: yellow
+- Stale updated (\>30d, non-reviewed): green
+- Notes still stub after their Layer is opened: green
+- Archetype coverage: Notes with no Interactive: green
+- Floor plausibility: Floor Notes flagged above 8th grade: green
+
 <!-- log-state: what the last entry recorded, which the next generate run compares against. Written by generate; never edit by hand.
 {
   "notes": {
@@ -214,7 +296,7 @@ Health: check passes.
       "zero-cross-references": "yellow",
       "stale-updated": "green",
       "stubs-in-opened-layers": "green",
-      "archetype-coverage": "yellow",
+      "archetype-coverage": "green",
       "floor-plausibility": "green"
     }
   }

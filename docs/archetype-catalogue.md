@@ -722,7 +722,7 @@ caption: The quotient never strays further from 0 than half of h does, so as h s
 | `undo` | `enum(none, reversed, reversed-and-wrong)` | no | `none` | — | Whether the chain is undone beneath, from the final output back to the start. `reversed` swaps each machine for its inverse and takes them last first. `reversed-and-wrong` also undoes them in the order they were done, and runs that answer forwards to show it misses the output. |
 | `swap` | `boolean` | no | `false` | — | Runs the same machines in the opposite order beside the chain, from the same input, so the two final outputs can be compared. |
 | `table` | `list of number` | no | `none` | `[1, 8] items; [-1000, 1000]` | Inputs tabulated beside the chain, each with the whole chain's output. |
-| `decimals` | `integer` | no | `2` | `[0, 6]` | Decimal places for every number passed along. |
+| `decimals` | `integer` | no | `2` | `[0, 6]` | Decimal places for every number shown. Rounding is for display only: each machine passes on the exact value, so rounding never changes a later output. |
 | `caption` | `text` | no | `none` | — | One line saying what to notice. |
 
 A machine with no output for the number it is given, such as a square root of a negative number, says so and passes nothing on. When undoing, a machine that cannot be undone, such as multiplying by $0$, or squaring a number that might have been negative, is marked as such, with every input that gives its output.
@@ -750,12 +750,13 @@ archetype: function-machine
 machines:
   - family: linear
     coefficients: [1, 3]
-    label: 'x + 3'
+    label: '+ 3'
   - family: quadratic
     coefficients: [1, 0, 0]
-    label: 'x^2'
+    label: '\text{square}'
 input: 2
 swap: true
+decimals: 0
 caption: In one order 2 becomes 5 and then 25, in the other 4 and then 7. Try -1, where both orders give 4.
 ```
 
