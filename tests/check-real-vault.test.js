@@ -35,7 +35,7 @@ test("check on the real vault passes and reports the frozen graph's shape", asyn
     floorNodes: 9,
     reachableNodes: 61,
   });
-  assert.deepEqual(report.notes, { notes: 65, conceptNotes: 61 });
+  assert.deepEqual(report.notes, { notes: 73, conceptNotes: 61 });
   assert.deepEqual(
     report.invariants.map((entry) => entry.status),
     [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13].map(() => "pass"),

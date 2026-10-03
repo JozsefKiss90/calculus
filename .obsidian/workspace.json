@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "wiki/algebra/Equivalent fractions and cancellation.md",
+                "file": "wiki/limits/Approaching a value.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Equivalent fractions and cancellation"
+              "title": "Approaching a value"
             }
           }
         ]
@@ -99,7 +99,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "wiki/algebra/Equivalent fractions and cancellation.md",
+                "file": "wiki/limits/Approaching a value.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -118,7 +118,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "wiki/algebra/Equivalent fractions and cancellation.md",
+                "file": "wiki/limits/Approaching a value.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
@@ -161,7 +161,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "wiki/algebra/Equivalent fractions and cancellation.md",
+                "file": "wiki/limits/Approaching a value.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
@@ -190,16 +190,22 @@
   },
   "active": "ddffb5ad77cd4b63",
   "lastOpenFiles": [
-    "wiki/limits/sedWLnG5X",
-    "wiki/observability/sedqVx76v",
-    "wiki/limits/sedkEnod3",
-    "wiki/functions/sedEjoYYq",
-    "wiki/functions/sedTCqra5",
-    "wiki/algebra/sedmLzyZQ",
-    "wiki/algebra/sedtLlPCU",
-    "wiki/algebra/sedyTh2rp",
-    "wiki/algebra/sedRGuhfE",
-    "wiki/algebra/sedRXQFP5",
+    "raw/sedkbSvPH",
+    "raw/openstax-prealgebra-2e/8-3-solve-equations-with-variables-and-constants-on-both-sides.html",
+    "wiki/sources/OpenStax Prealgebra 2e, section 2.2.md",
+    "raw/openstax-prealgebra-2e/2-2-evaluate-simplify-and-translate-expressions.html",
+    "wiki/sources/OpenStax Prealgebra 2e, section 7.3.md",
+    "raw/checksums.tmp",
+    "raw/openstax-prealgebra-2e/7-3-distributive-property.html",
+    "raw/openstax-prealgebra-2e",
+    "tests/conventions.test.js.tmp.12100.9724d6006ea1",
+    "docs/adr/0005-authors-read-a-context-pack-not-the-wiki.md.tmp.12100.3b892b97d9f1",
+    "scripts/lib/conventions-slice.js",
+    "scripts/lib/conventions-slice.js.tmp.12100.0f2d8cfb0b30",
+    "tests/sed1xl6n9",
+    "wiki/Conventions.md",
+    "wiki/Module 1 Anchor Graph.md",
+    "wiki/algebra/Equivalent fractions and cancellation.md",
     "wiki/algebra/Division restrictions.md",
     "wiki/functions/Functions, slopes, and rates.md"
   ]
