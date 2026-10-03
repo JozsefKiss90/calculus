@@ -39,7 +39,7 @@ The Wiki's health as `npm run check` computes it, written here by `npm run gener
 | 12 | 1 | 1 | 0 | 0 |
 | **All** | **61** | **52** | **9** | **0** |
 
-2 Notes are reviewed by an agent and wait for human sign-off. 0 Notes are signed off by a human.
+9 Notes are reviewed by an agent and wait for human sign-off. 0 Notes are signed off by a human.
 
 ## The graph
 

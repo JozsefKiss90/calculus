@@ -1,6 +1,6 @@
 # Correctness review: Coordinates, tables, and plotting
 
-**Status:** needs-triage
+**Status:** ready-for-human
 
 **Note:** [[Coordinates, tables, and plotting]] (`wiki/functions/Coordinates, tables, and plotting.md`)
 
@@ -29,5 +29,21 @@
 - **Where:** `## The idea`: "Any point on the grid is named by two numbers written in brackets, $(x, y)$".
 - **What is wrong:** Nothing yet. The Conventions entry *Intervals* says "The same $(a, b)$ also names the point with coordinates $a$ and $b$; say which." This Note introduces the point reading. Intervals are taught later, in [[Absolute value, intervals, and inequalities]], so that later Note is the natural place to warn about the clash. Flagged so the author can confirm that it does.
 - **What would fix it:** No change needed here, unless the author wants a skippable aside.
+
+## Review 2
+
+**Date:** 2026-10-03
+
+**Outcome:** No blocking finding, so `reviewed_by` is now `agent`. Human sign-off is next.
+
+Review 1's error is cleared. `## The idea` now says "For a curved rule such as $y = x^2 - 2$, draw a smooth curve through the points". It also adds a hedge for rules with a sharp corner or a gap. The third common mistake no longer claims a single V. I redid every calculation: the five table values $2, -1, -2, -1, 2$; $1.4^2 - 2 = 1.96 - 2 = -0.04$, with the true crossing near $1.414$, between $1$ and $2$; the rule's $0.5^2 - 2 = -1.75$ against the segment midpoint $(0.5, -1.5)$; $(-2) \times (-2) = 4$; and the counterexamples in the first and fourth mistakes. With the axis labelled the wrong way, the mark $1$ left of the origin reads $-3$. So $(-3, 0)$ lands where $(-1, 0)$ belongs. All are correct. This is a Floor Note, so no `unsourced` finding applies, and every idea it uses is 8th-grade mathematics. It agrees with its Layer siblings: the number line in [[Decimals, ordering, and number lines]] and the input–output table in [[Inputs, outputs, and composition]]. It also agrees with Conventions: *brackets* for $( \, )$, and $\times$ between numbers.
+
+### Findings
+
+#### 1. query: "sharp corners at the plotted points"
+
+- **Where:** `## Common mistakes`, third mistake: "Straight segments give a shape with sharp corners at the plotted points."
+- **What is wrong:** This is not strictly an error. The straight-line shape has corners only at the three inner points, $(-1, -1)$, $(0, -2)$ and $(1, -1)$. The end points $(-2, 2)$ and $(2, 2)$ are not corners. A careful learner may notice that.
+- **What would fix it:** Optional. For example: "sharp corners at the inner plotted points", or "sharp corners at $(-1, -1)$, $(0, -2)$ and $(1, -1)$".
 
 ## Comments

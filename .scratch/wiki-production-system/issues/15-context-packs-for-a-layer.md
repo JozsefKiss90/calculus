@@ -46,3 +46,26 @@ From 15, which implemented it. `npm run generate -- --layer <N>` rewrites the bl
 **The Pack fixture is a record, not a regression target.** The test does not compare it with what `generate` writes today, so a house style edit does not break it. Re-run the author when the Pack changes in a way that would change the writing.
 
 ADR-0005's list of Pack contents is amended to match the spec.
+
+From 18, which ran the nine Layer 0 Packs through real Note Authors. These are what the Pack lacked. None was patched in place.
+
+- **No Node to cross-reference.** A Pack names only the Node's Edges: Builds on and Required by. A link along an Edge does not count for the zero-Cross-references metric, so a Floor Note cannot meet that metric from its Pack alone. Five of nine authors went outside the Pack to find a target. Three took a Node name from `Conventions.md`, and two used `check`'s report or the directory listing. Two of the resulting links are forced: *Inputs, outputs, and composition* and *Decimals, ordering, and number lines* both point at *Left-hand and right-hand limits*, the one later Node `Conventions.md` happens to name. Two Notes found no target and are still listed. A Pack likely needs a short list of Nodes where its idea reappears, or the metric should not apply to the Floor.
+- **The word limit is ambiguous.** The house style does not say how inline `$…$` counts towards 900 words. *Factors and multiples* is about 760 words one way and 935 the other.
+- **`Conventions.md` has no entry for terms several authors needed.** Each author used the British school form:
+  - $\sqrt{\ }$ as the non-negative root
+  - $\pm$, $\neq$, and $\div$ as a sign in its own right
+  - $<$, $>$, $\leq$ and $\geq$
+  - numerator, denominator, simplest form, cancelling
+  - factor, multiple, prime, HCF and LCM
+  - coordinates, ordered pair, origin and axes
+  - function, input, output and composition
+  - mixed numbers
+- **The house style has no rule for the zero case of a general claim.** Review blocked six of nine Notes on an `error`. Most were a general rule that fails at an edge case:
+  - the sign rule when a factor is 0
+  - a zero numerator over a zero denominator
+  - adding the same number to the top and bottom of a fraction equal to 1
+  - "draw a smooth curve" for $|x|$
+  - "each digit" for "each place"
+
+  The *Signed arithmetic* error is the one ticket 16 caught in the earlier draft, made again by a fresh author from a fresh Pack. A house style rule along the lines of "test every *always*, *never* or *any* claim against 0, negatives and equal values" might catch these before review.
+- **Writing through a bash heredoc corrupts LaTeX.** One author's first write turned `\f` in `\frac` into a form feed. The Note Author contract could say to write the Note with the Write or Edit tool.

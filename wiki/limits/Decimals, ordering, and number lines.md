@@ -3,7 +3,7 @@ kind: concept
 domain: limits
 requires: []
 status: drafted
-reviewed_by: none
+reviewed_by: agent
 created: 2026-10-02
 updated: 2026-10-03
 ---
@@ -20,7 +20,7 @@ Calculus keeps asking how close one number is to another, and on which side. To 
 
 ## The idea
 
-**Place value.** Each digit of a decimal is worth ten times the digit to its right. The digits after the decimal point count tenths, then hundredths, then thousandths:
+**Place value.** Each place in a decimal is worth ten times the place to its right. The digits after the decimal point count tenths, then hundredths, then thousandths:
 
 $$3.47 = 3 + \frac{4}{10} + \frac{7}{100}$$
 
@@ -34,7 +34,7 @@ This Wiki writes a decimal point, $2.5$, and groups the digits of a long number 
 
 **Comparing two decimals.** For two positive decimals, compare the whole-number parts first. If they match, compare the tenths digits, then the hundredths, and so on: the first place where the digits differ decides. For negative numbers the order flips, because moving left takes you further from $0$: $-3 < -2$, since $-3$ is to the left of $-2$.
 
-**Between any two decimals there is another.** Halfway between $1.9$ and $2$ sits $1.95$, and halfway between $1.99$ and $2$ sits $1.995$. You can keep going for ever, so decimals can get as close to a number as you like without reaching it. On a number line, $1.9$, $1.99$ and $1.999$ crowd closer and closer to $2$ from its left. As an aside you can skip for now, you meet this approach from one side again in [[Left-hand and right-hand limits]].
+**Between any two different decimals there is another.** Halfway between $1.9$ and $2$ sits $1.95$, and halfway between $1.99$ and $2$ sits $1.995$. You can keep going for ever, so decimals can get as close to a number as you like without reaching it. On a number line, $1.9$, $1.99$ and $1.999$ crowd closer and closer to $2$ from its left. As an aside you can skip for now, you meet this approach from one side again in [[Left-hand and right-hand limits]].
 
 ## Worked example
 

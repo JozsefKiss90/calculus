@@ -3,7 +3,7 @@ kind: concept
 domain: algebra
 requires: []
 status: drafted
-reviewed_by: none
+reviewed_by: agent
 created: 2026-10-02
 updated: 2026-10-03
 ---
@@ -35,6 +35,7 @@ $$\frac{8}{12} = \frac{2 \times 4}{3 \times 4} = \frac{2}{3}.$$
 What you cancel must be a *factor* of the whole numerator and a factor of the whole denominator: a number that multiplies everything above the line, and everything below it. You can never cancel a number that is only added or subtracted.
 
 A fraction is in its *simplest form* when its numerator and denominator have no common factor other than $1$. You reach it in one step by dividing both by their highest common factor (HCF), or in several steps by cancelling smaller common factors until none is left. You meet the HCF again, as an aside, in [[Factors and multiples]].
+
 To check whether two fractions are equivalent, rewrite them over the same denominator, or put both in simplest form, and compare.
 
 ## Worked example
@@ -82,7 +83,7 @@ $$\frac{5}{6} = \frac{5 \times 4}{6 \times 4} = \frac{20}{24}.$$
 
 In general, for any non-zero number $k$,
 
-$$\frac{a}{b} = \frac{a \times k}{b \times k}.$$
+$$\frac{a}{b} = \frac{ak}{bk}.$$
 
 ## Common mistakes
 
@@ -92,7 +93,8 @@ $$\frac{a}{b} = \frac{a \times k}{b \times k}.$$
 
 **Changing only the denominator.** A learner writes $\frac{3}{4} = \frac{3}{12}$ to get denominator $12$. Multiplying the denominator alone by $3$ cuts the whole into three times as many parts, so each part is a third of the size, and $\frac{3}{12}$ is a third of $\frac{3}{4}$. Multiply the numerator by $3$ as well: $\frac{3}{4} = \frac{9}{12}$.
 
-**Adding the same number to top and bottom.** A learner thinks $\frac{1}{2} = \frac{1 + 1}{2 + 1} = \frac{2}{3}$. But $\frac{1}{2} = 0.5$ and $\frac{2}{3}$ is about $0.67$. Adding the same number to the numerator and the denominator changes the value. Only multiplying or dividing both by the same non-zero number keeps it.
+**Adding the same number to top and bottom.** A learner thinks $\frac{1}{2} = \frac{1 + 1}{2 + 1} = \frac{2}{3}$. But $\frac{1}{2} = 0.5$ and $\frac{2}{3}$ is about $0.67$. Adding the same number to the numerator and the denominator usually changes the value. Multiplying or dividing both by the same non-zero number always keeps it.
+
 ## Builds on
 
 <!-- generated:start builds-on -->

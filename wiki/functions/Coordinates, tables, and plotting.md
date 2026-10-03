@@ -3,7 +3,7 @@ kind: concept
 domain: functions
 requires: []
 status: drafted
-reviewed_by: none
+reviewed_by: agent
 created: 2026-10-02
 updated: 2026-10-03
 ---
@@ -26,7 +26,7 @@ Any point on the grid is named by two numbers written in brackets, $(x, y)$, cal
 
 To **plot** a point, start at the origin, move across by the $x$-coordinate, then up or down by the $y$-coordinate, and mark a dot. To **read** a point, go the other way: drop a line straight down or up to the $x$-axis to find $x$, and go straight across to the $y$-axis to find $y$.
 
-A rule such as $y = 2x + 1$ gives a $y$ for each $x$ you choose. A **table of values** lists some choices of $x$ in one row and the $y$ each one gives in the row below. Each column is one ordered pair, so one point. Plot every column, then join the points in order of $x$. For a straight-line rule, use a ruler. For any other rule, draw a smooth curve through the points, not straight segments from dot to dot.
+A rule such as $y = 2x + 1$ gives a $y$ for each $x$ you choose. A **table of values** lists some choices of $x$ in one row and the $y$ each one gives in the row below. Each column is one ordered pair, so one point. Plot every column, then join the points in order of $x$. For a straight-line rule, use a ruler. For a curved rule such as $y = x^2 - 2$, draw a smooth curve through the points, not straight segments from dot to dot. Some rules have a sharp corner or a gap, so when you are unsure what happens between two points, work out the $y$ for an $x$ between them and plot that too.
 
 ## Worked example
 
@@ -78,7 +78,7 @@ Now read a point back. The curve crosses the $x$-axis, where $y = 0$, between $x
 
 **Working out $(-2)^2 - 2$ as $-4 - 2 = -6$.** The square applies to the whole of $-2$, and a negative times a negative is positive: $(-2) \times (-2) = 4$. So $(-2)^2 - 2 = 4 - 2 = 2$, and the point is $(-2, 2)$, not $(-2, -6)$.
 
-**Joining the points of $y = x^2 - 2$ with straight lines.** Straight segments give a V with a sharp corner at $(0, -2)$. At $x = 0.5$ the rule gives $0.25 - 2 = -1.75$, but the segment from $(0, -2)$ to $(1, -1)$ passes through $(0.5, -1.5)$. Draw a smooth curve unless the rule is a straight line.
+**Joining the points of $y = x^2 - 2$ with straight lines.** Straight segments give a shape with sharp corners at the plotted points. At $x = 0.5$ the rule gives $0.25 - 2 = -1.75$, but the segment from $(0, -2)$ to $(1, -1)$ passes through $(0.5, -1.5)$. The rule bends between the points, so draw a smooth curve.
 
 **Labelling the $x$-axis left of the origin $-3$, $-2$, $-1$, with $-3$ next to the origin.** Each negative number sits as far left of the origin as its positive partner sits to the right, so moving left from the origin gives $-1$, then $-2$, then $-3$. With the wrong labels, $(-3, 0)$ is plotted where $(-1, 0)$ belongs.
 

@@ -3,14 +3,14 @@ kind: concept
 domain: algebra
 requires: []
 status: drafted
-reviewed_by: none
+reviewed_by: agent
 created: 2026-10-02
 updated: 2026-10-03
 ---
 
 ## In one sentence
 
-A factor of a whole number divides it exactly, leaving no remainder, and a multiple of a whole number is that number times a whole number, so $3$ is a factor of $12$ and $12$ is a multiple of $3$.
+A factor of a positive whole number is a positive whole number that divides it exactly, leaving no remainder, and a multiple of a positive whole number is that number times a positive whole number, so $3$ is a factor of $12$ and $12$ is a multiple of $3$.
 
 ## Why you need this
 
@@ -18,7 +18,7 @@ You use factors to cancel fractions and multiples to put fractions over a common
 
 ## The idea
 
-Take a positive whole number, such as $12$. A whole number $a$ is a **factor** of $12$ when $12 \div a$ is a whole number. Since $12 \div 3 = 4$, the number $3$ is a factor of $12$. Since $12 \div 5 = 2.4$, the number $5$ is not.
+In this Note, factors and multiples are positive whole numbers unless a minus sign is shown. Take a positive whole number, such as $12$. A positive whole number $a$ is a **factor** of $12$ when $12 \div a$ is a whole number. Since $12 \div 3 = 4$, the number $3$ is a factor of $12$. Since $12 \div 5 = 2.4$, the number $5$ is not.
 
 Turn the same fact round and you get a multiple. $12$ is a **multiple** of $3$ because $12 = 3 \times 4$: it is $3$ times a whole number. The multiples of $3$ are $3, 6, 9, 12, 15, \ldots$, and they go on for ever, but no factor of a number is bigger than the number.
 
@@ -32,7 +32,7 @@ To list every factor, test $1, 2, 3, \ldots$ in turn; each one that divides exac
 
 Two numbers can share factors. A **common factor** of $8$ and $12$ divides both: $1$, $2$ and $4$. The largest, $4$, is the **highest common factor**, written HCF. Two numbers can also share multiples. A **common multiple** of $4$ and $6$ is a multiple of both, such as $12$, $24$ or $36$. The smallest, $12$, is the **lowest common multiple**, written LCM.
 
-Negative whole numbers have factor pairs too. A negative times a negative is positive, so $(-3) \times (-4) = 12$, and each factor pair of $12$ has a negative twin. A negative number such as $-12$ has pairs with one positive and one negative factor: $3 \times (-4)$ and $(-3) \times 4$ both give $-12$.
+You also meet **negative factor pairs**, which leave the lists of factors and the meaning of a prime as they are. A negative times a negative is positive, so $(-3) \times (-4) = 12$, and each factor pair of $12$ has a negative twin. A negative number such as $-12$ splits into a pair with one positive and one negative number: $3 \times (-4)$ and $(-3) \times 4$ both give $-12$.
 
 ## Worked example
 
@@ -59,7 +59,7 @@ The first number in both lists is $12$, so the LCM is $12$.
 
 **Find the factor pair of $12$ that adds to $7$, and the one that adds to $-7$.** Add each pair: $1 + 12 = 13$, $2 + 6 = 8$, $3 + 4 = 7$. The pair is $3$ and $4$. For $-7$, use the negative twin: $(-3) \times (-4) = 12$ and $(-3) + (-4) = -7$.
 
-In general, whenever $a \times b = n$ for whole numbers, $a$ and $b$ are factors of $n$, and $n$ is a multiple of each.
+In general, whenever $a \times b = n$ for positive whole numbers, $a$ and $b$ are factors of $n$, and $n$ is a multiple of each.
 
 ## Common mistakes
 

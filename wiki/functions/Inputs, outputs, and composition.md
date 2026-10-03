@@ -3,7 +3,7 @@ kind: concept
 domain: functions
 requires: []
 status: drafted
-reviewed_by: none
+reviewed_by: agent
 created: 2026-10-02
 updated: 2026-10-03
 ---
@@ -83,7 +83,7 @@ Why it is wrong: $2^2 + 3$ squares first and adds second, which is the other cha
 
 **Losing the bracket when you write the chain with a letter.** For "add $3$, then square" you write $x + 3^2$, or expand $(x + 3)^2$ as $x^2 + 9$.
 
-Why it is wrong: at $x = 2$, $x + 3^2 = 2 + 9 = 11$ and $x^2 + 9 = 4 + 9 = 13$, but the chain gives $25$. The square acts on the whole output of rule A, so the bracket must stay: $(x + 3)^2 = (x + 3)(x + 3) = x^2 + 6x + 9$, which at $x = 2$ is $4 + 12 + 9 = 25$.
+Why it is wrong: at $x = 2$, $x + 3^2 = 2 + 9 = 11$ and $x^2 + 9 = 4 + 9 = 13$, but the chain gives $25$. The square acts on the whole output of rule A, so the bracket must stay: $(x + 3)^2$ at $x = 2$ is $5^2 = 25$.
 
 **Deciding a rule is not a function because two inputs share an output.** You see that "square it" sends both $3$ and $-3$ to $9$ and conclude it breaks the one-output requirement.
 

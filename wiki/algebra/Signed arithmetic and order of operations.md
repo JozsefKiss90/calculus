@@ -3,7 +3,7 @@ kind: concept
 domain: algebra
 requires: []
 status: drafted
-reviewed_by: none
+reviewed_by: agent
 created: 2026-10-02
 updated: 2026-10-03
 ---
@@ -31,7 +31,7 @@ A minus sign in front of a negative number turns it into a positive one: $-(-6) 
 - two numbers with the same sign give a positive answer: $(-3) \times (-4) = 12$;
 - two numbers with different signs give a negative answer: $(-3) \times 4 = -12$ and $12 \div (-4) = -3$.
 
-With more than two numbers, count the negative signs. An even number of them gives a positive answer, and an odd number gives a negative one: $(-1) \times (-2) \times (-3) = -6$.
+With more than two numbers, first look for a $0$. If you divide by $0$ anywhere, there is no answer, because dividing by $0$ has no meaning. If you multiply by $0$, or $0$ is the first number, the answer is $0$. Otherwise, count the negative signs. An even number of them gives a positive answer, and an odd number gives a negative one: $(-1) \times (-2) \times (-3) = -6$.
 
 **Order of operations.** With several operations, you work them in this order, called **BIDMAS**:
 
@@ -44,7 +44,7 @@ D comes before M, and A before S, but neither pair is ranked: within each pair y
 
 The same rule goes by other names: BODMAS (*Orders* or *Of* for indices) in UK and Commonwealth schools and older texts, PEMDAS (*Parentheses, Exponents*) in US schools, and BEDMAS in Canadian schools. Each letter order wrongly suggests a ranking within each pair.
 
-**Indices and negative numbers.** An index applies only to the number directly before it, called the *base*. In $(-3)^2$ the bracket makes the whole of $-3$ the base, so $(-3)^2 = (-3) \times (-3) = 9$. In $-3^2$ there is no bracket, so the index applies to the $3$ alone and the minus is taken afterwards: $-3^2 = -(3 \times 3) = -9$.
+**Indices and negative numbers.** An index applies only to what comes directly before it, a single number or a whole bracket, called the *base*. In $(-3)^2$ the bracket makes the whole of $-3$ the base, so $(-3)^2 = (-3) \times (-3) = 9$. In $-3^2$ there is no bracket, so the index applies to the $3$ alone and the minus is taken afterwards: $-3^2 = -(3 \times 3) = -9$.
 
 ## Worked example
 

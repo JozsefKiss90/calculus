@@ -1,6 +1,6 @@
 # Correctness review: Decimals, ordering, and number lines
 
-**Status:** needs-triage
+**Status:** ready-for-human
 
 **Note:** [[Decimals, ordering, and number lines]] (`wiki/limits/Decimals, ordering, and number lines.md`)
 
@@ -31,5 +31,31 @@
 - **What would fix it:** None needed, unless the author prefers to drop the unused $\leq$ and $\geq$ sentence or leave them to [[Absolute value, intervals, and inequalities]].
 
 All calculations were redone and are correct: $1.95$ and $1.995$ are the midpoints stated; the ordering $-0.8 < -0.35 < 0.072 < 0.65 < 0.7$ is right, as are the padded forms and the Step 5 positions; $0.65 < 0.7$, $0.4 < 0.45$, $-0.8 < -0.35$, and $2 - 1.999 = 0.001$ with $1.999 < 1.9995 < 2$. Each common mistake's counterexample breaks the wrong working. The decimal point and thin-space grouping match the **This Wiki** line of Conventions, and the Elsewhere forms are described as Conventions describes them. No contradiction with any Layer 0 sibling. As a Floor Node, nothing needs a source. The link to [[Left-hand and right-hand limits]] is marked as a skippable aside.
+
+## Review 2
+
+**Date:** 2026-10-03
+
+**Outcome:** No blocking finding, so `reviewed_by` is now `agent`. Human sign-off is next.
+
+### Findings
+
+#### 1. query: Review 1's query 3 still stands
+
+- **Where:** `## The idea`, **Order.**: "The symbol $\leq$ means "less than or equal to", and $\geq$ means "greater than or equal to"."; **Comparing two decimals.**: "because moving left takes you further from $0$"; `## Worked example`, Step 2: "Ignoring the signs, $0.80$ is further from $0$ than $0.35$".
+- **What is wrong:** Nothing mathematically, and the text is unchanged since Review 1. The Note teaches these ideas itself, on the number line, so they raise no `untaught` finding. As before, $\leq$ and $\geq$ are defined but never used in this Note, and they sit beside what [[Absolute value, intervals, and inequalities]] teaches. A human may want to decide whether they belong here. Not blocking.
+- **What would fix it:** Nothing is needed. If the author prefers, drop the unused $\leq$ and $\geq$ sentence.
+
+Review 1's finding 1 is cleared: the **Place value.** paragraph now reads "Each place in a decimal is worth ten times the place to its right." This is true: a tenth is ten times a hundredth, and a hundredth is ten times a thousandth. Review 1's query 2 is resolved: the heading now reads "Between any two different decimals there is another." That holds because the midpoint of two terminating decimals is again a terminating decimal.
+
+I redid every calculation, and each is correct:
+- $3.47 = 3 + \frac{4}{10} + \frac{7}{100}$.
+- $0.5 = 0.50 = 0.500$.
+- $1.95$ is the midpoint of $1.9$ and $2$, and $1.995$ is the midpoint of $1.99$ and $2$.
+- In the worked example, the padded forms $-0.80$, $0.700$, $0.650$ and $0.072$ are right, the tenths digits $7$, $6$ and $0$ are right, and so is the final order $-0.8 < -0.35 < 0.072 < 0.65 < 0.7$.
+- The Step 5 positions are fair: $0.35$ is about a third, and $0.65$ and $0.7$ are a bit over a half. The interactive's range and points match the example.
+- Common mistakes: $0.65 < 0.70$, $0.40 < 0.45$, $-0.8 < -0.35$, and $2 - 1.999 = 0.001 \neq 0$ with $1.999 < 1.9995 < 2$. Each counterexample breaks the wrong working it answers.
+
+The decimal point and thin-space grouping match the **This Wiki** line of Conventions, and the Elsewhere forms are described as Conventions describes them. There is no contradiction with any Layer 0 sibling. [[Signed arithmetic and order of operations]] and [[Coordinates, tables, and plotting]] place the negatives left of $0$ in the same way. As a Floor Node, nothing needs a source. The link to [[Left-hand and right-hand limits]] is still marked as a skippable aside.
 
 ## Comments

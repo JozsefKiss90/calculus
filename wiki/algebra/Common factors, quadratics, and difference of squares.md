@@ -22,7 +22,7 @@ updated: 2026-10-02
 ## Builds on
 
 <!-- generated:start builds-on -->
-- [[Factors and multiples]] — A factor of a whole number divides it exactly, leaving no remainder, and a multiple of a whole number is that number times a whole number, so $3$ is a factor of $12$ and $12$ is a multiple of $3$.
+- [[Factors and multiples]] — A factor of a positive whole number is a positive whole number that divides it exactly, leaving no remainder, and a multiple of a positive whole number is that number times a positive whole number, so $3$ is a factor of $12$ and $12$ is a multiple of $3$.
 <!-- generated:end builds-on -->
 
 ## Required by
