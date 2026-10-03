@@ -4,7 +4,7 @@
 
 **Blocked by:** None (can start immediately)
 
-**Status:** ready-for-human
+**Status:** done
 
 - [x] Obsidian opens with `wiki/` as the vault root, and `.obsidian/` is no longer at the repo root
 - [x] The five domain directories — algebra, functions, limits, trigonometry, calculus — exist and survive a clone (git does not track empty directories, so each needs a `.gitkeep` until 04 populates it)
@@ -66,3 +66,5 @@ open Obsidian on `wiki/` and confirm the Anchor Graph renders as a diagram, then
 `status: reviewed` and `reviewed_by: human` on the Note. Both are human-only by spec.
 
 **2026-10-03.** The author confirmed the Anchor Graph renders in Obsidian and let the four judgements stand. The one thing left is the sign-off itself: `wiki/Module 1 Anchor Graph.md` is still `status: drafted`, `reviewed_by: none`, and only the author sets those two fields. The ticket closes when they do.
+
+**Closed 2026-10-03.** The author signed `wiki/Module 1 Anchor Graph.md` off by hand at `status: reviewed`, `reviewed_by: human`.

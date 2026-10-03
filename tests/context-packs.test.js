@@ -52,11 +52,29 @@ Which symbol this fixture Wiki uses for each idea.
 
 ## Entries
 
+### Order of operations
+
+- **This Wiki:** brackets, indices, division and multiplication, addition and subtraction.
+- **Elsewhere:** none known.
+
 ### Limit
 
 - **This Wiki:** $\\lim_{x \\to a} f(x)$.
 - **Elsewhere:** none known.
+
+### Tangent
+
+- **This Wiki:** $\\tan \\theta$.
+- **Elsewhere:** none known.
 `;
+
+/** The fixture file up to and including its Entries heading: what every slice carries. */
+const CONVENTIONS_PREAMBLE = CONVENTIONS.slice(0, CONVENTIONS.indexOf("## Entries\n") + "## Entries\n".length);
+const entryOf = (term) => {
+  const start = CONVENTIONS.indexOf(`### ${term}\n`);
+  const next = CONVENTIONS.indexOf("\n### ", start + 1);
+  return CONVENTIONS.slice(start, next === -1 ? undefined : next + 1).replace(/\n*$/, "\n");
+};
 
 const source = (title, tag) => `---
 kind: source
@@ -98,7 +116,8 @@ async function packedVault() {
   await mkdir(join(vault, "sources"));
   await writeFile(join(vault, LIMITS_SOURCE), source("A limits text", "limits"), "utf8");
   await writeFile(join(vault, TRIG_SOURCE), source("A trigonometry text", "trigonometry"), "utf8");
-  await editNote(vault, ARITHMETIC, summarise("Signed arithmetic is adding and multiplying with signs.", "PREREQUISITE PROSE STAYS OUT."));
+  // The prose is read for the notation slice and copied into no Pack: $\tan$ pulls in the Tangent entry.
+  await editNote(vault, ARITHMETIC, summarise("Signed arithmetic is adding and multiplying with signs.", "PREREQUISITE PROSE STAYS OUT. And $\\tan 45^\\circ = 1$."));
   await editNote(vault, FRACTIONS, summarise("Two fractions are equal when one scales to the other."));
   await editNote(vault, LIMITS, summarise("A limit is the value a function approaches."));
   assert.equal((await runWiki(["generate", vault])).exitCode, 0);
@@ -200,7 +219,8 @@ test("a Pack holds exactly the Node, its skeleton, its neighbours' one-liners, t
     "",
     "## Notation authority",
     "",
-    "`wiki/Conventions.md`, whole:",
+    // Limit from the Node's name, Tangent from its prerequisite's prose, Order of operations always.
+    "`wiki/Conventions.md`, sliced: its instructions, and 3 of its 3 entries — those this Node's name and the Notes it builds on use. No entry was left out.",
     "",
     fenced(CONVENTIONS),
     "",
@@ -249,14 +269,42 @@ test("a Pack leaves out everything else: siblings, the Anchor Graph, prerequisit
   }
 });
 
-test("a Pack carries the house style and the notation authority verbatim, not summarised", async () => {
+test("a Pack carries the house style whole and the notation authority as a slice, both verbatim, never summarised", async () => {
   const { root, vault } = await packedVault();
   await generateLayer(vault, 0);
 
   const pack = await readPack(root, 0, "Signed arithmetic and order of operations");
 
   assert.ok(pack.includes((await readFile(HOUSE_STYLE, "utf8")).replace(/\r\n/g, "\n")));
-  assert.ok(pack.includes(CONVENTIONS));
+  // A Floor Node has no closure, and its own prose is not read; its name holds the one entry it gets.
+  assert.ok(
+    pack.includes(
+      "`wiki/Conventions.md`, sliced: its instructions, and 1 of its 3 entries — those this Node's name and the Notes it builds on use. " +
+        "Left out: Limit; Tangent. If you need one of these, name it when you hand the Note back. " +
+        "A symbol or term in neither place: write the British school form and report it, as the house style says.",
+    ),
+  );
+  assert.ok(pack.includes(fenced(`${CONVENTIONS_PREAMBLE}\n${entryOf("Order of operations")}`)));
+  assert.ok(!pack.includes("### Limit"));
+  assert.ok(!pack.includes("### Tangent"));
+});
+
+test("the notation slice follows the Prerequisite Closure, not the direct prerequisites alone", async () => {
+  const { root, vault } = await packedVault();
+  await generateLayer(vault, 0);
+  await generateLayer(vault, 2);
+
+  // Limits requires Algebra and the sine limit; Signed arithmetic, two Edges down, writes $\tan$.
+  const limits = await readPack(root, 2, "Limits");
+  assert.ok(limits.includes("3 of its 3 entries"));
+  assert.ok(limits.includes(entryOf("Tangent")));
+  assert.ok(!limits.includes("PREREQUISITE PROSE STAYS OUT."));
+
+  // A Floor Node whose name says nothing of the entries gets the general ones alone.
+  const fractions = await readPack(root, 0, "Equivalent fractions and cancellation");
+  assert.ok(fractions.includes("1 of its 3 entries"));
+  assert.ok(fractions.includes("Left out: Limit; Tangent."));
+  assert.ok(fractions.includes(entryOf("Order of operations")));
 });
 
 test("the sources section says which case it means: none apply to a Floor Node, none exist yet for a domain", async () => {

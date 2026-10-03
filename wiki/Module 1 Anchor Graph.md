@@ -2,8 +2,8 @@
 kind: reference
 domain: wiki
 requires: []
-status: drafted
-reviewed_by: none
+status: reviewed
+reviewed_by: human 
 created: 2026-10-01
 updated: 2026-10-01
 aliases:

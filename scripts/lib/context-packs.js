@@ -10,7 +10,9 @@
 //   Required by          each requiring Node's one-sentence summary
 //   Archetype catalogue  each Archetype's name and one-liner, not its schema
 //   House style          docs/house-style.md, whole
-//   Notation authority   the vault's Conventions.md, whole
+//   Notation authority   a slice of the vault's Conventions.md: its instructions, and the
+//                        entries the Node's name and its Prerequisite Closure use, the rest
+//                        named so they can be asked for (conventions-slice.js, ticket 19)
 //   Sources              the source Notes tagged with the Node's domain, whole — or which of
 //                        the two reasons there are none
 //
@@ -24,8 +26,9 @@
 import { mkdir, readFile, rm, writeFile } from "node:fs/promises";
 import { basename, join, posix, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { layersOf } from "./graph.js";
+import { layersOf, reachableFrom } from "./graph.js";
 import { buildNotesGraph, isConcept, summaryOf, valueOf } from "./notes.js";
+import { sliceConventions } from "./conventions-slice.js";
 
 const HOUSE_STYLE_PATH = fileURLToPath(new URL("../../docs/house-style.md", import.meta.url));
 export const NOTATION_AUTHORITY = "Conventions.md";
@@ -74,16 +77,24 @@ export async function writeContextPacks(vaultDir, notes, catalogue, layer) {
   const byName = (a, b) => (graph.nameOf(a) < graph.nameOf(b) ? -1 : graph.nameOf(a) > graph.nameOf(b) ? 1 : 0);
   const members = notes.filter((note) => isConcept(note) && layers.get(note.path) === layer);
 
+  const texts = new Map();
+  const textOf = async (path) => {
+    if (!texts.has(path)) texts.set(path, await readFile(join(vaultDir, path), "utf8"));
+    return texts.get(path);
+  };
+
   const packs = [];
   for (const note of members) {
+    const closure = [...reachableFrom(graph, note.path)].filter((id) => id !== note.path && byPath.has(id));
     packs.push({
       file: `${note.name}.md`,
       text: pack({
         note,
-        skeleton: await readFile(join(vaultDir, note.path), "utf8"),
+        skeleton: await textOf(note.path),
         prerequisites: graph.prerequisitesOf(note.path).map((id) => byPath.get(id)),
         dependents: [...graph.dependentsOf(note.path)].sort(byName).map((id) => byPath.get(id)),
         ...shared,
+        notation: sliceConventions(shared.notation, { name: note.name, closureTexts: await Promise.all(closure.map(textOf)) }),
       }),
     });
   }
@@ -118,11 +129,24 @@ function pack({ note, skeleton, prerequisites, dependents, vaultName, catalogue,
     "## House style",
     fence(houseStyle),
     "## Notation authority",
-    `\`${vaultName}/${NOTATION_AUTHORITY}\`, whole:`,
-    fence(notation),
+    notationIntro(vaultName, notation),
+    fence(notation.text),
     "## Sources",
     ...sourcesSection({ floor, domain, vaultName, sources }),
   ].join("\n\n") + "\n";
+}
+
+/**
+ * The notation section says it is a slice, how it was cut, and what was left out, so an author
+ * can tell an entry the file lacks from one the slice withheld, and ask for the latter by name.
+ */
+function notationIntro(vaultName, { included, omitted, total }) {
+  const cut = `\`${vaultName}/${NOTATION_AUTHORITY}\`, sliced: its instructions, and ${included.length} of its ${total} entries — those this Node's name and the Notes it builds on use.`;
+  if (omitted.length === 0) return `${cut} No entry was left out.`;
+  return (
+    `${cut} Left out: ${omitted.join("; ")}. If you need one of these, name it when you hand the Note back. ` +
+    "A symbol or term in neither place: write the British school form and report it, as the house style says."
+  );
 }
 
 /**

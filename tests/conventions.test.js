@@ -21,14 +21,6 @@ import { fileURLToPath } from "node:url";
 const CONVENTIONS = fileURLToPath(new URL("../wiki/Conventions.md", import.meta.url));
 const SOURCES = fileURLToPath(new URL("../wiki/sources/", import.meta.url));
 
-/**
- * Short enough to paste into a Context Pack whole, beside one Node's skeleton. Raised from 120
- * in 14, when the first curated source added its Same and Elsewhere lines, and pinned at 140 on
- * 2026-10-03 as a soft budget: every curated source adds lines, so going over is reported as a
- * diagnostic rather than failed, and the fix is for Packs to carry a slice of the file (ticket 19).
- */
-const MAX_LINES = 140;
-
 const ENTRY_LINE = /^- \*\*(This Wiki|Same|Elsewhere):\*\* (.+)$/;
 
 async function entries() {
@@ -75,14 +67,6 @@ async function attributions() {
     }),
   );
 }
-
-test("Conventions.md is short enough to go into a Context Pack whole, or says by how much it is not", async (t) => {
-  const lines = (await readFile(CONVENTIONS, "utf8")).trimEnd().split(/\r?\n/);
-  assert.ok(lines.length > 0, "Conventions.md is empty");
-  if (lines.length > MAX_LINES) {
-    t.diagnostic(`Conventions.md is ${lines.length} lines, over the ${MAX_LINES}-line soft budget: ticket 19, a slice per Pack, is due`);
-  }
-});
 
 test("every convention entry has the fixed shape: the term, this Wiki's choice, each conflict attributed", async () => {
   const found = await entries();

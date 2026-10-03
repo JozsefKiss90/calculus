@@ -24,7 +24,10 @@ One file: the Pack you were given, `.context-packs/layer-<N>/<Note name>.md`. It
 - **Archetype catalogue**: each Archetype's name and one-liner, so you know what a learner can
   be shown. You write no `interactive` block. The Interactive Author does that, after you.
 - **House style**: the rules for every sentence you write. They are binding.
-- **Notation authority**: `wiki/Conventions.md`, which decides every symbol and word.
+- **Notation authority**: a slice of `wiki/Conventions.md`, which decides every symbol and
+  word: its instructions, and the entries your Node's name and the Notes it builds on use.
+  The Pack names the entries it left out. If you need one of those, say so when you hand the
+  Note back; a symbol or term in neither place is a gap in the file, and you report that too.
 - **Sources**: the source Notes you may cite, or a sentence saying why there are none.
 
 Read the Pack, then the one Note it names. Read nothing else in `wiki/`: no other Note, not
@@ -115,4 +118,5 @@ Neither `requires` nor the Anchor Graph Note changes because of a flag. The auth
 You are done when `check` names no failure in your Note, the Note differs from what you read
 only in the five sections, `## References`, `status` and `updated`, and you have replied with:
 the Note's path; each claim left out for want of a source; each symbol or term the notation
-authority lacked; anything the Pack lacked; and the path of any flag you filed.
+authority lacked, and each entry the slice left out that you needed; anything the Pack
+lacked; and the path of any flag you filed.
